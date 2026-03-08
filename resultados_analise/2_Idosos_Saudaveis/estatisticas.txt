@@ -1,0 +1,40 @@
+ANÁLISE GEOGRÁFICA: 2_Idosos_Saudaveis
+============================================================
+
+--- Número de Entrevistados por Região ---
+Nome_Regiao
+Nordeste        1478
+Sudeste         1003
+Norte            825
+Sul              550
+Centro-Oeste     476
+
+--- Número de Entrevistados por Estado ---
+Nome_Estado
+Rio de Janeiro         322
+São Paulo              275
+Minas Gerais           240
+Maranhão               239
+Paraná                 204
+Ceará                  203
+Pernambuco             200
+Pará                   198
+Santa Catarina         175
+Bahia                  173
+Rio Grande do Sul      171
+Amazonas               170
+Espírito Santo         166
+Piauí                  154
+Mato Grosso do Sul     144
+Alagoas                140
+Paraíba                139
+Rio Grande do Norte    134
+Mato Grosso            121
+Goiás                  115
+Tocantins              105
+Acre                   103
+Sergipe                 96
+Distrito Federal        96
+Rondônia                94
+Roraima                 89
+Amapá                   66
