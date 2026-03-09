@@ -1,0 +1,40 @@
+ANÁLISE GEOGRÁFICA: 1_Populacao_Idosa_Geral
+============================================================
+
+--- Número de Entrevistados por Região ---
+Regiao
+Centro-Oeste    32488
+Nordeste        85213
+Norte           64843
+Sudeste         48701
+Sul             32670
+
+--- Número de Entrevistados por Estado ---
+Estado
+Acre                    8270
+Alagoas                10474
+Amapá                   6640
+Amazonas               13074
+Bahia                  11061
+Ceará                  15281
+Distrito Federal        7609
+Espírito Santo         10673
+Goiás                   8506
+Maranhão               17912
+Mato Grosso             7607
+Mato Grosso do Sul      8766
+Minas Gerais           15421
+Paraná                 11694
+Paraíba                10094
+Pará                   14393
+Pernambuco             12381
+Piauí                   9044
+Rio Grande do Norte     9964
+Rio Grande do Sul      10369
+Rio de Janeiro         14776
+Rondônia                7391
+Roraima                 8476
+Santa Catarina         10607
+Sergipe                 8140
+São Paulo              18504
+Tocantins               6599
