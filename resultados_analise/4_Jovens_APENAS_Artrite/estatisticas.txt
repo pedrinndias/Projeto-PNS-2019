@@ -1,0 +1,38 @@
+ANÁLISE GEOGRÁFICA: 4_Jovens_APENAS_Artrite
+============================================================
+
+--- Número de Jovens por Região ---
+Regiao
+Centro-Oeste     7
+Nordeste        17
+Norte           23
+Sudeste          7
+Sul              6
+
+--- Número de Jovens por Estado ---
+Estado
+Acre                    3
+Alagoas                 1
+Amapá                   1
+Amazonas                2
+Bahia                   3
+Ceará                   1
+Distrito Federal        1
+Espírito Santo          2
+Goiás                   1
+Maranhão                5
+Mato Grosso             1
+Mato Grosso do Sul      4
+Minas Gerais            3
+Paraná                  2
+Paraíba                 1
+Pará                    3
+Pernambuco              3
+Rio Grande do Norte     1
+Rio Grande do Sul       2
+Rio de Janeiro          1
+Rondônia               10
+Roraima                 4
+Santa Catarina          2
+Sergipe                 3
+São Paulo               3
