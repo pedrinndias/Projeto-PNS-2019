@@ -109,9 +109,172 @@ O documento `Plano_Artigo_Mineracao_Pedro_Dias_Soares.docx` segue uma estrutura 
 
 ---
 
-## 4. Análise Detalhada do Código
+## 4. Relatório Modular das Variáveis da PNS 2019
 
-### 4.1 Script `criar_banco_formatado.py`
+A PNS 2019 é estruturada em **4 partes** e **29 módulos temáticos**, totalizando 1.087 colunas e 5.221 entradas no dicionário de dados. Abaixo segue o mapeamento completo dos módulos e a análise de quais variáveis são (e devem ser) utilizadas no projeto.
+
+### 4.1 Estrutura Modular Completa
+
+| Parte | Módulo | Descrição | Relevância para o Projeto |
+|:-----:|:------:|-----------|:-------------------------:|
+| **1** | — | Identificação e Controle (V0001, V0024, UPA_PNS...) | ✅ UF/Estado |
+| **2** | **A** | Informações do Domicílio | 🟡 Possível |
+| **2** | **B** | Visitas Domiciliares de Equipe de Saúde | 🟡 Possível |
+| **3** | **C** | Características Gerais dos Moradores | ✅ **Essencial** |
+| **3** | **D** | Características de Educação | ✅ **Essencial** |
+| **3** | **E** | Características de Trabalho | 🟡 Possível |
+| **3** | **F** | Rendimentos de Outras Fontes | 🟡 Possível |
+| **3** | **G** | Pessoas com Deficiências (≥2 anos) | 🟡 Possível |
+| **3** | **I** | Cobertura de Plano de Saúde | ✅ Importante |
+| **3** | **J** | Utilização de Serviços de Saúde | ✅ Importante |
+| **3** | **K** | Saúde dos Indivíduos com ≥60 anos | ✅ **Essencial** |
+| **3** | **L** | Crianças com menos de 2 anos | ❌ Não relevante |
+| **4** | **M** | Características do Trabalho e Apoio Social | 🟡 Possível |
+| **4** | **N** | Percepção do Estado de Saúde | ✅ **Essencial** |
+| **4** | **O** | Acidentes | 🟡 Baixa |
+| **4** | **P** | Estilos de Vida (alimentação, exercício, álcool, tabaco) | ✅ **Essencial** |
+| **4** | **Q** | Doenças Crônicas | ✅ **CENTRAL** |
+| **4** | **R** | Saúde da Mulher (≥18 anos) | 🟢 Complementar |
+| **4** | **S** | Atendimento Pré-Natal | ❌ Não relevante |
+| **4** | **T** | Doenças Transmissíveis | 🟢 Complementar |
+| **4** | **U** | Saúde Bucal | 🟢 Complementar |
+| **4** | **V** | Violência (≥18 anos) | ❌ Não relevante |
+| **4** | **W** | Antropometria (peso/altura medidos) | ✅ Importante |
+| **4** | **Y** | Atividade Sexual (≥18 anos) | ❌ Não relevante |
+| **4** | **Z** | Paternidade e Pré-Natal do Parceiro | ❌ Não relevante |
+| — | **VD** | Variáveis Derivadas (renda, escolaridade, etc.) | ✅ **Essencial** |
+| **4** | **H** | Atendimento Médico (≥18 anos) | 🟡 Possível |
+
+### 4.2 Módulo Q — Doenças Crônicas (MÓDULO CENTRAL)
+
+Este é o módulo mais importante do projeto. O notebook atualmente utiliza **14 variáveis de diagnóstico** para definir os grupos de análise:
+
+| Variável | Pergunta do Questionário | Uso no Projeto |
+|:--------:|--------------------------|:--------------:|
+| **Q00201** | Algum médico já lhe deu o diagnóstico de **hipertensão arterial** (pressão alta)? | Filtro: saudável |
+| **Q03001** | Algum médico já lhe deu o diagnóstico de **diabetes**? | Filtro: saudável |
+| **Q060** | Algum médico já lhe deu o diagnóstico de **colesterol alto**? | Filtro: saudável |
+| **Q06306** | Diagnóstico de **doença do coração** (infarto, angina, insuficiência cardíaca)? | Filtro: saudável |
+| **Q068** | Diagnóstico de **AVC** (Acidente Vascular Cerebral) ou derrame? | Filtro: saudável |
+| **Q074** | Diagnóstico de **asma** (ou bronquite asmática)? | Filtro: saudável |
+| **Q079** | Diagnóstico de **artrite ou reumatismo**? | ✅ **Variável-alvo** |
+| **Q088** | Diagnóstico de **DORT** (Distúrbio Osteomuscular)? | Filtro: saudável |
+| **Q092** | Diagnóstico de **depressão**? | Filtro: saudável |
+| **Q11006** | Diagnóstico de **outra doença mental** (ansiedade, pânico, esquizofrenia, bipolar, TOC)? | Filtro: saudável |
+| **Q11604** | Diagnóstico de **doença crônica no pulmão** (enfisema, bronquite crônica, DPOC)? | Filtro: saudável |
+| **Q120** | Diagnóstico de **câncer**? | Filtro: saudável |
+| **Q124** | Diagnóstico de **insuficiência renal crônica**? | Filtro: saudável |
+| **Q128** | Diagnóstico de **outra doença crônica** (física ou mental, >6 meses)? | Filtro: saudável |
+
+**Lógica de classificação no código:**
+- **Saudável:** Todas as 14 variáveis = 2 (Não)
+- **Com artrite:** Q079 = 1 (Sim)
+- **Artrite pura:** Q079 = 1 E todas as outras 13 = 2
+
+> **Observação:** O Módulo Q contém ainda dezenas de sub-variáveis por doença (idade do diagnóstico, tratamentos, limitações), que **não estão sendo exploradas** atualmente mas poderiam enriquecer a análise de artrite.
+
+### 4.3 Variáveis Adicionais Relevantes (ainda NÃO utilizadas)
+
+Além do Módulo Q, o projeto deveria incorporar variáveis de outros módulos para criar features para o Machine Learning. Abaixo, a seleção recomendada organizada por categoria:
+
+#### 📋 Sociodemográficas (Módulos C, D, VD)
+
+| Variável | Descrição | Tipo | Prioridade |
+|:--------:|-----------|:----:|:----------:|
+| **C006** | Sexo | Categórica (1=Masc, 2=Fem) | 🔴 Alta |
+| **C008** | Idade do morador (anos) | Numérica | 🔴 Alta |
+| **C009** | Cor ou raça | Categórica (1=Branca..5=Indígena) | 🔴 Alta |
+| **C004** | Condição no domicílio | Categórica | 🟡 Média |
+| **V0001** | Unidade da Federação | Categórica (código UF) | ✅ Já usada |
+| **VDD004A** | Nível de instrução mais elevado | Ordinal | 🔴 Alta |
+| **VDE001** | Condição em relação à força de trabalho | Categórica | 🟡 Média |
+| **VDE002** | Condição de ocupação | Categórica | 🟡 Média |
+| **VDE014** | Grupamento de atividade do trabalho | Categórica | 🟡 Média |
+| **VDF002** | Rendimento domiciliar (R$) | Numérica | 🔴 Alta |
+| **VDF003** | Rendimento domiciliar per capita (R$) | Numérica | 🔴 Alta |
+| **VDF004** | Faixa de rendimento per capita | Ordinal | 🔴 Alta |
+
+#### 🏥 Saúde Percebida (Módulo N)
+
+| Variável | Descrição | Tipo | Prioridade |
+|:--------:|-----------|:----:|:----------:|
+| **N001** | Autoavaliação do estado de saúde | Ordinal (1=Muito bom..5=Muito ruim) | 🔴 Alta |
+
+#### 🏃 Estilo de Vida (Módulo P)
+
+| Variável | Descrição | Tipo | Prioridade |
+|:--------:|-----------|:----:|:----------:|
+| **P027** | Frequência de consumo de bebida alcoólica | Ordinal | 🟡 Média |
+| **P034** | Praticou exercício físico nos últimos 3 meses? | Categórica (1=Sim, 2=Não) | 🔴 Alta |
+| **P035** | Dias por semana de exercício | Numérica | 🟡 Média |
+| **P00104** | Peso (kg) | Numérica | 🟡 Média |
+| **P00404** | Altura (cm) | Numérica | 🟡 Média |
+| **P00601–P00622** | Consumo alimentar (22 itens) | Categórica cada | 🟢 Baixa |
+
+#### 🩺 Acesso à Saúde (Módulos I, J)
+
+| Variável | Descrição | Tipo | Prioridade |
+|:--------:|-----------|:----:|:----------:|
+| **I001** | Possui plano de saúde? | Categórica | 🟡 Média |
+| **J001** | Utilizou serviço de saúde nas últimas 2 semanas? | Categórica | 🟡 Média |
+
+#### 👴 Saúde do Idoso (Módulo K — exclusivo ≥60 anos)
+
+| Variável | Descrição | Tipo | Prioridade |
+|:--------:|-----------|:----:|:----------:|
+| **K001** | Grau de dificuldade para comer sozinho | Ordinal | 🔴 Alta |
+| Outras K* | Atividades de vida diária (AVDs) | Ordinal | 🔴 Alta |
+
+#### 🎯 Variáveis Específicas de Artrite (Módulo Q — sub-variáveis)
+
+| Variável | Descrição | Tipo | Prioridade |
+|:--------:|-----------|:----:|:----------:|
+| **Q080** | Idade no primeiro diagnóstico de artrite | Numérica | 🟡 Média |
+| **Q082** | Já fez cirurgia por causa da artrite? | Categórica | 🟡 Média |
+| **Q083** | Grau de limitação nas atividades habituais | Ordinal | 🔴 Alta |
+| **Q08107–Q08111** | Recomendações recebidas (exercício, fisio, medicamentos...) | Categórica cada | 🟡 Média |
+
+### 4.4 Seleção Recomendada de Features para Machine Learning
+
+Para a modelagem, recomenda-se um conjunto de **15-20 features** organizadas assim:
+
+```
+VARIÁVEL-ALVO (target):
+  → Q079 (artrite/reumatismo: 1=Sim, 2=Não) — binária
+
+FEATURES RECOMENDADAS:
+  Sociodemográficas:
+    → C006 (sexo)
+    → C008 (idade)
+    → C009 (cor/raça)
+    → VDD004A (escolaridade)
+    → VDF004 (faixa de renda per capita)
+    → V0001 (UF/região)
+  
+  Saúde:
+    → N001 (autoavaliação de saúde)
+    → Q084 (problema crônico de coluna)
+    → Q132 (uso de medicamento para dormir)
+  
+  Estilo de Vida:
+    → P034 (prática de exercício físico)
+    → P027 (consumo de álcool)
+    → P00104/P00404 (peso/altura → calcular IMC)
+  
+  Comorbidades (como features, não filtros):
+    → Q00201 (hipertensão)
+    → Q03001 (diabetes)
+    → Q092 (depressão)
+    → Q088 (DORT)
+```
+
+> **⚠️ IMPORTANTE:** No modelo atual do notebook, as variáveis de doenças crônicas são usadas apenas como **filtros** (para definir "saudável" vs "doente"). Para ML, elas poderiam ser usadas como **features** para predizer a presença de artrite, permitindo identificar perfis de risco.
+
+---
+
+## 5. Análise Detalhada do Código
+
+### 5.1 Script `criar_banco_formatado.py`
 
 **Função:** Lê o CSV bruto da PNS 2019, traduz os códigos numéricos para texto usando o dicionário de dados XLS, e salva tudo em um banco SQLite.
 
@@ -124,7 +287,7 @@ O documento `Plano_Artigo_Mineracao_Pedro_Dias_Soares.docx` segue uma estrutura 
 | Tratamento de erros | ⚠️ Usa `except:` genérico (*bare except*) — má prática Python |
 | Documentação | ✅ Bem comentado, cada linha possui explicação |
 
-### 4.2 Script `rastrear_registros_nulos.py`
+### 5.2 Script `rastrear_registros_nulos.py`
 
 | Aspecto | Avaliação |
 |---------|-----------|
@@ -133,7 +296,7 @@ O documento `Plano_Artigo_Mineracao_Pedro_Dias_Soares.docx` segue uma estrutura 
 | **Problema grave** | ❌ Referencia variáveis (`df_bem`, `df_atri_reu`, `df_atri_reu_puro`) que **não são definidas** no script |
 | Reutilização | ❌ Não é autônomo — só funciona se colado dentro do notebook |
 
-### 4.3 Notebook `pessoas_saudaveis.ipynb`
+### 5.3 Notebook `pessoas_saudaveis.ipynb`
 
 #### ❌ PROBLEMA CRÍTICO: Conflitos de Merge Git
 
@@ -175,7 +338,7 @@ aparecem em diversas células, tornando o arquivo **JSON inválido** e impedindo
 
 ---
 
-## 5. Resultados Gerados
+## 6. Resultados Gerados
 
 Cada um dos 8 subgrupos contém **5 arquivos** de resultado:
 
@@ -187,7 +350,7 @@ Cada um dos 8 subgrupos contém **5 arquivos** de resultado:
 | `grafico_estados.png` | Imagem | Gráfico de barras por estado |
 | `grafico_regioes.png` | Imagem | Gráfico de barras por região |
 
-### 5.1 Exemplo: Dados da População Idosa Geral
+### 6.1 Exemplo: Dados da População Idosa Geral
 
 | Região | Nº Entrevistados |
 |--------|:----------------:|
@@ -197,7 +360,7 @@ Cada um dos 8 subgrupos contém **5 arquivos** de resultado:
 | Sudeste | 48.701 |
 | Sul | 32.670 |
 
-### 5.2 Exemplo: Idosos Saudáveis
+### 6.2 Exemplo: Idosos Saudáveis
 
 | Região | Nº Saudáveis |
 |--------|:------------:|
@@ -211,7 +374,7 @@ Cada um dos 8 subgrupos contém **5 arquivos** de resultado:
 
 ---
 
-## 6. Histórico de Desenvolvimento (Git)
+## 7. Histórico de Desenvolvimento (Git)
 
 | # | Commit | Descrição |
 |---|--------|-----------|
@@ -242,7 +405,7 @@ Cada um dos 8 subgrupos contém **5 arquivos** de resultado:
 
 ---
 
-## 7. Problemas Identificados — Por Prioridade
+## 8. Problemas Identificados — Por Prioridade
 
 ### 🔴 Críticos
 
@@ -275,9 +438,9 @@ Cada um dos 8 subgrupos contém **5 arquivos** de resultado:
 
 ---
 
-## 8. Avaliação de Progresso
+## 9. Avaliação de Progresso
 
-### 8.1 Progresso por Fase do KDD/CRISP-DM
+### 9.1 Progresso por Fase do KDD/CRISP-DM
 
 | Fase do KDD | Status | Progresso |
 |:------------|:------:|:---------:|
@@ -288,7 +451,7 @@ Cada um dos 8 subgrupos contém **5 arquivos** de resultado:
 | 5. Avaliação | ❌ Não iniciada | **0%** |
 | 6. Implantação/Apresentação dos Resultados | ⚠️ Parcial | **20%** |
 
-### 8.2 Progresso por Fase do Plano do Artigo
+### 9.2 Progresso por Fase do Plano do Artigo
 
 | Fase do Plano | Progresso |
 |:-------------|:---------:|
@@ -307,7 +470,7 @@ O projeto completou a **compreensão do problema** e a **preparação inicial do
 
 ---
 
-## 9. Próximos Passos Recomendados
+## 10. Próximos Passos Recomendados
 
 ### Fase 1 — Correções Urgentes 🔴 *(1 dia)*
 
@@ -370,7 +533,7 @@ O projeto completou a **compreensão do problema** e a **preparação inicial do
 
 ---
 
-## 10. Melhorias de Qualidade Sugeridas
+## 11. Melhorias de Qualidade Sugeridas
 
 | # | Área | Melhoria | Impacto |
 |---|------|----------|---------|
@@ -387,7 +550,7 @@ O projeto completou a **compreensão do problema** e a **preparação inicial do
 
 ---
 
-## 11. Resumo Executivo
+## 12. Resumo Executivo
 
 ### Pontos Fortes ✅
 - **Estrutura de diretórios** bem organizada seguindo boas práticas
