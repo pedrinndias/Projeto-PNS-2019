@@ -4,20 +4,24 @@ Este repositório contém scripts, notebooks e dados utilizados para análise da
 
 ## Estrutura do Repositório
 
+- **archive/**: Backup de notebooks antigos, relatórios anteriores e arquivos não utilizados.
 - **data/**: Dados utilizados no projeto.
-  - **raw/**: Dados brutos originais (SAS, TXT, CSV).
-  - **processed/**: Dados processados e prontos para análise.
-  - **database/**: Banco de dados formatado.
-- **docs/**: Documentação adicional.
-- **notebooks/**: Notebooks Jupyter para exploração e análise dos dados.
-- **scripts/**: Scripts Python para processamento e preparação dos dados.
-- **src/**: Código-fonte adicional (em desenvolvimento).
+  - **raw/**: Dados brutos originais (CSV, TXT e dicionários XLS). *Atenção: o arquivo `pns2019.csv` não é versionado no Git devido ao tamanho.*
+  - **processed/**: Dados processados, filtrados e prontos para modelagem.
+  - **database/**: Bancos de dados em formato SQLite.
+- **docs/**: Documentação adicional (chaves de leitura, dicionários) e guias do projeto.
+- **notebooks/**: Fluxo principal de análise em cadernos numerados:
+  - `01_extracao_pre_processamento.ipynb`
+  - `02_analise_exploratoria_bivariada.ipynb`
+  - `03_machine_learning_capto.ipynb`
+- **scripts/**: Scripts Python utilitários.
+- **src/**: Código-fonte modular e funções reutilizáveis.
 
 ## Principais Arquivos
 
-- `notebooks/pessoas_saudaveis.ipynb`: Notebook principal de análise de pessoas idosas sem doenças crônicas e com artrite/reumatismo.
-- `scripts/criar_banco_formatado.py`: Script para criação do banco de dados formatado a partir dos dados brutos.
-- `data/raw/pns2019.csv`: Base de dados principal em formato CSV.
+- `notebooks/01_extracao_pre_processamento.ipynb`: Início do fluxo, realiza o carregamento e filtro dos dados brutos para a amostra de idosos.
+- `scripts/criar_banco_formatado.py`: Script original para criação de um banco SQLite mapeado.
+- `data/raw/pns2019.csv`: Base de dados principal em formato CSV (não incluída no repositório remoto).
 
 ## Objetivo
 
