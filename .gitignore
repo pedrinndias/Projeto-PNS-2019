@@ -13,3 +13,11 @@ archive/
 # Ignorar CSVs e bancos em qualquer lugar
 *.csv
 *.db
+
+# Garantindo bloqueio de dados
+*.csv
+*.db
+data/database/idosos_artrite_puro.db
+data/database/idosos_artrite.db
+data/database/idosos_geral.db
+data/database/idosos_saudaveis.db
