@@ -23,53 +23,41 @@
 
 ```
 Projeto_PNS/
+├── 📁 archive/                    ← (BACKUP DE ARQUIVOS ANTIGOS)
+│   ├── 📁 lixo_raiz/              ← bfg-1.15.0.jar
+│   ├── 📁 notebooks_antigos/      ← pessoas_saudaveis.ipynb (com conflitos)
+│   └── 📁 resultados_antigos/     ← antiga pasta resultados_analise e ZIPs
 ├── 📁 data/
-│   ├── raw/           → PNS_2019.txt (~455 MB), dicionário XLS, inputs SAS
-│   ├── processed/     → ⚠️ VAZIO
-│   └── database/      → 5 bancos SQLite (master + 4 subconjuntos)
-│       ├── pns_master_formatado.db  (~1.1 GB)
-│       ├── idosos_geral.db          (~16 MB)
-│       ├── idosos_saudaveis.db      (~8 MB)
-│       ├── idosos_artrite.db        (~8 MB)
-│       └── idosos_artrite_puro.db   (~1 MB)
+│   ├── raw/           → PNS_2019.txt, pns2019.csv, dicionários
+│   ├── processed/     → (Pronto para os novos dados limpos)
+│   └── database/      → Bancos SQLite
+├── 📁 docs/           → Chaves_PNS_2019.pdf, planos, relatórios
+│   └── Documentos_organizacao/
 ├── 📁 notebooks/
-│   ├── pessoas_saudaveis.ipynb  → Notebook principal (~572 KB)
-│   ├── pns2019.csv              → CSV principal (~922 MB)
-│   └── documentação auxiliar (dicionário, chaves, inputs)
+│   ├── 01_extracao_pre_processamento.ipynb
+│   ├── 02_analise_exploratoria_bivariada.ipynb
+│   └── 03_machine_learning_capto.ipynb
 ├── 📁 scripts/
-│   ├── criar_banco_formatado.py   → ETL: CSV → SQLite com tradução de códigos
-│   └── rastrear_registros_nulos.py → Análise de dados faltantes por módulo
-├── 📁 src/              → ⚠️ VAZIO (prometido no README)
-├── 📁 docs/             → ⚠️ VAZIO (prometido no README)
-├── 📁 resultados_analise/
-│   ├── 1_Populacao_Idosa_Geral/      → estatísticas + gráficos
-│   ├── 1_Populacao_Jovem_Geral/      → estatísticas + gráficos
-│   ├── 2_Idosos_Saudaveis/           → estatísticas + gráficos
-│   ├── 2_Jovens_Saudaveis/           → estatísticas + gráficos
-│   ├── 3_Idosos_com_Artrite/         → estatísticas + gráficos
-│   ├── 3_Jovens_com_Artrite/         → estatísticas + gráficos
-│   ├── 4_Idosos_APENAS_Artrite/      → estatísticas + gráficos
-│   └── 4_Jovens_APENAS_Artrite/      → estatísticas + gráficos
-├── Plano_Artigo_Mineracao_Pedro_Dias_Soares.docx
+│   ├── criar_banco_formatado.py
+│   └── rastrear_registros_nulos.py
+├── 📁 src/              → (Para módulos Python reutilizáveis)
 ├── README.md
 ├── requirements.txt
-├── .gitignore
-├── bfg-1.15.0.jar       → ⚠️ Ferramenta de limpeza Git (deveria ser removida)
-└── 2x arquivos ZIP de análise exploratória
+└── .gitignore           → Configurado para ignorar archive/ e CSVs
 ```
 
 ### 2.1 Avaliação da Estrutura
 
 | Aspecto | Status | Comentário |
 |---------|--------|------------|
-| Organização de diretórios | ✅ Boa | Segue padrão `data/raw`, `data/processed`, `notebooks`, `scripts`, `src` |
-| Pasta `src/` | ⚠️ Vazia | Deveria conter módulos Python reutilizáveis |
-| Pasta `docs/` | ⚠️ Vazia | Sem documentação adicional |
-| Pasta `data/processed/` | ⚠️ Vazia | Dados processados não estão sendo salvos como CSV intermediários |
-| `.gitignore` | ✅ Funcional | Ignora CSVs grandes e banco SQLite master |
-| `requirements.txt` | ⚠️ Incompleto | Falta `python-docx`, sem versionamento de pacotes |
-| README | ✅ Adequado | Bem estruturado, mas URL do `git clone` está genérica |
-| Ambientes virtuais | ⚠️ Duplicados | Existem `.venv` e `.venv-1` (um deveria ser removido) |
+| Organização de diretórios | ✅ Excelente | Estrutura limpa, com cadernos numerados e backup em `archive/` |
+| Pasta `src/` | ⚠️ Vazia | Pronta para receber módulos reutilizáveis no futuro |
+| Pasta `docs/` | ✅ Ok | Contém os documentos de organização e manuais |
+| Pasta `data/processed/` | ⚠️ Vazia | Aguardando a execução do Notebook 01 |
+| `.gitignore` | ✅ Funcional | Ignora backups, CSVs e bancos de dados locais |
+| `requirements.txt` | ⚠️ Incompleto | Falta adicionar pacotes de ML e atualizar via `pip freeze` |
+| README | ✅ Atualizado | Reflete a nova estrutura |
+| Ambientes virtuais | ✅ Limpo | Apenas o `.venv` oficial ativo |
 
 ---
 
@@ -429,11 +417,11 @@ Cada um dos 8 subgrupos contém **5 arquivos** de resultado:
 
 | # | Problema | Impacto |
 |---|---------|---------|
-| 9 | `src/` e `docs/` vazios | Prometidos no README mas sem conteúdo |
+| 9 | `src/` vazio | Prometido no README mas sem conteúdo |
 | 10 | `bare except` no script de ETL | Má prática Python |
-| 11 | CSV na pasta `notebooks/` | Deveria estar em `data/raw/` |
-| 12 | Dois ambientes virtuais (`.venv` e `.venv-1`) | Confusão, espaço desperdiçado |
-| 13 | `bfg-1.15.0.jar` na raiz | Ferramenta temporária não removida |
+| 11 | ~~CSV na pasta `notebooks/`~~ | ✅ Corrigido na reestruturação |
+| 12 | ~~Dois ambientes virtuais (`.venv` e `.venv-1`)~~ | ✅ Corrigido na reestruturação |
+| 13 | ~~`bfg-1.15.0.jar` na raiz~~ | ✅ Corrigido na reestruturação |
 | 14 | Mensagens de commit inconsistentes | Dificulta rastreamento de mudanças |
 
 ---
@@ -472,20 +460,18 @@ O projeto completou a **compreensão do problema** e a **preparação inicial do
 
 ## 10. Próximos Passos Recomendados
 
-### Fase 1 — Correções Urgentes 🔴 *(1 dia)*
+### Fase 1 — Correções Urgentes ✅ *(Concluído na Reestruturação)*
 
-- [ ] **Resolver conflitos de merge** no `pessoas_saudaveis.ipynb`
-  - Opção 1: Resolver manualmente cada marcador `<<<<<<< HEAD` / `=======` / `>>>>>>>`
-  - Opção 2: Recriar o notebook limpo com a versão mais atual do código
-  - Testar se executa completamente após correção
-- [ ] **Definir e documentar a faixa etária** — O projeto analisa idosos (≥60), jovens (18-29), ou ambos? Documentar claramente a decisão
-- [ ] **Limpar repositório** — Remover `bfg-1.15.0.jar`, `.venv-1/`, ZIPs antigos da raiz
+- [x] **Resolver conflitos de merge** no `pessoas_saudaveis.ipynb` (Movido para `archive/`)
+- [ ] **Definir e documentar a faixa etária** — O projeto analisa idosos (≥60), jovens (18-29), ou ambos? Documentar claramente a decisão no novo Notebook 01.
+- [x] **Limpar repositório** — Remover `bfg-1.15.0.jar`, `.venv-1/`, ZIPs antigos da raiz
 
 ### Fase 2 — Preparação dos Dados 🟡 *(1-2 dias)*
 
-- [ ] **Criar notebooks separados** para cada etapa (ETL, EDA, Modelagem, Resultados)
+- [x] **Criar notebooks separados** para cada etapa (01, 02 e 03)
 - [ ] **Usar o banco SQLite** para carregar dados no notebook (em vez do CSV de 922 MB)
 - [ ] **Salvar dados processados** em `data/processed/` como CSVs filtrados por grupo
+- [x] **Arquivos de dados na pasta correta** (`pns2019.csv` centralizado em `data/raw/`)
 - [ ] **Completar o `requirements.txt`** com versões exatas (`pip freeze > requirements.txt`)
 - [ ] **Tornar `rastrear_registros_nulos.py` autônomo** — Adicionar carregamento de dados
 

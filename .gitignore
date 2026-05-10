@@ -3,3 +3,13 @@
 /data/raw/PNS_2019.txt
 /data/database/pns_master_formatado.db
 /data/raw/pns2019.csv
+
+# Backups e lixo
+archive/
+*.jar
+*.zip
+.venv-1/
+
+# Ignorar CSVs e bancos em qualquer lugar
+*.csv
+*.db
