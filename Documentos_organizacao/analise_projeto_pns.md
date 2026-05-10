@@ -489,47 +489,47 @@ O projeto completou a **compreensão do problema** e a **preparação inicial do
 - [ ] **Completar o `requirements.txt`** com versões exatas (`pip freeze > requirements.txt`)
 - [ ] **Tornar `rastrear_registros_nulos.py` autônomo** — Adicionar carregamento de dados
 
-### Fase 3 — Análise Exploratória Avançada 🟡 *(2-3 dias)*
+### Fase 3 — Análise Estatística Bivariada e Comparativa 🟡 *(2-3 dias)*
 
-- [ ] **Estatísticas descritivas comparativas** entre grupos:
-  - Distribuição por sexo, raça/cor, escolaridade, renda domiciliar
-  - Medidas de tendência central (média, mediana) e dispersão (desvio padrão)
-- [ ] **Testes estatísticos:**
-  - Qui-quadrado (χ²) para variáveis categóricas
-  - Mann-Whitney / Kruskal-Wallis para variáveis ordinais
-  - Correlação de Spearman
-- [ ] **Visualizações comparativas:**
-  - Box plots e violin plots
-  - Heatmaps de correlação
-  - Gráficos de proporção lado a lado (saudáveis vs artrite)
+- [ ] **Análise Bivariada (Artrite vs Saudável):**
+  - **Variáveis Categóricas:** Teste Qui-quadrado (χ²) com análise de resíduos padronizados para variáveis nominais e Teste de Mann-Whitney para ordinais.
+  - **Variáveis Quantitativas:** Teste T de Student (se distribuição normal - Shapiro-Wilk) ou Mann-Whitney (se não normal) para comparar médias (ex: IMC, idade). Reportar p-valor e IC 95%.
+- [ ] **Comparação das 4 Bases (ANOVA e Kruskal-Wallis):**
+  - Comparar simultaneamente as 4 bases (Geral, Saudáveis, Com Artrite, Apenas Artrite) para justificar o uso da Base 4. 
+  - Usar ANOVA one-way com post-hoc de Tukey ou Kruskal-Wallis com post-hoc de Dunn.
+- [ ] **Análise de Prevalência:**
+  - Calcular prevalência global de artrite com IC 95%.
+  - Comparação de proporções (prop.test) por sexo, faixas etárias, escolaridade e renda.
 
-### Fase 4 — Modelagem com Machine Learning 🔴 *(3-5 dias)*
+### Fase 4 — Modelagem com Machine Learning (CAPTO + PICTOREA) 🔴 *(3-5 dias)*
 
-- [ ] **Seleção de features** relevantes (variáveis sociodemográficas, hábitos, saúde)
-- [ ] **Pré-processamento:**
-  - Tratamento de valores ausentes (imputação por mediana/moda)
-  - Encoding de variáveis categóricas (One-Hot / Label Encoding)
-  - Normalização/padronização de features numéricas
-  - Balanceamento de classes (SMOTE ou undersampling, dado que artrite << saudáveis)
-- [ ] **Modelos recomendados:**
-  - Regressão Logística (baseline interpretável)
-  - Árvore de Decisão (boa interpretabilidade)
-  - Random Forest (melhor performance geral)
-  - KNN ou SVM como alternativa
-- [ ] **Avaliação rigorosa:**
-  - Matriz de confusão
-  - Acurácia, Precisão, Recall, F1-Score
-  - Curva ROC e AUC
-  - Validação cruzada (k-fold, k=5 ou k=10)
-- [ ] **Bibliotecas a adicionar:** `scikit-learn`, `imbalanced-learn`
+- [ ] **Regressão Logística (Baseline):**
+  - Executar análise univariada (p<0,20) e multivariada calculando Odds Ratios (OR) com IC 95%.
+- [ ] **Otimização de Hiperparâmetros:**
+  - Aplicar `RandomizedSearchCV` com 5-fold CV interno. Métrica-alvo: F1-Score macro. (Fixar `random_state`).
+- [ ] **Treinamento e Validação Cruzada (10-fold):**
+  - Executar Stratified 10-fold CV no conjunto de treino com Random Under Sampling (RUS) aplicado internamente a cada fold.
+  - Calcular Média e IC 95% para Precisão, Recall e F1-Score.
+- [ ] **Avaliação no Conjunto de Teste:**
+  - Aplicar melhores modelos no teste (20% sem RUS).
+  - Reportar Acurácia, AUC-ROC e Matriz de Confusão por classe.
+- [ ] **Teste-T de Comparação de Modelos:**
+  - Comparar estatisticamente o desempenho (F1-Score nos 10 folds) entre modelos (DT vs RF vs NB vs AdaBoost).
 
-### Fase 5 — Escrita do Artigo 🟡 *(5-7 dias)*
+### Fase 5 — Extração de Conhecimento (Interpretabilidade) 🟡 *(2 dias)*
 
-- [ ] Seguir rigorosamente as fases do plano DOCX:
-  1. Método → 2. Resultados → 3. Discussão → 4. Introdução → 5. Resumo
-- [ ] Inserir tabelas e figuras geradas nas fases anteriores
-- [ ] Referenciar artigos-base (Pereira & Galvão, STROBE, Zárate et al.)
-- [ ] Aplicar checklist STROBE na revisão final (Fase 7 do plano)
+- [ ] **Feature Importance:** 
+  - Extrair a importância dos atributos normalizada para os modelos baseados em árvore (Gini/MDI/pesos).
+- [ ] **Extração de Regras da Árvore de Decisão:**
+  - Limitar profundidade (`max_depth=5`) e exportar regras de classificação legíveis (caminhos de decisão). Ex: 'SE IMC > 27 ENTÃO Artrite'.
+- [ ] **Análise por Dimensão CAPTO:**
+  - Agrupar importâncias de atributos pelas dimensões CAPTO (Hábitos, Sociodemográficos, Antropometria) para ver qual dimensão tem maior poder preditivo.
+
+### Fase 6 — Escrita do Artigo e Revisão Final 🟡 *(5-7 dias)*
+
+- [ ] Seguir rigorosamente a estrutura do artigo (Método → Resultados → Discussão → Introdução → Resumo).
+- [ ] Garantir que F1-scores e p-valores acompanham IC 95% e gráficos de barra iniciam no eixo Y=0.
+- [ ] Preencher o Checklist STROBE (22 itens).
 
 ---
 
