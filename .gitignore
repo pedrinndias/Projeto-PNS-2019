@@ -21,3 +21,6 @@ data/database/idosos_artrite_puro.db
 data/database/idosos_artrite.db
 data/database/idosos_geral.db
 data/database/idosos_saudaveis.db
+
+.venv/
+__pycache__/
