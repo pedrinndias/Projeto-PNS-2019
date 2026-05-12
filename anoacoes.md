@@ -1,0 +1,3 @@
+IMC e Peso com muitas outliers podem estar ligadas a pessoas que comem mais, ou seja sera que tenho que eliminar pessoas que comem mais? NÃO, pode ser uma caracteristica de pessoas que comem mais ter artrite.
+
+Agora no grupo de saudaveis, eu corto quem come mais? Uma possível alternativa é mudar o nome do grupo de Pessoas Saudáveis para Pessoas sem Doenças Cronicas, uma vez que estamos fechando os olhos para quem tem obesidade.
