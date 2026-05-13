@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"C:\\\\Users\\\\Pedro\\\\.claude\\\\projects\\\\D--Faculdade-Semestre-3-Minera--o-de-Dados-Python-Projeto-Projeto-PNS\\\\memory\\\\\" 2>&1)",
+      "Bash(jupyter nbconvert *)",
+      "Bash(python -c ' *)",
+      "Read(//tmp/**)"
+    ]
+  }
+}
