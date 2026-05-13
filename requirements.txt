@@ -1,7 +1,23 @@
-pandas
-numpy
-matplotlib
-seaborn
-jupyter
-ipykernel
-fpdf
+# Núcleo de manipulação e visualização
+pandas>=2.2
+numpy>=1.26
+matplotlib>=3.8
+seaborn>=0.13
+
+# Notebooks
+jupyter>=1.0
+ipykernel>=6.29
+
+# Estatística inferencial
+scipy>=1.11
+statsmodels>=0.14
+scikit-posthocs>=0.9
+
+# Machine learning (Notebook 04)
+scikit-learn>=1.4
+imbalanced-learn>=0.12
+
+# Exportação de relatórios
+fpdf>=1.7
+python-docx>=1.1
+openpyxl>=3.1

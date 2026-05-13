@@ -3,13 +3,13 @@
   "pesquisador": "Pedro Dias Soares",
   "orientador": "Prof. Dr. Luis Enrique Zárate — PUC Minas",
   "notebook": "03_preprocessamento",
-  "versao": "v2 — correções técnicas aplicadas",
+  "versao": "v3 — skip patterns resolvidos",
   "parametros": {
     "LIMITE_MISSING_pct": 75.0,
     "LIMITE_IQR_MULT": 3.0,
     "RANDOM_STATE": 42,
-    "metodo_imputacao_num": "Média por classe",
-    "metodo_imputacao_cat": "Moda por classe"
+    "metodo_imputacao_num": "Média por classe (missing real)",
+    "metodo_imputacao_cat": "Moda por classe (missing real)"
   },
   "rastreabilidade": {
     "etapa_1_carga": {
@@ -17,7 +17,61 @@
       "registros_validos": 4826,
       "variaveis_carregadas": 53
     },
-    "etapa_2_missing": {
+    "etapa_2_5_skip_patterns": {
+      "total_preenchidos": 1344,
+      "detalhes": [
+        {
+          "Variável": "P035",
+          "Pai": "P034",
+          "Condição": "P034=2 (Não)",
+          "Valor_Implicito": "0 dias/sem.",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "P02801",
+          "Pai": "P027",
+          "Condição": "P027∈{1,2} (não bebe semanalmente)",
+          "Valor_Implicito": "0 dias/sem.",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "P029",
+          "Pai": "P027",
+          "Condição": "P027=1 (nunca bebe)",
+          "Valor_Implicito": "0 doses",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "P03201",
+          "Pai": "P027",
+          "Condição": "P027=1 (nunca bebe)",
+          "Valor_Implicito": "'2' (Não)",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "J012",
+          "Pai": "J01101",
+          "Condição": "J01101≠1 (não consultou no último ano)",
+          "Valor_Implicito": "0 consultas",
+          "n_preenchidos": 1344
+        },
+        {
+          "Variável": "G060",
+          "Pai": "G059",
+          "Condição": "G059=2 (não usa aparelho)",
+          "Valor_Implicito": "'2' (Não)",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "G062",
+          "Pai": "G059",
+          "Condição": "G059=2 (não usa aparelho)",
+          "Valor_Implicito": "'2' (Não)",
+          "n_preenchidos": 0
+        }
+      ]
+    },
+    "etapa_3_missing": {
       "vars_excluidas_>75pct": [
         "VDF004",
         "P04501",
@@ -35,8 +89,8 @@
       ],
       "n_excluidas": 13
     },
-    "etapa_3_outliers": {
-      "total_outliers_substituidos": 49,
+    "etapa_4_outliers": {
+      "total_outliers_substituidos": 50,
       "parametro_usado": "3.0xIQR por classe",
       "detalhes": [
         {
@@ -52,22 +106,22 @@
         {
           "Variável": "P02002",
           "n_outliers": 7,
-          "% outliers": 0.15
+          "% outliers": 0.47
         },
         {
           "Variável": "J012",
-          "n_outliers": 23,
-          "% outliers": 0.48
+          "n_outliers": 24,
+          "% outliers": 0.5
         },
         {
           "Variável": "P029",
           "n_outliers": 15,
-          "% outliers": 0.31
+          "% outliers": 1.07
         }
       ]
     },
-    "etapa_4_imputacao": {
-      "total_imputados": 28798,
+    "etapa_5_imputacao": {
+      "total_imputados": 27455,
       "nan_residual_em_X": 0,
       "detalhes": [
         {
@@ -152,7 +206,7 @@
           "Variável": "J012",
           "Tipo": "Numérica",
           "Método": "Média/classe",
-          "n_imputados": 1367
+          "n_imputados": 24
         },
         {
           "Variável": "P029",
@@ -186,7 +240,7 @@
         }
       ]
     },
-    "etapa_5_fusao": {
+    "etapa_6_fusao": {
       "features_criadas": [
         "IMC",
         "Escore_Inflamatorio",
@@ -208,16 +262,16 @@
         "P01601"
       ]
     },
-    "etapa_6_categorizacao": {
+    "etapa_7_categorizacao": {
       "features_cat_criadas": [
         "FxEtaria_cat",
         "IMC_cat",
         "AtivFisica_cat",
         "EscInfla_cat"
       ],
-      "limitacao": "Renda_cat e Saude_cat nao criadas (VDF004/N001 = 100% missing)"
+      "limitacao": "Renda_cat/Saude_cat não criadas (VDF004/N001=100% missing)"
     },
-    "etapa_7_encoding": {
+    "etapa_8_encoding": {
       "label_encoding": [],
       "ohe_encoding": [
         "C006",
@@ -247,10 +301,10 @@
         "Q092 (constante na amostra artrite pura)"
       ],
       "removidas_df": [
-        "Q092 (removida explicitamente do DataFrame — BUG-01 corrigido)"
+        "Q092 (BUG-01 corrigido)"
       ]
     },
-    "etapa_8_dataset_final": {
+    "etapa_9_dataset_final": {
       "n_registros": 4826,
       "n_features": 49,
       "distribuicao_label": {
