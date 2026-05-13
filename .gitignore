@@ -24,3 +24,7 @@ data/database/idosos_saudaveis.db
 
 .venv/
 __pycache__/
+
+# Settings locais do Claude Code / Antigravity (per-máquina)
+.claude/settings.local.json
+.claude/worktrees/
