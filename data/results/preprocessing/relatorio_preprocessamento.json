@@ -1,0 +1,264 @@
+{
+  "projeto": "Artrite e Reumatismo em Idosos Brasileiros — PNS 2019",
+  "pesquisador": "Pedro Dias Soares",
+  "orientador": "Prof. Dr. Luis Enrique Zárate — PUC Minas",
+  "notebook": "03_preprocessamento",
+  "versao": "v2 — correções técnicas aplicadas",
+  "parametros": {
+    "LIMITE_MISSING_pct": 75.0,
+    "LIMITE_IQR_MULT": 3.0,
+    "RANDOM_STATE": 42,
+    "metodo_imputacao_num": "Média por classe",
+    "metodo_imputacao_cat": "Moda por classe"
+  },
+  "rastreabilidade": {
+    "etapa_1_carga": {
+      "registros_brutos": 4826,
+      "registros_validos": 4826,
+      "variaveis_carregadas": 53
+    },
+    "etapa_2_missing": {
+      "vars_excluidas_>75pct": [
+        "VDF004",
+        "P04501",
+        "Q115",
+        "N001",
+        "N011",
+        "G070",
+        "Q109",
+        "VDD004A",
+        "N010",
+        "G060",
+        "G062",
+        "P02602",
+        "P02801"
+      ],
+      "n_excluidas": 13
+    },
+    "etapa_3_outliers": {
+      "total_outliers_substituidos": 49,
+      "parametro_usado": "3.0xIQR por classe",
+      "detalhes": [
+        {
+          "Variável": "P00104",
+          "n_outliers": 2,
+          "% outliers": 0.04
+        },
+        {
+          "Variável": "C008",
+          "n_outliers": 2,
+          "% outliers": 0.04
+        },
+        {
+          "Variável": "P02002",
+          "n_outliers": 7,
+          "% outliers": 0.15
+        },
+        {
+          "Variável": "J012",
+          "n_outliers": 23,
+          "% outliers": 0.48
+        },
+        {
+          "Variável": "P029",
+          "n_outliers": 15,
+          "% outliers": 0.31
+        }
+      ]
+    },
+    "etapa_4_imputacao": {
+      "total_imputados": 28798,
+      "nan_residual_em_X": 0,
+      "detalhes": [
+        {
+          "Variável": "P00104",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 4
+        },
+        {
+          "Variável": "P00404",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 2
+        },
+        {
+          "Variável": "C008",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 2
+        },
+        {
+          "Variável": "P035",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 3475
+        },
+        {
+          "Variável": "P00901",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 420
+        },
+        {
+          "Variável": "P015",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 2011
+        },
+        {
+          "Variável": "P018",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 404
+        },
+        {
+          "Variável": "P01101",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 460
+        },
+        {
+          "Variável": "P02501",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 2733
+        },
+        {
+          "Variável": "P02002",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 3339
+        },
+        {
+          "Variável": "P02001",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 3564
+        },
+        {
+          "Variável": "P023",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 1266
+        },
+        {
+          "Variável": "P01601",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 1436
+        },
+        {
+          "Variável": "J012",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 1367
+        },
+        {
+          "Variável": "P029",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 3434
+        },
+        {
+          "Variável": "J01002",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 1427
+        },
+        {
+          "Variável": "Q03001",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 18
+        },
+        {
+          "Variável": "Q060",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 17
+        },
+        {
+          "Variável": "P03201",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 3419
+        }
+      ]
+    },
+    "etapa_5_fusao": {
+      "features_criadas": [
+        "IMC",
+        "Escore_Inflamatorio",
+        "Escore_Saudavel",
+        "Razao_Inf_Saud"
+      ],
+      "formula_imc": "Peso(kg) / (Altura(m))²",
+      "componentes_infla": [
+        "P01101",
+        "P02501",
+        "P02002",
+        "P02001"
+      ],
+      "componentes_saud": [
+        "P018",
+        "P00901",
+        "P015",
+        "P023",
+        "P01601"
+      ]
+    },
+    "etapa_6_categorizacao": {
+      "features_cat_criadas": [
+        "FxEtaria_cat",
+        "IMC_cat",
+        "AtivFisica_cat",
+        "EscInfla_cat"
+      ],
+      "limitacao": "Renda_cat e Saude_cat nao criadas (VDF004/N001 = 100% missing)"
+    },
+    "etapa_7_encoding": {
+      "label_encoding": [],
+      "ohe_encoding": [
+        "C006",
+        "P034",
+        "I00101",
+        "J01101",
+        "J01002",
+        "G059",
+        "Q11006",
+        "Q00201",
+        "Q03001",
+        "Q060",
+        "Q06306",
+        "Q068",
+        "Q084",
+        "Q074",
+        "Q120",
+        "Q124",
+        "Q11604",
+        "P00603",
+        "P00620",
+        "P02601",
+        "P027",
+        "P03201"
+      ],
+      "excluidas_ohe": [
+        "Q092 (constante na amostra artrite pura)"
+      ],
+      "removidas_df": [
+        "Q092 (removida explicitamente do DataFrame — BUG-01 corrigido)"
+      ]
+    },
+    "etapa_8_dataset_final": {
+      "n_registros": 4826,
+      "n_features": 49,
+      "distribuicao_label": {
+        "0": 4332,
+        "1": 494
+      },
+      "razao_desbalanceamento": 8.77,
+      "arquivo": "../data/results/preprocessing/dataset_preprocessado.csv"
+    }
+  }
+}
