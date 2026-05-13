@@ -23,14 +23,14 @@
         {
           "Variável": "P035",
           "Pai": "P034",
-          "Condição": "P034=2 (Não)",
+          "Condição": "P034=2 (Não pratica)",
           "Valor_Implicito": "0 dias/sem.",
           "n_preenchidos": 0
         },
         {
           "Variável": "P02801",
           "Pai": "P027",
-          "Condição": "P027∈{1,2} (não bebe semanalmente)",
+          "Condição": "P027∈{1,2} (não bebe sem.)",
           "Valor_Implicito": "0 dias/sem.",
           "n_preenchidos": 0
         },
@@ -51,7 +51,7 @@
         {
           "Variável": "J012",
           "Pai": "J01101",
-          "Condição": "J01101≠1 (não consultou no último ano)",
+          "Condição": "J01101≠1 (não consultou)",
           "Valor_Implicito": "0 consultas",
           "n_preenchidos": 1344
         },
@@ -269,7 +269,7 @@
         "AtivFisica_cat",
         "EscInfla_cat"
       ],
-      "limitacao": "Renda_cat/Saude_cat não criadas (VDF004/N001=100% missing)"
+      "limitacao": "Renda_cat/Saude_cat não criadas se VDF004/N001=100% missing"
     },
     "etapa_8_encoding": {
       "label_encoding": [],
@@ -301,7 +301,7 @@
         "Q092 (constante na amostra artrite pura)"
       ],
       "removidas_df": [
-        "Q092 (BUG-01 corrigido)"
+        "Q092"
       ]
     },
     "etapa_9_dataset_final": {
