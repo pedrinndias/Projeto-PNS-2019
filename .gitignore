@@ -24,6 +24,7 @@ data/database/idosos_saudaveis.db
 
 .venv/
 __pycache__/
-.claude/worktrees/eloquent-mendeleev-79fe4e
-.claude/worktrees/eloquent-mendeleev-79fe4e
-.claude/worktrees/eloquent-mendeleev-79fe4e
+
+# Settings locais do Claude Code / Antigravity (per-máquina)
+.claude/settings.local.json
+.claude/worktrees/
