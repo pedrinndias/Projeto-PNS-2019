@@ -1,0 +1,302 @@
+{
+  "projeto": "Artrite e Reumatismo em Idosos Brasileiros — PNS 2019",
+  "pesquisador": "Pedro Dias Soares",
+  "orientador": "Prof. Dr. Luis Enrique Zárate — PUC Minas",
+  "notebook": "03b_preprocessamento_comorbidades",
+  "versao": "v1 — variante com comorbidades (idosos_artrite.db)",
+  "desenho": "Com Artrite (Q079=Sim, qualquer combinação de outras doenças) vs Saudáveis",
+  "aviso": "Risco de data leakage circular nas variáveis Q* — ver Etapa 0 do notebook",
+  "parametros": {
+    "LIMITE_MISSING_pct": 75.0,
+    "LIMITE_IQR_MULT": 3.0,
+    "RANDOM_STATE": 42,
+    "metodo_imputacao_num": "Média por classe (missing real)",
+    "metodo_imputacao_cat": "Moda por classe (missing real)"
+  },
+  "rastreabilidade": {
+    "etapa_1_carga": {
+      "registros_brutos": 8357,
+      "registros_validos": 8357,
+      "variaveis_carregadas": 53
+    },
+    "etapa_2_5_skip_patterns": {
+      "total_preenchidos": 1489,
+      "detalhes": [
+        {
+          "Variável": "P035",
+          "Pai": "P034",
+          "Condição": "P034=2 (Não pratica)",
+          "Valor_Implicito": "0 dias/sem.",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "P02801",
+          "Pai": "P027",
+          "Condição": "P027∈{1,2} (não bebe sem.)",
+          "Valor_Implicito": "0 dias/sem.",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "P029",
+          "Pai": "P027",
+          "Condição": "P027=1 (nunca bebe)",
+          "Valor_Implicito": "0 doses",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "P03201",
+          "Pai": "P027",
+          "Condição": "P027=1 (nunca bebe)",
+          "Valor_Implicito": "'2' (Não)",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "J012",
+          "Pai": "J01101",
+          "Condição": "J01101≠1 (não consultou)",
+          "Valor_Implicito": "0 consultas",
+          "n_preenchidos": 1489
+        },
+        {
+          "Variável": "G060",
+          "Pai": "G059",
+          "Condição": "G059=2 (não usa aparelho)",
+          "Valor_Implicito": "'2' (Não)",
+          "n_preenchidos": 0
+        },
+        {
+          "Variável": "G062",
+          "Pai": "G059",
+          "Condição": "G059=2 (não usa aparelho)",
+          "Valor_Implicito": "'2' (Não)",
+          "n_preenchidos": 0
+        }
+      ]
+    },
+    "etapa_3_missing": {
+      "vars_excluidas_>75pct": [
+        "VDF004",
+        "P04501",
+        "Q115",
+        "N001",
+        "N011",
+        "G070",
+        "Q109",
+        "VDD004A",
+        "N010",
+        "G060",
+        "G062",
+        "P02602",
+        "P02801",
+        "P03201",
+        "P029",
+        "P02001"
+      ],
+      "n_excluidas": 16
+    },
+    "etapa_4_outliers": {
+      "total_outliers_substituidos": 208,
+      "parametro_usado": "3.0xIQR por classe",
+      "detalhes": [
+        {
+          "Variável": "P00104",
+          "n_outliers": 5,
+          "% outliers": 0.06
+        },
+        {
+          "Variável": "C008",
+          "n_outliers": 2,
+          "% outliers": 0.02
+        },
+        {
+          "Variável": "P02002",
+          "n_outliers": 86,
+          "% outliers": 3.65
+        },
+        {
+          "Variável": "J012",
+          "n_outliers": 115,
+          "% outliers": 1.38
+        }
+      ]
+    },
+    "etapa_5_imputacao": {
+      "total_imputados": 29768,
+      "nan_residual_em_X": 0,
+      "detalhes": [
+        {
+          "Variável": "P00104",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 7
+        },
+        {
+          "Variável": "P00404",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 2
+        },
+        {
+          "Variável": "C008",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 2
+        },
+        {
+          "Variável": "P035",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 6019
+        },
+        {
+          "Variável": "P00901",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 652
+        },
+        {
+          "Variável": "P015",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 3578
+        },
+        {
+          "Variável": "P018",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 634
+        },
+        {
+          "Variável": "P01101",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 949
+        },
+        {
+          "Variável": "P02501",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 4790
+        },
+        {
+          "Variável": "P02002",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 6087
+        },
+        {
+          "Variável": "P023",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 2133
+        },
+        {
+          "Variável": "P01601",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 2531
+        },
+        {
+          "Variável": "J012",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 115
+        },
+        {
+          "Variável": "J01002",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 2177
+        },
+        {
+          "Variável": "Q00201",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 4
+        },
+        {
+          "Variável": "Q03001",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 46
+        },
+        {
+          "Variável": "Q060",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 42
+        }
+      ]
+    },
+    "etapa_6_fusao": {
+      "features_criadas": [
+        "IMC",
+        "Escore_Inflamatorio",
+        "Escore_Saudavel",
+        "Razao_Inf_Saud"
+      ],
+      "formula_imc": "Peso(kg) / (Altura(m))²",
+      "componentes_infla": [
+        "P01101",
+        "P02501",
+        "P02002"
+      ],
+      "componentes_saud": [
+        "P018",
+        "P00901",
+        "P015",
+        "P023",
+        "P01601"
+      ]
+    },
+    "etapa_7_categorizacao": {
+      "features_cat_criadas": [
+        "FxEtaria_cat",
+        "IMC_cat",
+        "AtivFisica_cat",
+        "EscInfla_cat"
+      ],
+      "limitacao": "Renda_cat/Saude_cat não criadas se VDF004/N001=100% missing"
+    },
+    "etapa_8_encoding": {
+      "label_encoding": [],
+      "ohe_encoding": [
+        "C006",
+        "P034",
+        "I00101",
+        "J01101",
+        "J01002",
+        "G059",
+        "Q092",
+        "Q11006",
+        "Q00201",
+        "Q03001",
+        "Q060",
+        "Q06306",
+        "Q068",
+        "Q084",
+        "Q074",
+        "Q120",
+        "Q124",
+        "Q11604",
+        "P00603",
+        "P00620",
+        "P02601",
+        "P027"
+      ],
+      "excluidas_ohe": [],
+      "removidas_df": [],
+      "observacao": "Q092 e demais Q* mantidas — varia neste desenho (artrite com comorbidades)"
+    },
+    "etapa_9_dataset_final": {
+      "n_registros": 8357,
+      "n_features": 57,
+      "distribuicao_label": {
+        "0": 4332,
+        "1": 4025
+      },
+      "razao_desbalanceamento": 1.08,
+      "arquivo": "../data/results/preprocessing_comorbidades/dataset_preprocessado.csv"
+    }
+  }
+}
