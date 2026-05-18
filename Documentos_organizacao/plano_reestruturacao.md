@@ -1,118 +1,154 @@
-# 🔄 Plano de Reestruturação do Projeto PNS 2019
+# Plano de Reestruturação do Projeto PNS 2019
 
-Este documento define a estratégia para "reiniciar" o projeto, garantindo um fluxo de trabalho limpo, profissional (baseado em Data Science/CRISP-DM) e alinhado aos novos guias metodológicos, **sem perder nenhum dado ou análise feita anteriormente**.
+**Última atualização:** 18/05/2026  
+**Status geral:** Pré-processamento concluído. Fase de Modelagem (ML) pendente.
 
 ---
 
-## 1. A Nova Estrutura de Diretórios Alvo
+## Situação Atual
 
-A organização do projeto passará a seguir esta hierarquia limpa:
+### O que foi feito
 
-```text
+| Etapa | Descrição | Status |
+|-------|-----------|--------|
+| Estrutura de pastas | `data/`, `notebooks/`, `scripts/`, `docs/`, `.gitignore` | Concluído |
+| `01_extracao_pre_processamento.ipynb` | Carga, filtro de idosos ≥60 anos, criação do target Q079 | Concluído |
+| `02_analise_exploratoria_bivariada.ipynb` | Testes qui-quadrado, Mann-Whitney, gráficos EDA | Concluído |
+| `03_preprocessamento_v3.ipynb` | Pipeline completo – **Desenho 1: artrite pura** | Concluído |
+| `03b_preprocessamento_comorbidades.ipynb` | Pipeline completo – **Desenho 2: artrite + comorbidades** | Concluído |
+| Fluxograma KDD | PNG horizontal 4 fases/10 etapas (`figuras_artigo/`) | Concluído |
+| Scripts reproduzíveis | `build_nb03.py`, `build_nb03b.py`, `build_fluxograma_pipeline.py` | Concluído |
+| Documentação do artigo | Template, guia de redação, resultados consolidados (`.docx`) | Concluído |
+
+### O que está pendente
+
+| Próxima etapa | Descrição |
+|---------------|-----------|
+| Notebook 04 – ML | Regressão Logística, Árvore de Decisão, Random Forest |
+| Balanceamento | SMOTE / RUS para o Desenho 1 (razão 8,77:1) |
+| Avaliação | Matrizes de confusão, curva ROC, AUC, feature importance |
+| Artigo | Redigir seções Resultados e Discussão com base nos achados do ML |
+
+---
+
+## Estrutura de Diretórios Atual
+
+```
 Projeto_PNS/
-├── 📁 archive/                    ← 🛡️ NOVO: BACKUP SEGURO DE TUDO QUE É ANTIGO
-│   ├── notebooks_antigos/         ← Seu notebook com conflito de merge vem pra cá
-│   ├── resultados_antigos/        ← A pasta 'resultados_analise' e os arquivos .zip
-│   └── lixo_raiz/                 ← O arquivo bfg-1.15.0.jar
-│
-├── 📁 data/                       ← DADOS (Nunca vai para o GitHub)
-│   ├── raw/                       ← APENAS dados brutos (pns2019.csv, dicionários .xls)
-│   ├── processed/                 ← Dados limpos e filtrados prontos para o ML
-│   └── database/                  ← Seus bancos SQLite (esses se mantêm)
-│
-├── 📁 notebooks/                  ← 🚀 NOVOS NOTEBOOKS (Começando do zero)
-│   ├── 01_extracao_pre_processamento.ipynb   ← Filtros, tratamento de nulos
-│   ├── 02_analise_exploratoria_bivariada.ipynb ← Estatística, Teste T, Qui-quadrado
-│   └── 03_machine_learning_capto.ipynb       ← Modelagem, Regressão Logística, Random Forest
-│
-├── 📁 scripts/                    ← Scripts utilitários soltos
-│   ├── criar_banco_formatado.py   ← (Mantém como está)
+├── data/
+│   ├── raw/                            ← pns2019.csv (não versionado)
+│   └── results/
+│       ├── preprocessing/              ← Dataset Desenho 1 (4 826 × 49)
+│       ├── preprocessing_comorbidades/ ← Dataset Desenho 2 (8 357 × 57)
+│       └── eda/                        ← Figuras EDA
+├── Documentos_organizacao/
+│   ├── figuras_artigo/
+│   │   └── fluxograma_pipeline_kdd.png
+│   ├── Artigo_Template_de_Trabalho_PNS2019.docx
+│   ├── Guia_Redacao_Artigo_PNS2019.docx
+│   ├── Guia_Analises_Relatorios_PNS2019_Artrite.docx
+│   ├── Plano_Artigo_Mineracao_Pedro_Dias_Soares.docx
+│   └── Resultados_Consolidados_PNS2019_Artrite.docx
+├── notebooks/
+│   ├── 01_extracao_pre_processamento.ipynb
+│   ├── 02_analise_exploratoria_bivariada.ipynb
+│   ├── 03_preprocessamento_v3.ipynb
+│   └── 03b_preprocessamento_comorbidades.ipynb
+├── scripts/
+│   ├── build_nb03.py
+│   ├── build_nb03b.py
+│   ├── build_fluxograma_pipeline.py
+│   ├── build_guia_redacao.py
+│   ├── build_documento_resultados.py
+│   ├── build_template_trabalho.py
+│   ├── criar_banco_formatado.py
 │   └── rastrear_registros_nulos.py
-│
-├── 📁 docs/                       ← DOCUMENTAÇÃO
-│   └── Documentos_organizacao/    ← Seus guias DOCX, planos e relatórios MD
-│
-├── README.md                      ← Descrição do projeto
-├── requirements.txt               ← Dependências do projeto
-└── .gitignore                     ← Arquivos ignorados pelo Git
+├── docs/
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
 
 ---
 
-## 2. Plano de Ação Passo a Passo
+## Datasets Finais Gerados
 
-Para chegarmos na estrutura acima, execute os seguintes passos no seu terminal/VSCode:
+### Desenho 1 – Artrite Pura
 
-### Passo 1: Criar as pastas de Backup e limpar a Raiz
-Vamos criar uma pasta `archive` e mover tudo que está atrapalhando ou que é resultado antigo para lá.
-1. Crie a pasta `archive`, e dentro dela crie `notebooks_antigos` e `resultados_antigos`.
-2. Mova a pasta `resultados_analise` inteira para `archive/resultados_antigos/`.
-3. Mova os arquivos `.zip` soltos na raiz para `archive/resultados_antigos/`.
-4. Mova o arquivo `bfg-1.15.0.jar` para `archive/`.
+- **Arquivo:** `data/results/preprocessing/dataset_preprocessado.csv`
+- **Dimensões:** 4 826 registros × 49 features
+- **Target:** 0 = saudável (4 332) · 1 = artrite (494)
+- **Razão:** 8,77:1 (desbalanceado – requer SMOTE/RUS no ML)
+- **Variáveis excluídas (>75% missing):** 13 variáveis removidas
+- **Imputações realizadas:** 27 455 valores (média/moda por classe)
+- **Features sintéticas:** IMC · Escore Inflamatório · Escore Saudável · Razão Inf/Saud
+- **Encoding:** OHE em 22 variáveis categóricas
 
-### Passo 2: Limpar a pasta `notebooks/` e centralizar os Dados Brutos
-Atualmente, a sua pasta `notebooks` está misturada com dados pesados e PDFs. Vamos separar o código dos dados.
-1. Mova o arquivo `notebooks/pessoas_saudaveis.ipynb` para `archive/notebooks_antigos/`.
-2. Mova **o gigantesco** `pns2019.csv` de `notebooks/` para `data/raw/` (é o lugar correto dele).
-3. Na pasta `notebooks/`, existem arquivos duplicados (`dicionario_PNS_microdados_2019.xls`, `input_PNS_2019.sas`, `input_PNS_2019.txt`). Se eles já existem em `data/raw/`, **apague** as cópias que estão dentro da pasta `notebooks/`. Deixe a pasta `notebooks` completamente vazia.
-4. Mova o arquivo `notebooks/Chaves_PNS_2019.pdf` para `docs/`.
+### Desenho 2 – Artrite com Comorbidades
 
-### Passo 3: Limpar Ambientes Virtuais Duplicados
-Você tem `.venv` e `.venv-1`. Isso causa confusão no VSCode.
-1. Exclua a pasta `.venv-1` (geralmente uma cópia acidental). Mantenha apenas o `.venv`.
+- **Arquivo:** `data/results/preprocessing_comorbidades/dataset_preprocessado.csv`
+- **Dimensões:** 8 357 registros × 57 features
+- **Target:** 0 = saudável (4 332) · 1 = artrite (4 025)
+- **Razão:** 1,08:1 (quase balanceado – não requer SMOTE)
+- **NaN estruturais:** 1 489 preenchidos por skip patterns
+- **Variáveis excluídas (>75% missing):** 16 variáveis removidas
+- **Comorbidades documentadas (Etapa 3.5):** hipertensão 65,3% · colesterol 39,8% · diabetes 21,9% · depressão 19,5%
 
-### Passo 4: Atualizar o `.gitignore`
-Para garantir que seu repositório Git fique leve e não tente fazer o upload dos backups:
-1. Abra o arquivo `.gitignore`.
-2. Adicione as seguintes linhas ao final do arquivo:
-```gitignore
-# Backups e lixo
-archive/
-*.jar
-*.zip
-.venv-1/
+---
 
-# Ignorar CSVs e bancos em qualquer lugar
-*.csv
-*.db
+## Pipeline KDD – Visão Geral
+
+```
+Fase 1 – Entendimento         Fase 2 – Pré-processamento
+  Etapa 1: Contexto      →      Etapa 4: Skip patterns
+  Etapa 2: PICOS         →      Etapa 5: Missing >75%
+  Etapa 3: Variáveis     →      Etapa 6: Outliers (IQR×3)
+                                Etapa 7: Imputação
+
+Fase 3 – Preparação           Fase 4 – Modelagem [PENDENTE]
+  Etapa 8: Feature eng.  →      Etapa 10: Modelos ML
+  Etapa 9: Encoding OHE
 ```
 
-### Passo 5: Criar os Novos Notebooks
-Na pasta `notebooks/` recém-esvaziada, crie os três arquivos vazios a seguir. A numeração os manterá na ordem lógica de execução:
-- `01_extracao_pre_processamento.ipynb`
-- `02_analise_exploratoria_bivariada.ipynb`
-- `03_machine_learning_capto.ipynb`
+Fluxograma gerado em: `Documentos_organizacao/figuras_artigo/fluxograma_pipeline_kdd.png`  
+Script reproduzível: `scripts/build_fluxograma_pipeline.py`
 
 ---
 
-## 3. O Que Fazer nos Novos Notebooks?
+## Próximos Passos – Fase de Modelagem
 
-Agora que o projeto está limpo, veja como o fluxo de trabalho será distribuído sem gerar códigos gigantescos e impossíveis de dar manutenção:
+### Notebook 04 (a criar) – Machine Learning
 
-### 📔 Notebook 01: Extração e Pré-processamento
-**Objetivo:** Carregar os dados e criar o dataset final que será usado em tudo.
-- Conecte ao seu banco SQLite ou leia o `pns2019.csv` em *chunks*.
-- Aplique o filtro de Idosos (`C008 >= 60`).
-- Use o Dicionário de Variáveis para selecionar APENAS as colunas que importam (aquelas ~30 colunas do Guia).
-- Crie a variável alvo (Target = `Q079`).
-- Exporte o resultado final limpo como um arquivo pequeno (ex: `data/processed/dataset_idosos_artrite.csv`).
+**Entrada:** `data/results/preprocessing/dataset_preprocessado.csv` (Desenho 1) ou variante de comorbidades.
 
-### 📔 Notebook 02: Análise Exploratória Bivariada
-**Objetivo:** Gerar tabelas e gráficos estatísticos para o artigo.
-- Carregue o arquivo `dataset_idosos_artrite.csv`.
-- Faça testes de Qui-Quadrado (ex: Sexo vs Artrite).
-- Faça testes T ou Mann-Whitney (ex: Idade/IMC vs Artrite).
-- Gere gráficos e exporte para a pasta de imagens do seu artigo.
+**Estrutura sugerida:**
 
-### 📔 Notebook 03: Machine Learning (CAPTO)
-**Objetivo:** Treinar os modelos preditivos e extrair conhecimento.
-- Carregue o arquivo `dataset_idosos_artrite.csv`.
-- Faça o pré-processamento (One-Hot Encoding, SMOTE/RUS para balancear saudáveis vs artrite).
-- Treine Regressão Logística, Árvore de Decisão e Random Forest.
-- Plote as matrizes de confusão e curvas ROC.
-- Extraia a *Feature Importance* e as Regras da Árvore de Decisão.
+```
+Etapa 10.1  Divisão treino/teste (80/20, stratified, random_state=42)
+Etapa 10.2  Balanceamento – SMOTE no treino (Desenho 1 apenas)
+Etapa 10.3  Regressão Logística – baseline interpretável
+Etapa 10.4  Árvore de Decisão – regras explícitas para o artigo
+Etapa 10.5  Random Forest – melhor desempenho preditivo
+Etapa 10.6  Avaliação – Accuracy, Precision, Recall, F1, AUC-ROC
+Etapa 10.7  Feature Importance – quais variáveis predizem artrite?
+Etapa 10.8  Comparação entre os dois desenhos de estudo
+```
+
+**Artefatos esperados:**
+- Matrizes de confusão (PNG) → `data/results/eda/`
+- Curvas ROC (PNG)
+- Tabela comparativa de métricas (exportar para `.docx` / atualizar `Resultados_Consolidados`)
+- Regras da Árvore de Decisão (texto)
 
 ---
 
-> 💡 **Pronto para começar?**  
-> Se quiser, eu posso executar os **Passos 1 a 4** automaticamente para você no terminal via PowerShell, organizando as pastas, movendo os arquivos com segurança e atualizando o `.gitignore`. Me avise se posso fazer isso!
+## Histórico de Reestruturação (Concluído)
+
+O plano original de reestruturação de pastas foi **integralmente executado**:
+
+- [x] Criadas as pastas `data/raw/`, `data/results/`, `scripts/`, `docs/`
+- [x] Notebooks renumerados e com nomes descritivos
+- [x] `.gitignore` atualizado (ignora `.csv`, `.db`, `.venv`, `archive/`)
+- [x] Scripts utilitários organizados em `scripts/`
+- [x] Documentação centralizada em `Documentos_organizacao/`
+- [x] Notebooks gerados por scripts reproduzíveis (`build_nb03.py`, `build_nb03b.py`)
