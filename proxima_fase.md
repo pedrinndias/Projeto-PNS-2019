@@ -1,8 +1,21 @@
-# Próxima Fase — Modelagem com Machine Learning (Notebook 04)
+# Próxima Fase — Discretização (Notebook 04) e Modelagem ML (Notebook 05)
 
-> **Última atualização:** 21/05/2026
+> **Última atualização:** 30/05/2026
 > **Pré-requisito:** Notebooks 01–03b concluídos · datasets pré-processados disponíveis em `data/results/preprocessing/` e `data/results/preprocessing_comorbidades/`
-> **Documentos relacionados:** [`README.md`](README.md) · [`Documentos_organizacao/plano_reestruturacao.md`](Documentos_organizacao/plano_reestruturacao.md) · [`Documentos_organizacao/analise_projeto_pns.md`](Documentos_organizacao/analise_projeto_pns.md)
+> **Documentos relacionados:** [`README.md`](README.md) · [`Documentos_organizacao/analise_projeto_pns.md`](Documentos_organizacao/analise_projeto_pns.md)
+
+> **Mudança de plano (30/05/2026):** o antigo `04_eliminacao_outliers.ipynb` foi **removido** — o tratamento de outliers permanece embutido no NB03/NB03b (IQR×3 por classe). O **Notebook 04 passa a ser dedicado à discretização dos dados**; a modelagem de ML move-se para o **Notebook 05**.
+
+---
+
+## 0. Notebook 04 — Discretização (a criar, passo imediato)
+
+Etapa metodologicamente isolada (mesmo padrão pedido pelo orientador para outliers), reunindo num único notebook auditável a categorização de variáveis contínuas que hoje está parcialmente dispersa no NB03/NB03b (faixa etária, IMC-OMS, atividade física, escore inflamatório).
+
+- **Entrada:** datasets pré-processados dos dois desenhos.
+- **Saída:** dataset discretizado + relatório JSON de faixas/cortes usados.
+- **Decisões já fixadas:** ver tabela "Discretização" em §3.
+- Só depois de concluído o NB04 é que o NB05 (ML) consome o dataset discretizado.
 
 ---
 
@@ -21,10 +34,10 @@ Cada CSV traz `X` (features encoded) + coluna `Label` (0 = saudável, 1 = artrit
 
 ---
 
-## 2. Notebook 04 — esqueleto proposto
+## 2. Notebook 05 — esqueleto proposto (ML)
 
 ```
-notebooks/04_modelagem_ml.ipynb
+notebooks/05_modelagem_ml.ipynb
 │
 ├── 1. Configuração
 │     • Imports (scikit-learn, imblearn, scipy.stats)
@@ -103,11 +116,11 @@ Essas decisões já foram tomadas e ficam registradas para evitar retrabalho:
 | Split | **80/20 estratificado**, `random_state=42` | Padrão da literatura PUC Minas |
 | Balanceamento | **RUS dentro de cada fold da CV** (não fora) | Evita vazamento; padrão Cancella |
 | Métrica-alvo | **F1-macro** | Robusta a desbalanceamento (Desenho 1) |
-| Onde mora o ML | **`notebooks/04_modelagem_ml.ipynb`** | Não criar 02b/04b separados — feature eng já está nos NB03/03b |
+| Onde mora o ML | **`notebooks/05_modelagem_ml.ipynb`** | NB04 = discretização; ML separado no NB05 |
 
 ---
 
-## 4. Artefatos esperados ao final do NB04
+## 4. Artefatos esperados ao final do NB05
 
 ```
 data/results/modelagem/
@@ -126,21 +139,23 @@ data/results/modelagem/
 
 Esses artefatos alimentam:
 - A seção **Resultados** do artigo (template já pronto em `Documentos_organizacao/Artigo_Template_de_Trabalho_PNS2019.docx`)
-- A atualização do `Resultados_Consolidados_PNS2019_Artrite.docx` via `python scripts/build_documento_resultados.py`
+- A atualização manual do `Resultados_Consolidados_PNS2019_Artrite.docx` com as métricas e figuras do ML
 
 ---
 
-## 5. Checklist antes de começar o NB04
+## 5. Checklist
 
-- [ ] Corrigir ou remover `scripts/rastrear_registros_nulos.py` (script quebrado — `NameError`)
-- [ ] Adicionar `nbformat` e `xlrd` ao `requirements.txt`
+**Discretização (NB04):**
 - [ ] Confirmar que `dataset_preprocessado.csv` foi gerado nos dois desenhos (rodar NB03 e NB03b se necessário)
-- [ ] Criar `notebooks/04_modelagem_ml.ipynb` seguindo o esqueleto acima
-- [ ] Considerar criar `scripts/build_nb04.py` para gerar o notebook de forma idempotente (padrão dos NB03/NB03b)
+- [ ] Criar `notebooks/04_discretizacao.ipynb` — categorizar contínuas (faixa etária, IMC-OMS, atividade física, escore inflamatório), exportar dataset discretizado + relatório JSON de cortes
+
+**Modelagem (NB05):**
+- [ ] Criar `notebooks/05_modelagem_ml.ipynb` seguindo o esqueleto da §2
+- [ ] Consumir o dataset discretizado nos dois desenhos
 
 ---
 
-## 6. Depois do NB04 — fechamento do projeto
+## 6. Depois do NB05 — fechamento do projeto
 
 1. **Atualizar** `Resultados_Consolidados_PNS2019_Artrite.docx` com as métricas e figuras do ML.
 2. **Redigir** as seções pendentes do artigo (Resultados → Discussão → Introdução → Resumo), seguindo o template em `Artigo_Template_de_Trabalho_PNS2019.docx` e o guia em `Guia_Redacao_Artigo_PNS2019.docx`.
@@ -149,4 +164,4 @@ Esses artefatos alimentam:
 
 ---
 
-*Documento atualizado em 21/05/2026, substituindo o Q&A original de definição de arquitetura (cujas decisões foram absorvidas nos NB03/NB03b).*
+*Documento atualizado em 30/05/2026: NB04 redefinido para discretização; modelagem de ML movida para o NB05.*

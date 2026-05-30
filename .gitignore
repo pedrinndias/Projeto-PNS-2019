@@ -1,30 +1,22 @@
-/notebooks/pns2019.csv
-# Ignorar arquivos grandes que não devem ser versionados
-/data/raw/PNS_2019.txt
-/data/database/pns_master_formatado.db
-/data/raw/pns2019.csv
+# ─── Dados (nunca versionar) ────────────────────────────────
+# CSVs e bancos SQLite em qualquer lugar do projeto
+*.csv
+*.db
 
-# Backups e lixo
+# Arquivos brutos grandes específicos (redundante com *.csv, mas explícito)
+/data/raw/pns2019.csv
+/data/raw/PNS_2019.txt
+
+# ─── Backups e lixo ─────────────────────────────────────────
 archive/
 *.jar
 *.zip
-.venv-1/
 
-# Ignorar CSVs e bancos em qualquer lugar
-*.csv
-*.db
-
-# Garantindo bloqueio de dados
-*.csv
-*.db
-data/database/idosos_artrite_puro.db
-data/database/idosos_artrite.db
-data/database/idosos_geral.db
-data/database/idosos_saudaveis.db
-
+# ─── Ambientes e cache Python ───────────────────────────────
 .venv/
+.venv-1/
 __pycache__/
 
-# Settings locais do Claude Code / Antigravity (per-máquina)
+# ─── Settings locais (per-máquina) ──────────────────────────
 .claude/settings.local.json
 .claude/worktrees/
