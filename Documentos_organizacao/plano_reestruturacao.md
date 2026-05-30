@@ -1,6 +1,11 @@
 # Plano de Reestruturação do Projeto PNS 2019
 
-**Última atualização:** 18/05/2026  
+> ⚠️ **DOCUMENTO DESCONTINUADO (30/05/2026).** A reestruturação descrita aqui foi concluída e este plano não reflete mais o estado atual. Em particular: os scripts `build_*.py`/utilitários listados abaixo **foram removidos do repo**; o balanceamento adotado é **RUS** (não SMOTE); o **NB04 passou a ser de discretização** e o ML vai para o **NB05**.
+> **Use no lugar deste:** [`analise_projeto_pns.md`](analise_projeto_pns.md) (estado atual) e [`../proxima_fase.md`](../proxima_fase.md) (roadmap). Mantido apenas como registro histórico.
+
+---
+
+**Última atualização original:** 18/05/2026  
 **Status geral:** Pré-processamento concluído. Fase de Modelagem (ML) pendente.
 
 ---

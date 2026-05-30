@@ -1,8 +1,8 @@
 # Análise do Projeto PNS 2019
 ## Mineração de Dados — Pedro Dias Soares
 
-> **Última atualização:** 21/05/2026
-> **Documento companheiro:** [`plano_reestruturacao.md`](plano_reestruturacao.md) (estado atual da estrutura) · [`../proxima_fase.md`](../proxima_fase.md) (roadmap da Fase 4)
+> **Última atualização:** 30/05/2026
+> **Documento companheiro:** [`../proxima_fase.md`](../proxima_fase.md) (roadmap das Fases 3.x e 4). O antigo `plano_reestruturacao.md` está **descontinuado** (ver banner no topo dele).
 
 ---
 
@@ -45,16 +45,10 @@ Projeto_PNS/
 │   ├── 01_extracao_pre_processamento.ipynb
 │   ├── 02_analise_exploratoria_bivariada.ipynb
 │   ├── 03_preprocessamento_v3.ipynb           ← Desenho 1
-│   └── 03b_preprocessamento_comorbidades.ipynb ← Desenho 2
-├── scripts/
-│   ├── criar_banco_formatado.py
-│   ├── build_nb03.py / build_nb03b.py         ← Geram os notebooks idempotentemente
-│   ├── build_fluxograma_pipeline.py
-│   ├── build_documento_resultados.py
-│   ├── build_guia_redacao.py
-│   ├── build_template_trabalho.py
-│   ├── apply_fixes.py
-│   └── rastrear_registros_nulos.py
+│   ├── 03b_preprocessamento_comorbidades.ipynb ← Desenho 2
+│   ├── 04_discretizacao.ipynb                 ← (a criar) discretização das contínuas
+│   └── 05_modelagem_ml.ipynb                  ← (a criar) modelagem e avaliação
+├── scripts/                                   ← (vazio no momento — scripts de build removidos)
 ├── docs/
 │   └── Chaves_PNS_2019.pdf
 ├── README.md
@@ -68,12 +62,12 @@ Projeto_PNS/
 | Aspecto | Status | Comentário |
 |---------|--------|------------|
 | Organização de diretórios | ✅ | Pipeline `data/ → notebooks/ → scripts/ → Documentos_organizacao/` claro |
-| `.gitignore` | ✅ | Ignora `.csv`, `.db`, `.venv`, settings locais. Tem algumas linhas duplicadas (cosmético) |
-| `requirements.txt` | ⚠️ | Falta `nbformat` (usado em `build_nb03*.py`) e `xlrd` (usado em `criar_banco_formatado.py` para ler `.xls`) |
+| `.gitignore` | ✅ | Ignora `.csv`, `.db`, `.venv`, settings locais. Limpo (duplicatas removidas em 30/05) |
+| `requirements.txt` | ✅ | Inclui `nbformat` e `xlrd` |
 | README | ✅ | Atualizado, descreve os dois desenhos de estudo |
 | Notebooks 01–03b | ✅ | Executados sem erros, com células markdown explicativas em cada etapa |
 | Rastreabilidade (JSON) | ✅ | `relatorio_preprocessamento.json` em cada pasta de resultado |
-| Scripts reproduzíveis | ✅ | `build_nb03.py` / `build_nb03b.py` regeneram os notebooks do zero |
+| Scripts de build | ⚠️ | Removidos do repo (commit ad89d7a). Os notebooks são mantidos diretamente, não mais por geradores |
 
 ---
 
@@ -83,10 +77,10 @@ Projeto_PNS/
 |------|--------|--------|
 | **Fase 1** · Entendimento (CAPTO) | 1. Contexto · 2. PICOS · 3. Seleção de variáveis | ✅ Concluído |
 | **Fase 2** · Pré-processamento | 4. Skip patterns · 5. Missing >75% · 6. Outliers IQR×3 · 7. Imputação | ✅ Concluído |
-| **Fase 3** · Preparação | 8. Feature engineering (IMC, escores) · 9. Encoding OHE | ✅ Concluído |
-| **Fase 4** · Modelagem e avaliação | 10. ML — Reg. Logística · Árvore · Random Forest | 🔴 **Pendente — próximo passo** |
+| **Fase 3** · Preparação | 8. Feature engineering (IMC, escores) · 9. Encoding OHE · 10. Discretização (NB04) | 🟡 **Em andamento — NB04 a criar** |
+| **Fase 4** · Modelagem e avaliação | 11. ML — Reg. Logística · Árvore · Random Forest (NB05) | 🔴 **Pendente** |
 
-Fluxograma: [`figuras_artigo/fluxograma_pipeline_kdd.png`](figuras_artigo/fluxograma_pipeline_kdd.png) · regerado por `python scripts/build_fluxograma_pipeline.py`.
+Fluxograma: [`figuras_artigo/fluxograma_pipeline_kdd.png`](figuras_artigo/fluxograma_pipeline_kdd.png).
 
 ---
 
@@ -128,27 +122,26 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 
 ## 6. Pontos de atenção atuais
 
-### 🔴 Bug ativo
+### 🟢 Resolvidos (30/05/2026)
 
-| # | Arquivo | Problema |
-|---|---------|----------|
-| 1 | `scripts/rastrear_registros_nulos.py` | Usa `df_bem`, `df_atri_reu`, `df_atri_reu_puro` sem definir. `NameError` se rodado standalone. Solução: carregar bases do SQLite no topo, ou mover o conteúdo para uma célula do NB01. |
+- `requirements.txt` — `nbformat` e `xlrd` adicionados.
+- `.gitignore` — duplicatas e referência a `archive/` limpas.
+- `scripts/rastrear_registros_nulos.py` e `scripts/criar_banco_formatado.py` — removidos do repo (não há mais bug ativo neles).
+- `04_eliminacao_outliers.ipynb` — removido; o tratamento de outliers permanece embutido no NB03/NB03b. O NB04 será dedicado à **discretização**.
 
-### 🟡 Pendências cosméticas / má prática
+### 🟡 Pendências cosméticas
 
 | # | Arquivo | Observação |
 |---|---------|------------|
-| 2 | `requirements.txt` | Adicionar `nbformat` (build dos notebooks) e `xlrd` (leitura do dicionário `.xls`) |
-| 3 | `scripts/criar_banco_formatado.py` | `except:` bare na linha 54 — trocar por `except (ValueError, TypeError)` |
-| 4 | `.gitignore` | Linhas redundantes (`*.csv` e `*.db` aparecem 2× cada); `archive/` referencia pasta que não existe |
-| 5 | `data/raw/input_PNS_2019.sas` ↔ `.txt` | Idênticos exceto pelo `\n` final — manter só um |
-| 6 | `dicionario_PNS_microdados_2019.xls` | Duplicado em `data/raw/` e `Documentos_organizacao/Dados PNS/` |
+| 1 | `data/raw/input_PNS_2019.sas` ↔ `.txt` | Diferem só por 2 bytes (provável `\n`) — considerar manter um só |
+| 2 | `dicionario_PNS_microdados_2019.xls` | Existe em `data/raw/` e `Documentos_organizacao/Dados PNS/` com **hashes diferentes** — verificar qual é a versão correta |
+| 3 | `scripts/` | Pasta vazia — sem geradores; notebooks mantidos diretamente |
 
 ### 🟢 Risco metodológico documentado
 
 | # | Observação |
 |---|------------|
-| 7 | **Data leakage circular no Desenho 2:** as variáveis Q* foram usadas para definir o controle "saudável" (todas Q* = Não) e simultaneamente entram como features no NB03b. Os modelos terão acurácia inflada — discutir como limitação no artigo. Mitigação prevista no NB04: treinar Modelo A (com Q*) e Modelo B (sem Q*) para análise de sensibilidade. |
+| 7 | **Data leakage circular no Desenho 2:** as variáveis Q* foram usadas para definir o controle "saudável" (todas Q* = Não) e simultaneamente entram como features no NB03b. Os modelos terão acurácia inflada — discutir como limitação no artigo. Mitigação prevista no NB05: treinar Modelo A (com Q*) e Modelo B (sem Q*) para análise de sensibilidade. |
 
 ---
 
@@ -162,7 +155,8 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 | Pré-processamento — Desenho 1 (NB03) | ✅ 100% |
 | Pré-processamento — Desenho 2 (NB03b) | ✅ 100% |
 | Documentação (template, guias, resultados consolidados) | ✅ 100% |
-| **Modelagem ML (NB04)** | 🔴 **0%** |
+| **Discretização (NB04)** | 🟡 **0% — próximo passo** |
+| **Modelagem ML (NB05)** | 🔴 0% |
 | Avaliação e feature importance | 🔴 0% |
 | Redação do artigo (Resultados/Discussão) | 🔴 0% |
 
@@ -174,12 +168,11 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 
 Detalhamento em [`../proxima_fase.md`](../proxima_fase.md). Em resumo:
 
-1. **Corrigir** o `rastrear_registros_nulos.py` (ou remover).
-2. **Completar** `requirements.txt` com `nbformat` e `xlrd`.
-3. **Criar** `notebooks/04_modelagem_ml.ipynb` — pipeline ML rodando nos dois desenhos.
-4. **Atualizar** o `Resultados_Consolidados_PNS2019_Artrite.docx` com as métricas do ML.
-5. **Redigir** as seções de Resultados e Discussão do artigo.
+1. **Criar** `notebooks/04_discretizacao.ipynb` — discretização das variáveis contínuas (faixa etária, IMC-OMS, atividade física, escore inflamatório) nos dois desenhos.
+2. **Criar** `notebooks/05_modelagem_ml.ipynb` — pipeline ML rodando nos dois desenhos.
+3. **Atualizar** o `Resultados_Consolidados_PNS2019_Artrite.docx` com as métricas do ML.
+4. **Redigir** as seções de Resultados e Discussão do artigo.
 
 ---
 
-*Documento atualizado em 21/05/2026 substituindo a versão original de 09/05/2026.*
+*Documento atualizado em 30/05/2026: NB04 redefinido para discretização, ML movido para o NB05, scripts de build e bugs associados removidos.*
