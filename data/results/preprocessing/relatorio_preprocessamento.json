@@ -263,12 +263,7 @@
       ]
     },
     "etapa_7_categorizacao": {
-      "features_cat_criadas": [
-        "FxEtaria_cat",
-        "IMC_cat",
-        "AtivFisica_cat",
-        "EscInfla_cat"
-      ],
+      "features_cat_criadas": [],
       "limitacao": "Renda_cat/Saude_cat não criadas se VDF004/N001=100% missing"
     },
     "etapa_8_encoding": {
@@ -306,7 +301,7 @@
     },
     "etapa_9_dataset_final": {
       "n_registros": 4826,
-      "n_features": 49,
+      "n_features": 45,
       "distribuicao_label": {
         "0": 4332,
         "1": 494

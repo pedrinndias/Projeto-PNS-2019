@@ -1,0 +1,346 @@
+{
+  "projeto": "Artrite e Reumatismo em Idosos Brasileiros — PNS 2019",
+  "pesquisador": "Pedro Dias Soares",
+  "orientador": "Prof. Dr. Luis Enrique Zárate — PUC Minas",
+  "notebook": "04_discretizacao",
+  "desenho": "comorbidades",
+  "rotulo": "Desenho 2 — Artrite + comorbidades",
+  "metodo": "Discretização não-supervisionada univariada por faixas de domínio (OMS/Guia BR); quantis só p/ escores sem referência externa. Entropia+correlação só p/ seleção.",
+  "parametros": {
+    "RANDOM_STATE": 42,
+    "LIMIAR_ENTROPIA": 0.1,
+    "LIMIAR_CORR": 0.6
+  },
+  "rastreabilidade": {
+    "entrada": "../data/results/preprocessing_comorbidades/dataset_preprocessado.csv",
+    "faixas_aplicadas": [
+      {
+        "variavel": "IMC",
+        "nova": "IMC_cat",
+        "metodo": "dominio",
+        "n_faixas": 4,
+        "fonte": "OMS — classificação de IMC para adultos",
+        "distribuicao": {
+          "0.0": 205,
+          "1.0": 3479,
+          "2.0": 3108,
+          "3.0": 1565
+        }
+      },
+      {
+        "variavel": "C008",
+        "nova": "C008_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Subdivisão etária do idoso (risco crescente)",
+        "distribuicao": {
+          "0.0": 4832,
+          "1.0": 2448,
+          "2.0": 1077
+        }
+      },
+      {
+        "variavel": "P035",
+        "nova": "P035_cat",
+        "metodo": "dominio",
+        "n_faixas": 4,
+        "fonte": "Guia de Atividade Física para a População Brasileira (2021)",
+        "distribuicao": {
+          "1.0": 682,
+          "2.0": 6805,
+          "3.0": 870
+        }
+      },
+      {
+        "variavel": "Escore_Inflamatorio",
+        "nova": "Escore_Inflamatorio_cat",
+        "metodo": "quantis",
+        "n_faixas": 4,
+        "fonte": "Quartis da amostra (sem ref. externa)",
+        "distribuicao": {
+          "0.0": 2260,
+          "1.0": 2009,
+          "2.0": 2011,
+          "3.0": 2077
+        }
+      },
+      {
+        "variavel": "Escore_Saudavel",
+        "nova": "Escore_Saudavel_cat",
+        "metodo": "quantis",
+        "n_faixas": 4,
+        "fonte": "Quartis da amostra (sem ref. externa)",
+        "distribuicao": {
+          "0.0": 2091,
+          "1.0": 2214,
+          "2.0": 1997,
+          "3.0": 2055
+        }
+      }
+    ],
+    "continuas_removidas": [
+      "IMC",
+      "C008",
+      "P035",
+      "Escore_Inflamatorio",
+      "Escore_Saudavel"
+    ],
+    "selecao_atributos": [
+      {
+        "feature": "J01002_Outro serviço",
+        "entropia": 0.019,
+        "corr_abs_Label": 0.001,
+        "sinal": "baixa_entropia"
+      },
+      {
+        "feature": "J01002_Atendimento domiciliar",
+        "entropia": 0.03,
+        "corr_abs_Label": 0.011,
+        "sinal": "baixa_entropia"
+      },
+      {
+        "feature": "J01101_Nunca foi ao médico",
+        "entropia": 0.033,
+        "corr_abs_Label": 0.057,
+        "sinal": "baixa_entropia"
+      },
+      {
+        "feature": "P02601_Muito alto",
+        "entropia": 0.065,
+        "corr_abs_Label": 0.008,
+        "sinal": "baixa_entropia"
+      },
+      {
+        "feature": "J01002_Farmácia",
+        "entropia": 0.105,
+        "corr_abs_Label": 0.009,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q124_Sim",
+        "entropia": 0.121,
+        "corr_abs_Label": 0.134,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q11604_Sim",
+        "entropia": 0.14,
+        "corr_abs_Label": 0.147,
+        "sinal": "ok"
+      },
+      {
+        "feature": "J01002_Policlínica pública, PAM (Posto de Assistência Médica) ou Centro de Especialidades público",
+        "entropia": 0.143,
+        "corr_abs_Label": 0.021,
+        "sinal": "ok"
+      },
+      {
+        "feature": "J01002_Pronto atendimento ou emergência de hospital privado.",
+        "entropia": 0.173,
+        "corr_abs_Label": 0.05,
+        "sinal": "ok"
+      },
+      {
+        "feature": "J01101_Mais de 2 anos a 3 anos",
+        "entropia": 0.195,
+        "corr_abs_Label": 0.113,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q068_Sim",
+        "entropia": 0.207,
+        "corr_abs_Label": 0.19,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q11006_Sim",
+        "entropia": 0.223,
+        "corr_abs_Label": 0.2,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q074_Sim",
+        "entropia": 0.229,
+        "corr_abs_Label": 0.204,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q120_Sim",
+        "entropia": 0.254,
+        "corr_abs_Label": 0.219,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02601_Alto",
+        "entropia": 0.309,
+        "corr_abs_Label": 0.007,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02601_Muito baixo",
+        "entropia": 0.332,
+        "corr_abs_Label": 0.068,
+        "sinal": "ok"
+      },
+      {
+        "feature": "J01002_UPA (Unidade de Pronto Atendimento), outro tipo de pronto atendimento público (24 horas), pronto-socorro ou emergência de hospital público.",
+        "entropia": 0.344,
+        "corr_abs_Label": 0.017,
+        "sinal": "ok"
+      },
+      {
+        "feature": "J01101_Mais de 3 anos",
+        "entropia": 0.353,
+        "corr_abs_Label": 0.201,
+        "sinal": "ok"
+      },
+      {
+        "feature": "G059_Sim",
+        "entropia": 0.354,
+        "corr_abs_Label": 0.166,
+        "sinal": "ok"
+      },
+      {
+        "feature": "J01101_Mais de 1 ano a 2 anos",
+        "entropia": 0.396,
+        "corr_abs_Label": 0.178,
+        "sinal": "ok"
+      },
+      {
+        "feature": "I00101_Sim",
+        "entropia": 0.412,
+        "corr_abs_Label": 0.025,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q06306_Sim",
+        "entropia": 0.422,
+        "corr_abs_Label": 0.318,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q092_Sim",
+        "entropia": 0.449,
+        "corr_abs_Label": 0.334,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q03001_Sim",
+        "entropia": 0.486,
+        "corr_abs_Label": 0.356,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P027_Uma vez ou mais por mês",
+        "entropia": 0.632,
+        "corr_abs_Label": 0.123,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00620_Sim",
+        "entropia": 0.647,
+        "corr_abs_Label": 0.028,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q060_Sim",
+        "entropia": 0.705,
+        "corr_abs_Label": 0.505,
+        "sinal": "ok"
+      },
+      {
+        "feature": "J01002_Consultório particular, clínica privada ou ambulatório de hospital privado",
+        "entropia": 0.727,
+        "corr_abs_Label": 0.085,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00603_Sim",
+        "entropia": 0.759,
+        "corr_abs_Label": 0.081,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P027_Não bebo nunca",
+        "entropia": 0.802,
+        "corr_abs_Label": 0.127,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P034_Sim",
+        "entropia": 0.863,
+        "corr_abs_Label": 0.005,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P035_cat",
+        "entropia": 0.876,
+        "corr_abs_Label": 0.039,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q00201_Sim",
+        "entropia": 0.899,
+        "corr_abs_Label": 0.703,
+        "sinal": "alta_corr_alvo"
+      },
+      {
+        "feature": "Q084_Sim",
+        "entropia": 0.927,
+        "corr_abs_Label": 0.355,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02601_Baixo",
+        "entropia": 0.928,
+        "corr_abs_Label": 0.092,
+        "sinal": "ok"
+      },
+      {
+        "feature": "J01002_Unidade básica de saúde (posto ou centro de saúde ou unidade de saúde da família)",
+        "entropia": 0.961,
+        "corr_abs_Label": 0.1,
+        "sinal": "ok"
+      },
+      {
+        "feature": "C006_Mulher",
+        "entropia": 0.973,
+        "corr_abs_Label": 0.366,
+        "sinal": "ok"
+      },
+      {
+        "feature": "C008_cat",
+        "entropia": 1.357,
+        "corr_abs_Label": 0.114,
+        "sinal": "ok"
+      },
+      {
+        "feature": "IMC_cat",
+        "entropia": 1.641,
+        "corr_abs_Label": 0.203,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Escore_Inflamatorio_cat",
+        "entropia": 1.998,
+        "corr_abs_Label": 0.238,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Escore_Saudavel_cat",
+        "entropia": 1.999,
+        "corr_abs_Label": 0.106,
+        "sinal": "ok"
+      }
+    ],
+    "dataset_final": {
+      "n_registros": 8357,
+      "n_features": 53,
+      "distribuicao_label": {
+        "0": 4332,
+        "1": 4025
+      },
+      "arquivo": "../data/results/discretizacao_comorbidades/dataset_discretizado.csv"
+    }
+  }
+}
