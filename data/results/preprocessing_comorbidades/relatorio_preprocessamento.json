@@ -5,7 +5,7 @@
   "notebook": "03b_preprocessamento_comorbidades",
   "versao": "v1 — variante com comorbidades (idosos_artrite.db)",
   "desenho": "Com Artrite (Q079=Sim, qualquer combinação de outras doenças) vs Saudáveis",
-  "aviso": "Risco de data leakage circular nas variáveis Q* — ver Etapa 0 do notebook",
+  "aviso": "Anti-leakage aplicado: as comorbidades-filtro (Q*) saem das features; servem só p/ selecionar a coorte.",
   "parametros": {
     "LIMITE_MISSING_pct": 75.0,
     "LIMITE_IQR_MULT": 3.0,
@@ -280,12 +280,24 @@
         "P027"
       ],
       "excluidas_ohe": [],
-      "removidas_df": [],
-      "observacao": "Q092 e demais Q* mantidas — varia neste desenho (artrite com comorbidades)"
+      "removidas_df": [
+        "Q092_Sim",
+        "Q11006_Sim",
+        "Q00201_Sim",
+        "Q03001_Sim",
+        "Q060_Sim",
+        "Q06306_Sim",
+        "Q068_Sim",
+        "Q074_Sim",
+        "Q120_Sim",
+        "Q124_Sim",
+        "Q11604_Sim"
+      ],
+      "observacao": "Comorbidades-filtro removidas do X (anti-leakage); Q084 mantida (não é filtro e varia nos controles)."
     },
     "etapa_9_dataset_final": {
       "n_registros": 8357,
-      "n_features": 53,
+      "n_features": 42,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025

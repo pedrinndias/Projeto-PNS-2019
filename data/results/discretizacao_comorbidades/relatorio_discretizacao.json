@@ -5,7 +5,7 @@
   "notebook": "04_discretizacao",
   "desenho": "comorbidades",
   "rotulo": "Desenho 2 — Artrite + comorbidades",
-  "metodo": "Discretização não-supervisionada univariada por faixas de domínio (OMS/Guia BR); quantis só p/ escores sem referência externa. Entropia+correlação só p/ seleção.",
+  "metodo": "Discretização não-supervisionada univariada por faixas de domínio (OMS/Guia BR); escores alimentares combinados em plano cartesiano (mediana → 4 quadrantes). Entropia+correlação só p/ seleção.",
   "parametros": {
     "RANDOM_STATE": 42,
     "LIMIAR_ENTROPIA": 0.1,
@@ -52,29 +52,29 @@
         }
       },
       {
-        "variavel": "Escore_Inflamatorio",
-        "nova": "Escore_Inflamatorio_cat",
-        "metodo": "quantis",
+        "variavel": "J012",
+        "nova": "J012_cat",
+        "metodo": "dominio",
         "n_faixas": 4,
-        "fonte": "Quartis da amostra (sem ref. externa)",
+        "fonte": "Intensidade de uso de serviços de saúde (faixas pragmáticas)",
         "distribuicao": {
-          "0.0": 2260,
-          "1.0": 2009,
-          "2.0": 2011,
-          "3.0": 2077
+          "0.0": 1489,
+          "1.0": 2951,
+          "2.0": 2961,
+          "3.0": 956
         }
       },
       {
-        "variavel": "Escore_Saudavel",
-        "nova": "Escore_Saudavel_cat",
-        "metodo": "quantis",
+        "variavel": "Escore_Inflamatorio x Escore_Saudavel",
+        "nova": "Padrao_Alimentar_cat",
+        "metodo": "plano_cartesiano",
         "n_faixas": 4,
-        "fonte": "Quartis da amostra (sem ref. externa)",
+        "fonte": "Plano cartesiano de padrões alimentares (Ribeiro & Zárate, 2019, ESWA) — corte pela mediana",
         "distribuicao": {
-          "0.0": 2091,
-          "1.0": 2214,
-          "2.0": 1997,
-          "3.0": 2055
+          "0": 2088,
+          "1": 2181,
+          "2": 1964,
+          "3": 2124
         }
       }
     ],
@@ -82,8 +82,20 @@
       "IMC",
       "C008",
       "P035",
+      "J012",
       "Escore_Inflamatorio",
-      "Escore_Saudavel"
+      "Escore_Saudavel",
+      "Razao_Inf_Saud",
+      "P00104",
+      "P00404",
+      "P01101",
+      "P02501",
+      "P02002",
+      "P018",
+      "P00901",
+      "P015",
+      "P023",
+      "P01601"
     ],
     "selecao_atributos": [
       {
@@ -117,18 +129,6 @@
         "sinal": "ok"
       },
       {
-        "feature": "Q124_Sim",
-        "entropia": 0.121,
-        "corr_abs_Label": 0.134,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q11604_Sim",
-        "entropia": 0.14,
-        "corr_abs_Label": 0.147,
-        "sinal": "ok"
-      },
-      {
         "feature": "J01002_Policlínica pública, PAM (Posto de Assistência Médica) ou Centro de Especialidades público",
         "entropia": 0.143,
         "corr_abs_Label": 0.021,
@@ -144,30 +144,6 @@
         "feature": "J01101_Mais de 2 anos a 3 anos",
         "entropia": 0.195,
         "corr_abs_Label": 0.113,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q068_Sim",
-        "entropia": 0.207,
-        "corr_abs_Label": 0.19,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q11006_Sim",
-        "entropia": 0.223,
-        "corr_abs_Label": 0.2,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q074_Sim",
-        "entropia": 0.229,
-        "corr_abs_Label": 0.204,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q120_Sim",
-        "entropia": 0.254,
-        "corr_abs_Label": 0.219,
         "sinal": "ok"
       },
       {
@@ -213,24 +189,6 @@
         "sinal": "ok"
       },
       {
-        "feature": "Q06306_Sim",
-        "entropia": 0.422,
-        "corr_abs_Label": 0.318,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q092_Sim",
-        "entropia": 0.449,
-        "corr_abs_Label": 0.334,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q03001_Sim",
-        "entropia": 0.486,
-        "corr_abs_Label": 0.356,
-        "sinal": "ok"
-      },
-      {
         "feature": "P027_Uma vez ou mais por mês",
         "entropia": 0.632,
         "corr_abs_Label": 0.123,
@@ -240,12 +198,6 @@
         "feature": "P00620_Sim",
         "entropia": 0.647,
         "corr_abs_Label": 0.028,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q060_Sim",
-        "entropia": 0.705,
-        "corr_abs_Label": 0.505,
         "sinal": "ok"
       },
       {
@@ -277,12 +229,6 @@
         "entropia": 0.876,
         "corr_abs_Label": 0.039,
         "sinal": "ok"
-      },
-      {
-        "feature": "Q00201_Sim",
-        "entropia": 0.899,
-        "corr_abs_Label": 0.703,
-        "sinal": "alta_corr_alvo"
       },
       {
         "feature": "Q084_Sim",
@@ -321,21 +267,21 @@
         "sinal": "ok"
       },
       {
-        "feature": "Escore_Inflamatorio_cat",
-        "entropia": 1.998,
-        "corr_abs_Label": 0.238,
+        "feature": "J012_cat",
+        "entropia": 1.862,
+        "corr_abs_Label": 0.426,
         "sinal": "ok"
       },
       {
-        "feature": "Escore_Saudavel_cat",
+        "feature": "Padrao_Alimentar_cat",
         "entropia": 1.999,
-        "corr_abs_Label": 0.106,
+        "corr_abs_Label": 0.269,
         "sinal": "ok"
       }
     ],
     "dataset_final": {
       "n_registros": 8357,
-      "n_features": 53,
+      "n_features": 30,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025
