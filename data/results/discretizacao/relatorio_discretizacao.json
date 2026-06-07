@@ -5,7 +5,7 @@
   "notebook": "04_discretizacao",
   "desenho": "puro",
   "rotulo": "Desenho 1 — Artrite pura",
-  "metodo": "Discretização não-supervisionada univariada por faixas de domínio (OMS/Guia BR); quantis só p/ escores sem referência externa. Entropia+correlação só p/ seleção.",
+  "metodo": "Discretização não-supervisionada univariada por faixas de domínio (OMS/Guia BR); escores alimentares combinados em plano cartesiano (mediana → 4 quadrantes). Entropia+correlação só p/ seleção.",
   "parametros": {
     "RANDOM_STATE": 42,
     "LIMIAR_ENTROPIA": 0.1,
@@ -52,29 +52,40 @@
         }
       },
       {
-        "variavel": "Escore_Inflamatorio",
-        "nova": "Escore_Inflamatorio_cat",
-        "metodo": "quantis",
+        "variavel": "J012",
+        "nova": "J012_cat",
+        "metodo": "dominio",
         "n_faixas": 4,
-        "fonte": "Quartis da amostra (sem ref. externa)",
+        "fonte": "Intensidade de uso de serviços de saúde (faixas pragmáticas)",
         "distribuicao": {
-          "0.0": 1228,
-          "1.0": 1244,
-          "2.0": 1160,
-          "3.0": 1194
+          "0.0": 1344,
+          "1.0": 2022,
+          "2.0": 1225,
+          "3.0": 235
         }
       },
       {
-        "variavel": "Escore_Saudavel",
-        "nova": "Escore_Saudavel_cat",
-        "metodo": "quantis",
-        "n_faixas": 4,
-        "fonte": "Quartis da amostra (sem ref. externa)",
+        "variavel": "P029",
+        "nova": "P029_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "NIAAA — binge a partir de 5 doses por ocasião (só D1; baixa confiança)",
         "distribuicao": {
-          "0.0": 1210,
-          "1.0": 1205,
-          "2.0": 1246,
-          "3.0": 1165
+          "1.0": 4535,
+          "2.0": 291
+        }
+      },
+      {
+        "variavel": "Escore_Inflamatorio x Escore_Saudavel",
+        "nova": "Padrao_Alimentar_cat",
+        "metodo": "plano_cartesiano",
+        "n_faixas": 4,
+        "fonte": "Plano cartesiano de padrões alimentares (Ribeiro & Zárate, 2019, ESWA) — corte pela mediana",
+        "distribuicao": {
+          "0": 1191,
+          "1": 1281,
+          "2": 1220,
+          "3": 1134
         }
       }
     ],
@@ -82,8 +93,22 @@
       "IMC",
       "C008",
       "P035",
+      "J012",
+      "P029",
       "Escore_Inflamatorio",
-      "Escore_Saudavel"
+      "Escore_Saudavel",
+      "Razao_Inf_Saud",
+      "P00104",
+      "P00404",
+      "P01101",
+      "P02501",
+      "P02002",
+      "P02001",
+      "P018",
+      "P00901",
+      "P015",
+      "P023",
+      "P01601"
     ],
     "selecao_atributos": [
       {
@@ -156,6 +181,12 @@
         "feature": "J01002_UPA (Unidade de Pronto Atendimento), outro tipo de pronto atendimento público (24 horas), pronto-socorro ou emergência de hospital público.",
         "entropia": 0.328,
         "corr_abs_Label": 0.002,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P029_cat",
+        "entropia": 0.329,
+        "corr_abs_Label": 0.031,
         "sinal": "ok"
       },
       {
@@ -261,21 +292,21 @@
         "sinal": "ok"
       },
       {
-        "feature": "Escore_Inflamatorio_cat",
-        "entropia": 1.999,
-        "corr_abs_Label": 0.05,
+        "feature": "J012_cat",
+        "entropia": 1.754,
+        "corr_abs_Label": 0.142,
         "sinal": "ok"
       },
       {
-        "feature": "Escore_Saudavel_cat",
-        "entropia": 2.0,
-        "corr_abs_Label": 0.049,
+        "feature": "Padrao_Alimentar_cat",
+        "entropia": 1.999,
+        "corr_abs_Label": 0.026,
         "sinal": "ok"
       }
     ],
     "dataset_final": {
       "n_registros": 4826,
-      "n_features": 45,
+      "n_features": 32,
       "distribuicao_label": {
         "0": 4332,
         "1": 494
