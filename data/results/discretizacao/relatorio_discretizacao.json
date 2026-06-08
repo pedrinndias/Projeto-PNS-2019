@@ -130,15 +130,39 @@
         "sinal": "baixa_entropia"
       },
       {
+        "feature": "P02101_Diet/Light/Zero",
+        "entropia": 0.056,
+        "corr_abs_Label": 0.001,
+        "sinal": "baixa_entropia"
+      },
+      {
         "feature": "P02601_Muito alto",
         "entropia": 0.069,
         "corr_abs_Label": 0.001,
         "sinal": "baixa_entropia"
       },
       {
+        "feature": "P02101_Normal",
+        "entropia": 0.079,
+        "corr_abs_Label": 0.006,
+        "sinal": "baixa_entropia"
+      },
+      {
+        "feature": "P02102_Diet/Light/Zero",
+        "entropia": 0.087,
+        "corr_abs_Label": 0.01,
+        "sinal": "baixa_entropia"
+      },
+      {
         "feature": "J01002_Farmácia",
         "entropia": 0.113,
         "corr_abs_Label": 0.009,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02102_Normal",
+        "entropia": 0.135,
+        "corr_abs_Label": 0.008,
         "sinal": "ok"
       },
       {
@@ -157,6 +181,12 @@
         "feature": "G059_Sim",
         "entropia": 0.2,
         "corr_abs_Label": 0.073,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02401_Os dois tipos",
+        "entropia": 0.229,
+        "corr_abs_Label": 0.006,
         "sinal": "ok"
       },
       {
@@ -190,15 +220,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "I00101_Sim",
-        "entropia": 0.402,
-        "corr_abs_Label": 0.042,
-        "sinal": "ok"
-      },
-      {
         "feature": "P03201_Sim",
         "entropia": 0.407,
         "corr_abs_Label": 0.031,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00616_Sim",
+        "entropia": 0.426,
+        "corr_abs_Label": 0.046,
         "sinal": "ok"
       },
       {
@@ -211,6 +241,18 @@
         "feature": "J01101_Mais de 1 ano a 2 anos",
         "entropia": 0.522,
         "corr_abs_Label": 0.062,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02401_Integral",
+        "entropia": 0.59,
+        "corr_abs_Label": 0.027,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00615_Sim",
+        "entropia": 0.654,
+        "corr_abs_Label": 0.0,
         "sinal": "ok"
       },
       {
@@ -232,15 +274,27 @@
         "sinal": "ok"
       },
       {
-        "feature": "P027_Uma vez ou mais por mês",
+        "feature": "P00614_Sim",
         "entropia": 0.721,
-        "corr_abs_Label": 0.022,
+        "corr_abs_Label": 0.015,
         "sinal": "ok"
       },
       {
         "feature": "Q084_Sim",
         "entropia": 0.721,
         "corr_abs_Label": 0.144,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P027_Uma vez ou mais por mês",
+        "entropia": 0.721,
+        "corr_abs_Label": 0.022,
+        "sinal": "ok"
+      },
+      {
+        "feature": "I00102_Sim",
+        "entropia": 0.768,
+        "corr_abs_Label": 0.033,
         "sinal": "ok"
       },
       {
@@ -271,6 +325,12 @@
         "feature": "J01002_Unidade básica de saúde (posto ou centro de saúde ou unidade de saúde da família)",
         "entropia": 0.93,
         "corr_abs_Label": 0.055,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00612_Sim",
+        "entropia": 0.962,
+        "corr_abs_Label": 0.009,
         "sinal": "ok"
       },
       {
@@ -306,7 +366,7 @@
     ],
     "dataset_final": {
       "n_registros": 4826,
-      "n_features": 32,
+      "n_features": 50,
       "distribuicao_label": {
         "0": 4332,
         "1": 494

@@ -129,6 +129,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "P02102_Diet/Light/Zero",
+        "entropia": 0.128,
+        "corr_abs_Label": 0.056,
+        "sinal": "ok"
+      },
+      {
         "feature": "J01002_Policlínica pública, PAM (Posto de Assistência Médica) ou Centro de Especialidades público",
         "entropia": 0.143,
         "corr_abs_Label": 0.021,
@@ -141,9 +147,21 @@
         "sinal": "ok"
       },
       {
+        "feature": "P02102_Normal",
+        "entropia": 0.176,
+        "corr_abs_Label": 0.052,
+        "sinal": "ok"
+      },
+      {
         "feature": "J01101_Mais de 2 anos a 3 anos",
         "entropia": 0.195,
         "corr_abs_Label": 0.113,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02401_Os dois tipos",
+        "entropia": 0.235,
+        "corr_abs_Label": 0.009,
         "sinal": "ok"
       },
       {
@@ -183,9 +201,9 @@
         "sinal": "ok"
       },
       {
-        "feature": "I00101_Sim",
-        "entropia": 0.412,
-        "corr_abs_Label": 0.025,
+        "feature": "P00616_Sim",
+        "entropia": 0.456,
+        "corr_abs_Label": 0.048,
         "sinal": "ok"
       },
       {
@@ -195,9 +213,27 @@
         "sinal": "ok"
       },
       {
+        "feature": "P00615_Sim",
+        "entropia": 0.64,
+        "corr_abs_Label": 0.016,
+        "sinal": "ok"
+      },
+      {
         "feature": "P00620_Sim",
         "entropia": 0.647,
         "corr_abs_Label": 0.028,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02401_Integral",
+        "entropia": 0.693,
+        "corr_abs_Label": 0.125,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00614_Sim",
+        "entropia": 0.693,
+        "corr_abs_Label": 0.042,
         "sinal": "ok"
       },
       {
@@ -216,6 +252,12 @@
         "feature": "P027_Não bebo nunca",
         "entropia": 0.802,
         "corr_abs_Label": 0.127,
+        "sinal": "ok"
+      },
+      {
+        "feature": "I00102_Sim",
+        "entropia": 0.828,
+        "corr_abs_Label": 0.097,
         "sinal": "ok"
       },
       {
@@ -240,6 +282,12 @@
         "feature": "P02601_Baixo",
         "entropia": 0.928,
         "corr_abs_Label": 0.092,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00612_Sim",
+        "entropia": 0.945,
+        "corr_abs_Label": 0.053,
         "sinal": "ok"
       },
       {
@@ -281,7 +329,7 @@
     ],
     "dataset_final": {
       "n_registros": 8357,
-      "n_features": 30,
+      "n_features": 46,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025
