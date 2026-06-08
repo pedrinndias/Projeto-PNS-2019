@@ -1,7 +1,7 @@
 # Análise do Projeto PNS 2019
 ## Mineração de Dados — Pedro Dias Soares
 
-> **Última atualização:** 03/06/2026
+> **Última atualização:** 08/06/2026
 > **Documento companheiro:** [`../proxima_fase.md`](../proxima_fase.md) (roadmap das Fases 3.x e 4). O antigo `plano_reestruturacao.md` está **descontinuado** (ver banner no topo dele).
 
 ---
@@ -46,7 +46,8 @@ Projeto_PNS/
 │   └── Resultados_Consolidados_PNS2019_Artrite.docx
 ├── notebooks/
 │   ├── 01_extracao_pre_processamento.ipynb
-│   ├── 02_analise_exploratoria_bivariada.ipynb
+│   ├── 02_analise_exploratoria_bivariada.ipynb     ← EDA bivariada — Desenho 1
+│   ├── 02b_analise_exploratoria_comorbidades.ipynb ← EDA bivariada — Desenho 2
 │   ├── 03_preprocessamento_v3.ipynb           ← Desenho 1
 │   ├── 03b_preprocessamento_comorbidades.ipynb ← Desenho 2
 │   ├── 04_discretizacao.ipynb                 ← discretização (faixas de domínio + plano cartesiano)
@@ -68,8 +69,8 @@ Projeto_PNS/
 | Organização de diretórios | ✅ | Pipeline `data/ → notebooks/ → scripts/ → Documentos_organizacao/` claro |
 | `.gitignore` | ✅ | Ignora `.csv`, `.db`, `.venv`, settings locais. Limpo (duplicatas removidas em 30/05) |
 | `requirements.txt` | ✅ | Inclui `nbformat` e `xlrd` |
-| README | ✅ | Atualizado, descreve os dois desenhos de estudo |
-| Notebooks 01–05 | ✅ | Executados sem erros (0 erros, ordem monotônica); markdown explicativo em cada etapa |
+| README | ✅ | Sincronizado em 08/06 (NB04/05 existem; 05 = exportação; +02b; NB06 a criar) |
+| Notebooks 01–05 + 02b | ⚠️ | Código atualizado em 08/06 (alinhamento D1×D2, Tab 2-C, anti-leakage de exames). **NB03b/02/02b precisam ser REEXECUTADOS** — outputs limpos; `data/results/` ainda refletem o código antigo |
 | Rastreabilidade (JSON) | ✅ | `relatorio_preprocessamento.json` em cada pasta de resultado |
 | Scripts de build | ⚠️ | Removidos do repo (commit ad89d7a). Os notebooks são mantidos diretamente, não mais por geradores |
 
@@ -97,13 +98,13 @@ Fluxograma: [`figuras_artigo/fluxograma_pipeline_kdd.png`](figuras_artigo/fluxog
 | n casos | 494 | 4 025 |
 | n controles | 4 332 | 4 332 |
 | Razão | 8,77:1 (desbalanceado) | 1,08:1 (quase balanceado) |
-| Features (pré-proc → após NB04) | 45 → **33** (100% categórico) | 42 → **31** (100% categórico) |
-| Vars Q* (comorbidades) | Constantes → removidas | **Removidas das features** (filtro de coorte; anti-leakage) — só Q084 permanece |
-| Skip patterns | 1 344 NaN preenchidos | 1 489 NaN preenchidos |
-| Vars excluídas (>75% NaN) | 13 | 16 |
-| Outliers tratados (IQR×3) | 50 | 208 |
-| Valores imputados | 27 455 | 29 768 |
-| Risco metodológico | Amostra pequena para ML | Leakage circular das Q* **resolvido por anti-leakage** (NB03b) |
+| Features (pré-proc → após NB04) | ~33 (majoritariamente categórico; `P04501` e `VDF004` seguem numéricas) | **a recalcular na reexecução** (D2 ganhou ~15 vars + anti-leakage maior) |
+| Vars Q* (comorbidades) | Constantes → removidas | **Removidas das features** (filtro de coorte; anti-leakage) — só Q084 permanece; **+ exames condicionais** (`Q04708/Q047081/Q04711/Q047111/Q05901`) também removidos |
+| Skip patterns | 1 344 NaN preenchidos | a recalcular (ganhou skip-8 P03202) |
+| Vars excluídas (>75% NaN) | 13 | a recalcular |
+| Outliers tratados (IQR×3) | 50 | a recalcular |
+| Valores imputados | 27 455 | a recalcular |
+| Risco metodológico | Amostra pequena para ML | Leakage circular das Q* + exames **resolvido por anti-leakage** (NB03b) |
 
 Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alto 39,8% · diabetes 21,9% · depressão 19,5%.
 
@@ -116,16 +117,30 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 | Faixa etária | ≥ 60 anos (idosos) | Alinhado com Cancella (2025) e Plano do Artigo |
 | Limite de missing | Excluir variável se > 75% NaN | Padrão Cancella (60%) flexibilizado para preservar variáveis-chave |
 | Outliers | IQR × 3,0 por classe → substituir por limite | ~3,3 σ na normal; conservador (Hipertensão/DPOC usam 1,5×) |
-| Imputação | Média (numérica) / Moda (categórica) **por classe** | Preserva n; estratificada para não vazar informação |
+| Imputação | Média (numérica) / Moda (categórica) **por classe**; IMC/escores por **mediana** | Preserva n; mediana evita `IMC=0` no `fillna` final |
+| Renda (`VDF004`) | Tratada como **faixa** (1–7) via `coerce_codificado` (aceita texto ou código) | É faixa de salário mínimo, não "quintil"; evita exclusão silenciosa |
+| Plano de saúde | `I00102` (médico) — **não** `I00101` (odontológico) | Correção de código contra o dicionário PNS 2019 |
 | Discretização (NB04) | Faixa etária, IMC-OMS, atividade física, consultas (J012), álcool (NIAAA, só D1) e **padrão alimentar via plano cartesiano** (Ribeiro & Zárate, 2019) — substitui os escores em quartis | Faixas de organismos oficiais (OMS, Guia AF BR 2021, NIAAA); padrão CAPTO/STROBE |
-| Anti-leakage (D2) | Comorbidades-filtro removidas das features (só Q084 permanece) | Q* definem a coorte, não o modelo — evita vazamento circular |
+| Anti-leakage (D2) | Comorbidades-filtro (13 Q*) **+ exames condicionais** (Q047*/Q05901) removidos das features (só Q084 permanece) | Q* e exames a elas atrelados definem a coorte, não o modelo — evita vazamento circular |
+| Consistência D1×D2 | NB03 e NB03b usam **a mesma metodologia/variáveis**; diferem só na coorte e no anti-leakage | Alinhados em 08/06; evita divergência de resultados entre desenhos |
 | Encoding | OHE com `drop_first=True, dtype=int` (nominais) | Compatível com Logistic Regression e árvores |
-| Balanceamento | RUS **dentro de cada fold da CV** (NB04) | Evita vazamento entre treino e teste |
+| Balanceamento | RUS **dentro de cada fold da CV** (NB06) | Evita vazamento entre treino e teste |
 | Random state | `42` em tudo | Reprodutibilidade |
 
 ---
 
 ## 6. Pontos de atenção atuais
+
+### 🟢 Resolvidos (08/06/2026 — auditoria + alinhamento)
+
+- **Rótulos de variáveis corrigidos** (contra o dicionário PNS 2019): `I00101`→`I00102` (plano médico, não odontológico); rótulos alimentares do NB02 (`P02001`=suco em pó, `P01601`=suco natural, `P02602`=subst. almoço); `VDF004`=faixa (não "quintil"). +`P006`/`P013` (feijão/frango semanais), +`P00620` (embutidos) qualitativo.
+- **Inconsistência D1×D2 (introduzida no merge) — RESOLVIDA:** o NB03b recebeu todas as correções do NB03 (I00102, coerce/renda-faixa, skip-8 P03202, imputação por mediana de IMC/escores, +15 variáveis); anti-leakage do D2 estendido para remover exames condicionais a comorbidades.
+- **Bug `NaN`-como-categoria na Tab 2-C** (NB02/02b): `dropna()` antes do `crosstab`, alinhando com a Tab 2-B (não contamina mais χ²/Fisher).
+- **`IMC=0` latente:** imputação por mediana de IMC/escores antes do `fillna(0)` final (NB03 e NB03b).
+
+### 🔴 Pendência ativa — REEXECUÇÃO do pipeline
+
+Como o código do NB03b/NB02/02b mudou e os `.db` **não são versionados**, os artefatos em `data/results/` (CSVs, figuras, relatórios) e as bases finais estão **defasados (stale)**. É preciso **reexecutar localmente `03 → 03b → 04 → 05` (+ `02`/`02b`)** e commitar os resultados regenerados. Os números do Desenho 2 (nº de features, excluídas, imputados) vão mudar.
 
 ### 🟢 Resolvidos (30/05/2026)
 
@@ -156,9 +171,9 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 |------|:------:|
 | Compreensão do problema (CAPTO/PICOS) | ✅ 100% |
 | ETL e bases SQLite | ✅ 100% |
-| EDA bivariada (NB02) | ✅ 100% |
+| EDA bivariada (NB02 D1 + NB02b D2) | ✅ código pronto — ⚠️ reexecutar p/ regenerar figuras/tabelas |
 | Pré-processamento — Desenho 1 (NB03) | ✅ 100% |
-| Pré-processamento — Desenho 2 (NB03b) | ✅ 100% |
+| Pré-processamento — Desenho 2 (NB03b) | ✅ código alinhado ao D1 — ⚠️ reexecutar |
 | Documentação (template, guias, resultados consolidados) | ✅ 100% |
 | **Discretização (NB04)** | ✅ 100% — faixas de domínio + plano cartesiano |
 | **Exportação das bases (NB05)** | ✅ 100% — 2 .db + 2 .csv + Excel |
@@ -166,7 +181,7 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 | Avaliação e feature importance | 🔴 0% |
 | Redação do artigo (Resultados/Discussão) | 🔴 0% |
 
-**Progresso geral estimado:** ~82% — bases finais prontas (D1 4.826×33, D2 8.357×31, 100% categóricas); falta a modelagem (NB06) e a escrita do artigo.
+**Progresso geral estimado:** ~80% — pipeline corrigido e consistente entre os dois desenhos; falta **reexecutar** para regenerar as bases finais (números do D2 mudarão), a modelagem (NB06) e a escrita do artigo.
 
 ---
 
@@ -175,10 +190,11 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 Detalhamento em [`../proxima_fase.md`](../proxima_fase.md). Em resumo:
 
 1. ✅ **Concluído** — `notebooks/04_discretizacao.ipynb` (faixas de domínio + plano cartesiano) e `05_exportacao_bases.ipynb` (bases finais .db/.csv/Excel).
-2. **Criar** `notebooks/06_modelagem_ml.ipynb` — pipeline ML nos dois desenhos (Reg. Logística, Árvore, Random Forest; RUS dentro da CV; F1-macro com IC 95%).
-3. **Atualizar** o `Resultados_Consolidados_PNS2019_Artrite.docx` com as métricas do ML.
-4. **Redigir** as seções de Resultados e Discussão do artigo.
+2. **Reexecutar** `03 → 03b → 04 → 05` (+ `02`/`02b`) para regenerar `data/results/` e as bases finais com o código corrigido, e commitar os resultados.
+3. **Criar** `notebooks/06_modelagem_ml.ipynb` — pipeline ML nos dois desenhos (Reg. Logística, Árvore, Random Forest; RUS dentro da CV; F1-macro com IC 95%).
+4. **Atualizar** o `Resultados_Consolidados_PNS2019_Artrite.docx` com as métricas do ML.
+5. **Redigir** as seções de Resultados e Discussão do artigo.
 
 ---
 
-*Documento atualizado em 03/06/2026: NB04 (discretização + plano cartesiano de Ribeiro & Zárate, 2019) e NB05 (exportação das bases finais) concluídos; anti-leakage aplicado no NB03b; bases finais D1 4.826×33 e D2 8.357×31 (100% categóricas); modelagem ML movida para o NB06.*
+*Documento atualizado em 08/06/2026: auditoria completa + correção de rótulos (I00102, alimentares, VDF004 faixa); **alinhamento D1×D2** (NB03b recebeu as correções do NB03 e o anti-leakage foi estendido aos exames condicionais); `dropna()` na Tab 2-C; imputação por mediana de IMC/escores. **Pendente:** reexecutar o pipeline para regenerar `data/results/` (artefatos atuais defasados); modelagem no NB06.*
