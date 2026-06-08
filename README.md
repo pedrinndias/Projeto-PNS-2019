@@ -30,11 +30,13 @@ Projeto_PNS/
 │   └── plano_reestruturacao.md
 ├── notebooks/
 │   ├── 01_extracao_pre_processamento.ipynb
-│   ├── 02_analise_exploratoria_bivariada.ipynb
+│   ├── 02_analise_exploratoria_bivariada.ipynb     ← EDA bivariada – Desenho 1
+│   ├── 02b_analise_exploratoria_comorbidades.ipynb ← EDA bivariada – Desenho 2
 │   ├── 03_preprocessamento_v3.ipynb            ← Desenho 1 – artrite pura
 │   ├── 03b_preprocessamento_comorbidades.ipynb ← Desenho 2 – artrite + comorbidades
-│   ├── 04_discretizacao.ipynb                  ← (a criar) discretização das contínuas
-│   └── 05_modelagem_ml.ipynb                   ← (a criar) modelagem e avaliação
+│   ├── 04_discretizacao.ipynb                  ← discretização (faixas de domínio + plano cartesiano)
+│   ├── 05_exportacao_bases.ipynb               ← exporta bases finais (.db + .csv) dos 2 desenhos
+│   └── 06_modelagem_ml.ipynb                   ← (a criar) modelagem e avaliação
 ├── scripts/                          ← (vazio no momento)
 ├── docs/
 │   └── Chaves_PNS_2019.pdf
@@ -52,15 +54,15 @@ Projeto_PNS/
 |------|--------|--------|
 | **Fase 1** – Entendimento do problema (CAPTO) | 1. Contexto · 2. Perguntas PICOS · 3. Seleção de variáveis | Concluído |
 | **Fase 2** – Pré-processamento | 4. Skip patterns · 5. Missing (>75%) · 6. Outliers · 7. Imputação | Concluído |
-| **Fase 3** – Preparação para mineração | 8. Feature engineering · 9. Encoding (OHE) · 10. Discretização (NB04) | Em andamento |
-| **Fase 4** – Modelagem e avaliação | 11. ML — Reg. Logística, Árvore, Random Forest (NB05) | **Pendente** |
+| **Fase 3** – Preparação para mineração | 8. Feature engineering · 9. Encoding (OHE) · 10. Discretização (NB04) · 11. Exportação das bases finais (NB05) | Concluído |
+| **Fase 4** – Modelagem e avaliação | 12. ML — Reg. Logística, Árvore, Random Forest (NB06) | **Pendente** |
 
 ---
 
 ## Dois Desenhos de Estudo
 
 ### Desenho 1 – Artrite Pura (`03_preprocessamento_v3.ipynb`)
-- **Critério:** `Q079 = Sim` (sem exigência de outras doenças)
+- **Critério:** `Q079 = Sim` **e** as demais 13 doenças crônicas = Não (artrite isolada)
 - **Amostra:** 4 826 registros · 49 features
 - **Distribuição:** 4 332 saudáveis vs 494 artrite (razão 8,77:1 – desbalanceado)
 - **Dataset:** `data/results/preprocessing/dataset_preprocessado.csv`
@@ -98,10 +100,13 @@ pip install -r requirements.txt
 
 # Executar os notebooks em ordem
 jupyter notebook notebooks/01_extracao_pre_processamento.ipynb
-jupyter notebook notebooks/02_analise_exploratoria_bivariada.ipynb
+jupyter notebook notebooks/02_analise_exploratoria_bivariada.ipynb     # EDA Desenho 1
+jupyter notebook notebooks/02b_analise_exploratoria_comorbidades.ipynb # EDA Desenho 2
 jupyter notebook notebooks/03_preprocessamento_v3.ipynb            # Desenho 1
 jupyter notebook notebooks/03b_preprocessamento_comorbidades.ipynb # Desenho 2
-# notebooks/04_discretizacao.ipynb e 05_modelagem_ml.ipynb ainda serão criados
+jupyter notebook notebooks/04_discretizacao.ipynb                  # discretização (ambos)
+jupyter notebook notebooks/05_exportacao_bases.ipynb              # bases finais (.db + .csv)
+# notebooks/06_modelagem_ml.ipynb ainda será criado (modelagem ML)
 ```
 
 ---
