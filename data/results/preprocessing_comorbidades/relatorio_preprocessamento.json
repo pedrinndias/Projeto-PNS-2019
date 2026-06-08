@@ -17,10 +17,10 @@
     "etapa_1_carga": {
       "registros_brutos": 8357,
       "registros_validos": 8357,
-      "variaveis_carregadas": 53
+      "variaveis_carregadas": 71
     },
     "etapa_2_5_skip_patterns": {
-      "total_preenchidos": 1489,
+      "total_preenchidos": 9335,
       "detalhes": [
         {
           "Variável": "P035",
@@ -70,29 +70,40 @@
           "Condição": "G059=2 (não usa aparelho)",
           "Valor_Implicito": "'2' (Não)",
           "n_preenchidos": 0
+        },
+        {
+          "Variável": "P03202",
+          "Pai": "P03201",
+          "Condição": "P03201≠1 (não fez binge)",
+          "Valor_Implicito": "0 doses",
+          "n_preenchidos": 7846
         }
       ]
     },
     "etapa_3_missing": {
       "vars_excluidas_>75pct": [
-        "VDF004",
+        "Q05901",
+        "G081",
+        "G080",
         "P04501",
+        "G079",
         "Q115",
-        "N001",
-        "N011",
+        "Q047081",
         "G070",
-        "Q109",
-        "VDD004A",
-        "N010",
         "G060",
         "G062",
+        "Q047111",
+        "Q04708",
+        "Q04711",
+        "Q109",
         "P02602",
         "P02801",
         "P03201",
         "P029",
-        "P02001"
+        "P02001",
+        "P02101"
       ],
-      "n_excluidas": 16
+      "n_excluidas": 20
     },
     "etapa_4_outliers": {
       "total_outliers_substituidos": 208,
@@ -121,7 +132,7 @@
       ]
     },
     "etapa_5_imputacao": {
-      "total_imputados": 29768,
+      "total_imputados": 39150,
       "nan_residual_em_X": 0,
       "detalhes": [
         {
@@ -135,6 +146,12 @@
           "Tipo": "Numérica",
           "Método": "Média/classe",
           "n_imputados": 2
+        },
+        {
+          "Variável": "VDF004",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 1
         },
         {
           "Variável": "C008",
@@ -197,6 +214,18 @@
           "n_imputados": 2531
         },
         {
+          "Variável": "P006",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 422
+        },
+        {
+          "Variável": "P013",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 825
+        },
+        {
           "Variável": "J012",
           "Tipo": "Numérica",
           "Método": "Média/classe",
@@ -225,6 +254,18 @@
           "Tipo": "Qualitativa",
           "Método": "Moda/classe",
           "n_imputados": 42
+        },
+        {
+          "Variável": "P02401",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 2133
+        },
+        {
+          "Variável": "P02102",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/classe",
+          "n_imputados": 6001
         }
       ]
     },
@@ -254,11 +295,16 @@
       "limitacao": "Renda_cat/Saude_cat não criadas se VDF004/N001=100% missing"
     },
     "etapa_8_encoding": {
-      "label_encoding": [],
+      "label_encoding": [
+        "VDD004A",
+        "N001",
+        "N010",
+        "N011"
+      ],
       "ohe_encoding": [
         "C006",
         "P034",
-        "I00101",
+        "I00102",
         "J01101",
         "J01002",
         "G059",
@@ -277,7 +323,13 @@
         "P00603",
         "P00620",
         "P02601",
-        "P027"
+        "P027",
+        "P02401",
+        "P02102",
+        "P00612",
+        "P00614",
+        "P00615",
+        "P00616"
       ],
       "excluidas_ohe": [],
       "removidas_df": [],
@@ -285,7 +337,7 @@
     },
     "etapa_9_dataset_final": {
       "n_registros": 8357,
-      "n_features": 53,
+      "n_features": 69,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025
