@@ -1,21 +1,19 @@
-# Próxima Fase — Discretização (Notebook 04) e Modelagem ML (Notebook 05)
+# Próxima Fase — Modelagem ML (Notebook 06)
 
-> **Última atualização:** 30/05/2026
-> **Pré-requisito:** Notebooks 01–03b concluídos · datasets pré-processados disponíveis em `data/results/preprocessing/` e `data/results/preprocessing_comorbidades/`
+> **Última atualização:** 08/06/2026
+> **Pré-requisito:** Notebooks 01–05 concluídos (NB04 discretização + NB05 exportação) · **reexecutar o pipeline** após o alinhamento D1×D2 de 08/06 para regenerar `data/results/`
 > **Documentos relacionados:** [`README.md`](README.md) · [`Documentos_organizacao/analise_projeto_pns.md`](Documentos_organizacao/analise_projeto_pns.md)
 
-> **Mudança de plano (30/05/2026):** o antigo `04_eliminacao_outliers.ipynb` foi **removido** — o tratamento de outliers permanece embutido no NB03/NB03b (IQR×3 por classe). O **Notebook 04 passa a ser dedicado à discretização dos dados**; a modelagem de ML move-se para o **Notebook 05**.
+> **Histórico:** o `04_eliminacao_outliers.ipynb` foi removido (outliers seguem embutidos no NB03/NB03b, IQR×3 por classe). O **Notebook 04 é a discretização** (faixas de domínio + plano cartesiano) e o **Notebook 05 é a exportação das bases finais** — ambos **concluídos**. A modelagem de ML é o **Notebook 06** (a criar).
 
 ---
 
-## 0. Notebook 04 — Discretização (a criar, passo imediato)
+## 0. Passo imediato — REEXECUTAR o pipeline e criar o NB06
 
-Etapa metodologicamente isolada (mesmo padrão pedido pelo orientador para outliers), reunindo num único notebook auditável a categorização de variáveis contínuas que hoje está parcialmente dispersa no NB03/NB03b (faixa etária, IMC-OMS, atividade física, escore inflamatório).
+⚠️ Antes da modelagem: o código do NB03b/NB02/02b foi corrigido em 08/06 (alinhamento D1×D2, anti-leakage de exames, Tab 2-C). Como os `.db` não são versionados, **reexecutar `03 → 03b → 04 → 05` (+ `02`/`02b`)** localmente para regerar `data/results/` e as bases finais (os números do Desenho 2 vão mudar). Só então o NB06 consome o `dataset_discretizado.csv` atualizado.
 
-- **Entrada:** datasets pré-processados dos dois desenhos.
-- **Saída:** dataset discretizado + relatório JSON de faixas/cortes usados.
-- **Decisões já fixadas:** ver tabela "Discretização" em §3.
-- Só depois de concluído o NB04 é que o NB05 (ML) consome o dataset discretizado.
+- ✅ **NB04 — Discretização (concluído):** faixas de domínio (OMS/Guia AF BR/NIAAA) + plano cartesiano dos padrões alimentares (Ribeiro & Zárate, 2019). Entrada: datasets pré-processados; saída: dataset discretizado + relatório JSON de cortes.
+- ✅ **NB05 — Exportação (concluído):** 2 `.db` + 2 `.csv` + Excel das bases finais dos dois desenhos.
 
 ---
 
@@ -25,19 +23,19 @@ Os notebooks 03 e 03b já entregam datasets **prontos para ML**:
 
 | Desenho | Arquivo (não versionado) | n × p | Distribuição (0/1) | Razão |
 |---------|--------------------------|-------|--------------------|-------|
-| 1 — Artrite Pura | `data/results/preprocessing/dataset_preprocessado.csv` | 4 826 × 49 | 4 332 / 494 | 8,77:1 |
-| 2 — Artrite c/ Comorbidades | `data/results/preprocessing_comorbidades/dataset_preprocessado.csv` | 8 357 × 57 | 4 332 / 4 025 | 1,08:1 |
+| 1 — Artrite Pura | `data/results/preprocessing/dataset_preprocessado.csv` | 4 826 × ~49 | 4 332 / 494 | 8,77:1 |
+| 2 — Artrite c/ Comorbidades | `data/results/preprocessing_comorbidades/dataset_preprocessado.csv` | 8 357 × **a recalcular** | 4 332 / 4 025 | 1,08:1 |
 
-Cada CSV traz `X` (features encoded) + coluna `Label` (0 = saudável, 1 = artrite). Não há mais NaN, não há mais outliers extremos, encoding já feito.
+Cada CSV traz `X` (features encoded) + coluna `Label` (0 = saudável, 1 = artrite). Não há mais NaN, não há mais outliers extremos, encoding já feito. O NB06 consome o **dataset discretizado** (saída do NB04).
 
-> A "preparação para ML" prevista em discussões antigas (notebook 02b separado) foi **incorporada dentro do NB03/NB03b** — não há etapa intermediária pendente.
+> ⚠️ Os números acima são **pré-reexecução**: o Desenho 2 ganhou ~15 variáveis e o anti-leakage cresceu (13 Q* + 5 exames), então `p` (nº de features) mudará ao rodar o pipeline atualizado.
 
 ---
 
-## 2. Notebook 05 — esqueleto proposto (ML)
+## 2. Notebook 06 — esqueleto proposto (ML)
 
 ```
-notebooks/05_modelagem_ml.ipynb
+notebooks/06_modelagem_ml.ipynb
 │
 ├── 1. Configuração
 │     • Imports (scikit-learn, imblearn, scipy.stats)
@@ -85,10 +83,9 @@ notebooks/05_modelagem_ml.ipynb
 │     • 9.3 Extração das regras da árvore (texto + visualização)
 │     • 9.4 Agrupamento por dimensão CAPTO (Hábitos · Sociodemográficos · Antropometria · Comorbidades)
 │
-├── 10. Análise de sensibilidade — Modelo A vs Modelo B (Desenho 2)
-│     • Modelo A: com as 13 variáveis Q* (cenário "realista")
-│     • Modelo B: sem nenhuma Q* (controle de data leakage circular)
-│     • Comparar F1 e feature importance — quanto a acurácia cai sem comorbidades?
+├── 10. (Revisado) Sem "Modelo A vs B" — anti-leakage já no NB03b
+│     • As Q* e exames condicionais são removidos das features no NB03b (filtro de coorte).
+│     • A comparação relevante é entre DESENHOS (§11), não entre com/sem Q* dentro do D2.
 │
 ├── 11. Comparação dos dois desenhos
 │     • Tabela: métricas do Desenho 1 (artrite pura) vs Desenho 2 (com comorbidades)
@@ -109,18 +106,18 @@ Essas decisões já foram tomadas e ficam registradas para evitar retrabalho:
 | Decisão | Valor | Motivo |
 |---------|-------|--------|
 | Desenhos | **C** — treinar e comparar os dois | Triangulação metodológica; Desenho 1 = limpo; Desenho 2 = poder estatístico |
-| Q* como features | **Sim** no Desenho 2; constantes no Desenho 1 (excluídas) | Estilo Cancella; documentar leakage circular como limitação |
+| Q* como features | **Não** em nenhum desenho — removidas no NB03b (anti-leakage; + exames condicionais) | Q* definem a coorte, não o modelo — evita vazamento circular |
 | Tratamento de missing | **Imputação por classe** (média/moda) após corte de >75% NaN | Já feito no NB03/NB03b |
 | Outliers | **IQR × 3,0 por classe → substituir** | ~3,3 σ; já feito no NB03/NB03b |
 | Discretização | **Sim** — IMC-OMS, faixa etária, atividade física, escore inflamatório | Melhor interpretabilidade das regras (CAPTO) |
 | Split | **80/20 estratificado**, `random_state=42` | Padrão da literatura PUC Minas |
 | Balanceamento | **RUS dentro de cada fold da CV** (não fora) | Evita vazamento; padrão Cancella |
 | Métrica-alvo | **F1-macro** | Robusta a desbalanceamento (Desenho 1) |
-| Onde mora o ML | **`notebooks/05_modelagem_ml.ipynb`** | NB04 = discretização; ML separado no NB05 |
+| Onde mora o ML | **`notebooks/06_modelagem_ml.ipynb`** | NB04 = discretização; NB05 = exportação; ML separado no NB06 |
 
 ---
 
-## 4. Artefatos esperados ao final do NB05
+## 4. Artefatos esperados ao final do NB06
 
 ```
 data/results/modelagem/
@@ -145,17 +142,19 @@ Esses artefatos alimentam:
 
 ## 5. Checklist
 
-**Discretização (NB04):**
-- [ ] Confirmar que `dataset_preprocessado.csv` foi gerado nos dois desenhos (rodar NB03 e NB03b se necessário)
-- [ ] Criar `notebooks/04_discretizacao.ipynb` — categorizar contínuas (faixa etária, IMC-OMS, atividade física, escore inflamatório), exportar dataset discretizado + relatório JSON de cortes
+**Pré-processamento / Discretização / Exportação:**
+- [x] `04_discretizacao.ipynb` criado (faixas de domínio + plano cartesiano)
+- [x] `05_exportacao_bases.ipynb` criado (bases finais .db/.csv)
+- [x] Alinhamento D1×D2 + anti-leakage de exames (08/06)
+- [ ] **Reexecutar** `03 → 03b → 04 → 05` (+ `02`/`02b`) e commitar `data/results/` regenerado
 
-**Modelagem (NB05):**
-- [ ] Criar `notebooks/05_modelagem_ml.ipynb` seguindo o esqueleto da §2
+**Modelagem (NB06):**
+- [ ] Criar `notebooks/06_modelagem_ml.ipynb` seguindo o esqueleto da §2
 - [ ] Consumir o dataset discretizado nos dois desenhos
 
 ---
 
-## 6. Depois do NB05 — fechamento do projeto
+## 6. Depois do NB06 — fechamento do projeto
 
 1. **Atualizar** `Resultados_Consolidados_PNS2019_Artrite.docx` com as métricas e figuras do ML.
 2. **Redigir** as seções pendentes do artigo (Resultados → Discussão → Introdução → Resumo), seguindo o template em `Artigo_Template_de_Trabalho_PNS2019.docx` e o guia em `Guia_Redacao_Artigo_PNS2019.docx`.
@@ -164,4 +163,4 @@ Esses artefatos alimentam:
 
 ---
 
-*Documento atualizado em 30/05/2026: NB04 redefinido para discretização; modelagem de ML movida para o NB05.*
+*Documento atualizado em 08/06/2026: NB04 (discretização) e NB05 (exportação) concluídos; modelagem de ML é o NB06. Pipeline alinhado entre os dois desenhos (anti-leakage estendido aos exames); pendente reexecutar para regenerar `data/results/`.*
