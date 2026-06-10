@@ -161,8 +161,8 @@ O pipeline `02 → 03 → 03b → 04 → 05` foi **reexecutado** após as corre�
 
 | # | Arquivo | Observação |
 |---|---------|------------|
-| 1 | `data/raw/input_PNS_2019.sas` ↔ `.txt` | Diferem só por 2 bytes (provável `\n`) — considerar manter um só |
-| 2 | `dicionario_PNS_microdados_2019.xls` | Existe em `data/raw/` e `Documentos_organizacao/Dados PNS/` com **hashes diferentes** — verificar qual é a versão correta |
+| 1 | `data/raw/input_PNS_2019.sas` | ✅ Resolvido — o `.txt` era cópia **byte-idêntica** (1100 linhas iguais; só o newline final) e não era usado por nenhum notebook; **removido**, mantido o `.sas`. |
+| 2 | `dicionario_PNS_microdados_2019.xls` | ✅ Resolvido — as duas cópias são **idênticas célula a célula** (5224×7; hash difere só por metadata binária do Excel); ambas mantidas (`data/raw/` = raw do pipeline; `Dados PNS/` = bundle de referência). |
 | 3 | `scripts/` | Pasta vazia — sem geradores; notebooks mantidos diretamente |
 
 ### ✅ Risco metodológico documentado (resolvido)
