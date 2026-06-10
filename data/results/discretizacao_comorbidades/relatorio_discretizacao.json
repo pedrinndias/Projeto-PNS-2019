@@ -46,8 +46,9 @@
         "n_faixas": 4,
         "fonte": "Guia de Atividade Física para a População Brasileira (2021)",
         "distribuicao": {
-          "1.0": 682,
-          "2.0": 6805,
+          "0.0": 5968,
+          "1.0": 733,
+          "2.0": 786,
           "3.0": 870
         }
       },
@@ -62,6 +63,18 @@
           "1.0": 2951,
           "2.0": 2961,
           "3.0": 956
+        }
+      },
+      {
+        "variavel": "P029",
+        "nova": "P029_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "NIAAA — binge a partir de 5 doses por ocasião (só D1; baixa confiança)",
+        "distribuicao": {
+          "0.0": 6318,
+          "1.0": 1933,
+          "2.0": 106
         }
       },
       {
@@ -83,6 +96,7 @@
       "C008",
       "P035",
       "J012",
+      "P029",
       "Escore_Inflamatorio",
       "Escore_Saudavel",
       "Razao_Inf_Saud",
@@ -120,6 +134,18 @@
         "feature": "P02601_Muito alto",
         "entropia": 0.065,
         "corr_abs_Label": 0.008,
+        "sinal": "baixa_entropia"
+      },
+      {
+        "feature": "G062_Não",
+        "entropia": 0.078,
+        "corr_abs_Label": 0.031,
+        "sinal": "baixa_entropia"
+      },
+      {
+        "feature": "G060_Sim",
+        "entropia": 0.087,
+        "corr_abs_Label": 0.06,
         "sinal": "baixa_entropia"
       },
       {
@@ -171,9 +197,27 @@
         "sinal": "ok"
       },
       {
+        "feature": "G060_Não",
+        "entropia": 0.311,
+        "corr_abs_Label": 0.153,
+        "sinal": "ok"
+      },
+      {
+        "feature": "G062_Sim",
+        "entropia": 0.316,
+        "corr_abs_Label": 0.166,
+        "sinal": "ok"
+      },
+      {
         "feature": "P02601_Muito baixo",
         "entropia": 0.332,
         "corr_abs_Label": 0.068,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P03201_Sim",
+        "entropia": 0.332,
+        "corr_abs_Label": 0.1,
         "sinal": "ok"
       },
       {
@@ -225,6 +269,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "P03201_Não",
+        "entropia": 0.686,
+        "corr_abs_Label": 0.079,
+        "sinal": "ok"
+      },
+      {
         "feature": "P02401_Integral",
         "entropia": 0.693,
         "corr_abs_Label": 0.125,
@@ -267,9 +317,9 @@
         "sinal": "ok"
       },
       {
-        "feature": "P035_cat",
-        "entropia": 0.876,
-        "corr_abs_Label": 0.039,
+        "feature": "P029_cat",
+        "entropia": 0.874,
+        "corr_abs_Label": 0.089,
         "sinal": "ok"
       },
       {
@@ -303,6 +353,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "P035_cat",
+        "entropia": 1.315,
+        "corr_abs_Label": 0.02,
+        "sinal": "ok"
+      },
+      {
         "feature": "C008_cat",
         "entropia": 1.357,
         "corr_abs_Label": 0.114,
@@ -329,7 +385,7 @@
     ],
     "dataset_final": {
       "n_registros": 8357,
-      "n_features": 46,
+      "n_features": 54,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025
