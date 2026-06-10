@@ -8,8 +8,8 @@
     "LIMITE_MISSING_pct": 75.0,
     "LIMITE_IQR_MULT": 3.0,
     "RANDOM_STATE": 42,
-    "metodo_imputacao_num": "Média por classe (missing real)",
-    "metodo_imputacao_cat": "Moda por classe (missing real)"
+    "metodo_imputacao_num": "Média global (target-blind, missing real)",
+    "metodo_imputacao_cat": "Moda global (target-blind, missing real)"
   },
   "rastreabilidade": {
     "etapa_1_carga": {
@@ -134,151 +134,151 @@
         {
           "Variável": "P00104",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 4
         },
         {
           "Variável": "P00404",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 2
         },
         {
           "Variável": "VDF004",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 1
         },
         {
           "Variável": "C008",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 2
         },
         {
           "Variável": "P035",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 31
         },
         {
           "Variável": "P00901",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 420
         },
         {
           "Variável": "P015",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 2011
         },
         {
           "Variável": "P018",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 404
         },
         {
           "Variável": "P01101",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 460
         },
         {
           "Variável": "P02501",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 2733
         },
         {
           "Variável": "P02002",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 3339
         },
         {
           "Variável": "P02001",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 3564
         },
         {
           "Variável": "P023",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 1266
         },
         {
           "Variável": "P01601",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 1436
         },
         {
           "Variável": "P006",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 234
         },
         {
           "Variável": "P013",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 510
         },
         {
           "Variável": "J012",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 24
         },
         {
           "Variável": "P02801",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 93
         },
         {
           "Variável": "P029",
           "Tipo": "Numérica",
-          "Método": "Média/classe",
+          "Método": "Média/global",
           "n_imputados": 285
         },
         {
           "Variável": "J01002",
           "Tipo": "Qualitativa",
-          "Método": "Moda/classe",
+          "Método": "Moda/global",
           "n_imputados": 1427
         },
         {
           "Variável": "Q03001",
           "Tipo": "Qualitativa",
-          "Método": "Moda/classe",
+          "Método": "Moda/global",
           "n_imputados": 18
         },
         {
           "Variável": "Q060",
           "Tipo": "Qualitativa",
-          "Método": "Moda/classe",
+          "Método": "Moda/global",
           "n_imputados": 17
         },
         {
           "Variável": "P02401",
           "Tipo": "Qualitativa",
-          "Método": "Moda/classe",
+          "Método": "Moda/global",
           "n_imputados": 1266
         },
         {
           "Variável": "P02101",
           "Tipo": "Qualitativa",
-          "Método": "Moda/classe",
+          "Método": "Moda/global",
           "n_imputados": 3564
         },
         {
           "Variável": "P02102",
           "Tipo": "Qualitativa",
-          "Método": "Moda/classe",
+          "Método": "Moda/global",
           "n_imputados": 3332
         }
       ]

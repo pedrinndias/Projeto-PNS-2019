@@ -60,8 +60,8 @@
         "fonte": "Intensidade de uso de serviços de saúde (faixas pragmáticas)",
         "distribuicao": {
           "0.0": 1344,
-          "1.0": 2022,
-          "2.0": 1225,
+          "1.0": 2006,
+          "2.0": 1241,
           "3.0": 235
         }
       },
@@ -84,10 +84,10 @@
         "n_faixas": 4,
         "fonte": "Plano cartesiano de padrões alimentares (Ribeiro & Zárate, 2019, ESWA) — corte pela mediana",
         "distribuicao": {
-          "0": 1191,
-          "1": 1281,
-          "2": 1220,
-          "3": 1134
+          "0": 1189,
+          "1": 1276,
+          "2": 1224,
+          "3": 1137
         }
       }
     ],
@@ -294,15 +294,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "Q084_Sim",
-        "entropia": 0.721,
-        "corr_abs_Label": 0.144,
-        "sinal": "ok"
-      },
-      {
         "feature": "P027_Uma vez ou mais por mês",
         "entropia": 0.721,
         "corr_abs_Label": 0.022,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q084_Sim",
+        "entropia": 0.721,
+        "corr_abs_Label": 0.144,
         "sinal": "ok"
       },
       {
@@ -385,14 +385,14 @@
       },
       {
         "feature": "J012_cat",
-        "entropia": 1.754,
-        "corr_abs_Label": 0.142,
+        "entropia": 1.756,
+        "corr_abs_Label": 0.141,
         "sinal": "ok"
       },
       {
         "feature": "Padrao_Alimentar_cat",
         "entropia": 1.999,
-        "corr_abs_Label": 0.026,
+        "corr_abs_Label": 0.016,
         "sinal": "ok"
       }
     ],

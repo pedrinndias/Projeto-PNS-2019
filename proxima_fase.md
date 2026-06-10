@@ -1,16 +1,16 @@
 # Próxima Fase — Modelagem ML (Notebook 06)
 
 > **Última atualização:** 08/06/2026
-> **Pré-requisito:** Notebooks 01–05 concluídos (NB04 discretização + NB05 exportação) · **reexecutar o pipeline** após o alinhamento D1×D2 de 08/06 para regenerar `data/results/`
+> **Pré-requisito:** Notebooks 01–05 concluídos e **reexecutados em 10/06** (correção dos skip patterns + imputação global target-blind + skip na EDA); `data/results/` regenerado e versionado
 > **Documentos relacionados:** [`README.md`](README.md) · [`Documentos_organizacao/analise_projeto_pns.md`](Documentos_organizacao/analise_projeto_pns.md)
 
 > **Histórico:** o `04_eliminacao_outliers.ipynb` foi removido (outliers seguem embutidos no NB03/NB03b, IQR×3 por classe). O **Notebook 04 é a discretização** (faixas de domínio + plano cartesiano) e o **Notebook 05 é a exportação das bases finais** — ambos **concluídos**. A modelagem de ML é o **Notebook 06** (a criar).
 
 ---
 
-## 0. Passo imediato — REEXECUTAR o pipeline e criar o NB06
+## 0. Passo imediato — criar o NB06
 
-⚠️ Antes da modelagem: o código do NB03b/NB02/02b foi corrigido em 08/06 (alinhamento D1×D2, anti-leakage de exames, Tab 2-C). Como os `.db` não são versionados, **reexecutar `03 → 03b → 04 → 05` (+ `02`/`02b`)** localmente para regerar `data/results/` e as bases finais (os números do Desenho 2 vão mudar). Só então o NB06 consome o `dataset_discretizado.csv` atualizado.
+✅ **Reexecução concluída (10/06).** O pipeline `02 → 03 → 03b → 04 → 05` foi reexecutado após as correções de 10/06 (skip patterns das perguntas-pai textuais, imputação **global target-blind**, skip P035←P034 na EDA incl. Tab 3-A). `data/results/` e as bases finais já estão regenerados e versionados. O NB06 consome diretamente o `dataset_discretizado.csv` atualizado — **não há mais reexecução pendente**.
 
 - ✅ **NB04 — Discretização (concluído):** faixas de domínio (OMS/Guia AF BR/NIAAA) + plano cartesiano dos padrões alimentares (Ribeiro & Zárate, 2019). Entrada: datasets pré-processados; saída: dataset discretizado + relatório JSON de cortes.
 - ✅ **NB05 — Exportação (concluído):** 2 `.db` + 2 `.csv` + Excel das bases finais dos dois desenhos.
@@ -23,12 +23,12 @@ Os notebooks 03 e 03b já entregam datasets **prontos para ML**:
 
 | Desenho | Arquivo (não versionado) | n × p | Distribuição (0/1) | Razão |
 |---------|--------------------------|-------|--------------------|-------|
-| 1 — Artrite Pura | `data/results/preprocessing/dataset_preprocessado.csv` | 4 826 × ~49 | 4 332 / 494 | 8,77:1 |
-| 2 — Artrite c/ Comorbidades | `data/results/preprocessing_comorbidades/dataset_preprocessado.csv` | 8 357 × **a recalcular** | 4 332 / 4 025 | 1,08:1 |
+| 1 — Artrite Pura | `data/results/preprocessing/dataset_preprocessado.csv` | 4 826 × 69 (→ 56 NB04) | 4 332 / 494 | 8,77:1 |
+| 2 — Artrite c/ Comorbidades | `data/results/preprocessing_comorbidades/dataset_preprocessado.csv` | 8 357 × 66 (→ 54 NB04) | 4 332 / 4 025 | 1,08:1 |
 
 Cada CSV traz `X` (features encoded) + coluna `Label` (0 = saudável, 1 = artrite). Não há mais NaN, não há mais outliers extremos, encoding já feito. O NB06 consome o **dataset discretizado** (saída do NB04).
 
-> ⚠️ Os números acima são **pré-reexecução**: o Desenho 2 ganhou ~15 variáveis e o anti-leakage cresceu (13 Q* + 5 exames), então `p` (nº de features) mudará ao rodar o pipeline atualizado.
+> ✅ Números **pós-reexecução (10/06)**. Anti-leakage do D2 = 13 Q* + 5 exames removidos. Os skips agora preenchem P035/P029/G060/G062/P02801/P03201 (antes descartados por >75% missing), por isso `p` subiu vs. versões antigas.
 
 ---
 
@@ -107,7 +107,7 @@ Essas decisões já foram tomadas e ficam registradas para evitar retrabalho:
 |---------|-------|--------|
 | Desenhos | **C** — treinar e comparar os dois | Triangulação metodológica; Desenho 1 = limpo; Desenho 2 = poder estatístico |
 | Q* como features | **Não** em nenhum desenho — removidas no NB03b (anti-leakage; + exames condicionais) | Q* definem a coorte, não o modelo — evita vazamento circular |
-| Tratamento de missing | **Imputação por classe** (média/moda) após corte de >75% NaN | Já feito no NB03/NB03b |
+| Tratamento de missing | **Imputação global (target-blind)** (média/moda) após corte de >75% NaN | Sem vazamento do alvo no dataset de ML; já no NB03/NB03b |
 | Outliers | **IQR × 3,0 por classe → substituir** | ~3,3 σ; já feito no NB03/NB03b |
 | Discretização | **Sim** — IMC-OMS, faixa etária, atividade física, escore inflamatório | Melhor interpretabilidade das regras (CAPTO) |
 | Split | **80/20 estratificado**, `random_state=42` | Padrão da literatura PUC Minas |
@@ -146,7 +146,8 @@ Esses artefatos alimentam:
 - [x] `04_discretizacao.ipynb` criado (faixas de domínio + plano cartesiano)
 - [x] `05_exportacao_bases.ipynb` criado (bases finais .db/.csv)
 - [x] Alinhamento D1×D2 + anti-leakage de exames (08/06)
-- [ ] **Reexecutar** `03 → 03b → 04 → 05` (+ `02`/`02b`) e commitar `data/results/` regenerado
+- [x] Correção skip patterns + imputação global target-blind + skip na EDA (10/06)
+- [x] **Reexecutado** `02 → 03 → 03b → 04 → 05` e commitado `data/results/` regenerado (10/06)
 
 **Modelagem (NB06):**
 - [ ] Criar `notebooks/06_modelagem_ml.ipynb` seguindo o esqueleto da §2
@@ -163,4 +164,4 @@ Esses artefatos alimentam:
 
 ---
 
-*Documento atualizado em 08/06/2026: NB04 (discretização) e NB05 (exportação) concluídos; modelagem de ML é o NB06. Pipeline alinhado entre os dois desenhos (anti-leakage estendido aos exames); pendente reexecutar para regenerar `data/results/`.*
+*Documento atualizado em 10/06/2026: skip patterns das perguntas-pai textuais corrigidos (NB03/03b), imputação trocada para global target-blind, skip P035←P034 aplicado na EDA (NB02 incl. Tab 3-A). Pipeline `02→03→03b→04→05` reexecutado e `data/results/` regenerado/versionado. Dims atuais: D1 4 826×69→56, D2 8 357×66→54. Resta apenas a modelagem (NB06).*
