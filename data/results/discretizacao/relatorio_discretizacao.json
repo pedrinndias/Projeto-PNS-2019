@@ -46,8 +46,9 @@
         "n_faixas": 4,
         "fonte": "Guia de Atividade Física para a População Brasileira (2021)",
         "distribuicao": {
-          "1.0": 362,
-          "2.0": 3931,
+          "0.0": 3444,
+          "1.0": 393,
+          "2.0": 456,
           "3.0": 533
         }
       },
@@ -71,8 +72,9 @@
         "n_faixas": 3,
         "fonte": "NIAAA — binge a partir de 5 doses por ocasião (só D1; baixa confiança)",
         "distribuicao": {
-          "1.0": 4535,
-          "2.0": 291
+          "0.0": 3419,
+          "1.0": 1386,
+          "2.0": 21
         }
       },
       {
@@ -124,6 +126,12 @@
         "sinal": "baixa_entropia"
       },
       {
+        "feature": "G060_Sim",
+        "entropia": 0.048,
+        "corr_abs_Label": 0.022,
+        "sinal": "baixa_entropia"
+      },
+      {
         "feature": "J01101_Nunca foi ao médico",
         "entropia": 0.053,
         "corr_abs_Label": 0.026,
@@ -133,6 +141,12 @@
         "feature": "P02101_Diet/Light/Zero",
         "entropia": 0.056,
         "corr_abs_Label": 0.001,
+        "sinal": "baixa_entropia"
+      },
+      {
+        "feature": "G062_Não",
+        "entropia": 0.06,
+        "corr_abs_Label": 0.012,
         "sinal": "baixa_entropia"
       },
       {
@@ -178,6 +192,18 @@
         "sinal": "ok"
       },
       {
+        "feature": "G062_Sim",
+        "entropia": 0.164,
+        "corr_abs_Label": 0.076,
+        "sinal": "ok"
+      },
+      {
+        "feature": "G060_Não",
+        "entropia": 0.172,
+        "corr_abs_Label": 0.07,
+        "sinal": "ok"
+      },
+      {
         "feature": "G059_Sim",
         "entropia": 0.2,
         "corr_abs_Label": 0.073,
@@ -211,12 +237,6 @@
         "feature": "J01002_UPA (Unidade de Pronto Atendimento), outro tipo de pronto atendimento público (24 horas), pronto-socorro ou emergência de hospital público.",
         "entropia": 0.328,
         "corr_abs_Label": 0.002,
-        "sinal": "ok"
-      },
-      {
-        "feature": "P029_cat",
-        "entropia": 0.329,
-        "corr_abs_Label": 0.031,
         "sinal": "ok"
       },
       {
@@ -274,12 +294,6 @@
         "sinal": "ok"
       },
       {
-        "feature": "P00614_Sim",
-        "entropia": 0.721,
-        "corr_abs_Label": 0.015,
-        "sinal": "ok"
-      },
-      {
         "feature": "Q084_Sim",
         "entropia": 0.721,
         "corr_abs_Label": 0.144,
@@ -289,6 +303,18 @@
         "feature": "P027_Uma vez ou mais por mês",
         "entropia": 0.721,
         "corr_abs_Label": 0.022,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00614_Sim",
+        "entropia": 0.721,
+        "corr_abs_Label": 0.015,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P03201_Não",
+        "entropia": 0.742,
+        "corr_abs_Label": 0.015,
         "sinal": "ok"
       },
       {
@@ -310,15 +336,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "P035_cat",
-        "entropia": 0.872,
-        "corr_abs_Label": 0.023,
-        "sinal": "ok"
-      },
-      {
         "feature": "P02601_Baixo",
         "entropia": 0.886,
         "corr_abs_Label": 0.016,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P029_cat",
+        "entropia": 0.903,
+        "corr_abs_Label": 0.003,
         "sinal": "ok"
       },
       {
@@ -346,6 +372,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "P035_cat",
+        "entropia": 1.315,
+        "corr_abs_Label": 0.018,
+        "sinal": "ok"
+      },
+      {
         "feature": "IMC_cat",
         "entropia": 1.553,
         "corr_abs_Label": 0.036,
@@ -366,7 +398,7 @@
     ],
     "dataset_final": {
       "n_registros": 4826,
-      "n_features": 50,
+      "n_features": 56,
       "distribuicao_label": {
         "0": 4332,
         "1": 494

@@ -20,35 +20,35 @@
       "variaveis_carregadas": 71
     },
     "etapa_2_5_skip_patterns": {
-      "total_preenchidos": 9335,
+      "total_preenchidos": 50565,
       "detalhes": [
         {
           "Variável": "P035",
           "Pai": "P034",
           "Condição": "P034=2 (Não pratica)",
           "Valor_Implicito": "0 dias/sem.",
-          "n_preenchidos": 0
+          "n_preenchidos": 5968
         },
         {
           "Variável": "P02801",
           "Pai": "P027",
           "Condição": "P027∈{1,2} (não bebe sem.)",
           "Valor_Implicito": "0 dias/sem.",
-          "n_preenchidos": 0
+          "n_preenchidos": 7028
         },
         {
           "Variável": "P029",
           "Pai": "P027",
           "Condição": "P027=1 (nunca bebe)",
           "Valor_Implicito": "0 doses",
-          "n_preenchidos": 0
+          "n_preenchidos": 6318
         },
         {
           "Variável": "P03201",
           "Pai": "P027",
           "Condição": "P027=1 (nunca bebe)",
           "Valor_Implicito": "'2' (Não)",
-          "n_preenchidos": 0
+          "n_preenchidos": 6318
         },
         {
           "Variável": "J012",
@@ -62,14 +62,14 @@
           "Pai": "G059",
           "Condição": "G059=2 (não usa aparelho)",
           "Valor_Implicito": "'2' (Não)",
-          "n_preenchidos": 0
+          "n_preenchidos": 7799
         },
         {
           "Variável": "G062",
           "Pai": "G059",
           "Condição": "G059=2 (não usa aparelho)",
           "Valor_Implicito": "'2' (Não)",
-          "n_preenchidos": 0
+          "n_preenchidos": 7799
         },
         {
           "Variável": "P03202",
@@ -83,30 +83,25 @@
     "etapa_3_missing": {
       "vars_excluidas_>75pct": [
         "Q05901",
+        "G079",
         "G081",
         "G080",
         "P04501",
-        "G079",
         "Q115",
         "Q047081",
         "G070",
-        "G060",
-        "G062",
         "Q047111",
         "Q04708",
         "Q04711",
         "Q109",
         "P02602",
-        "P02801",
-        "P03201",
-        "P029",
-        "P02001",
-        "P02101"
+        "P02101",
+        "P02001"
       ],
-      "n_excluidas": 20
+      "n_excluidas": 15
     },
     "etapa_4_outliers": {
-      "total_outliers_substituidos": 208,
+      "total_outliers_substituidos": 493,
       "parametro_usado": "3.0xIQR por classe",
       "detalhes": [
         {
@@ -128,11 +123,16 @@
           "Variável": "J012",
           "n_outliers": 115,
           "% outliers": 1.38
+        },
+        {
+          "Variável": "P029",
+          "n_outliers": 285,
+          "% outliers": 3.41
         }
       ]
     },
     "etapa_5_imputacao": {
-      "total_imputados": 39150,
+      "total_imputados": 33616,
       "nan_residual_em_X": 0,
       "detalhes": [
         {
@@ -163,7 +163,7 @@
           "Variável": "P035",
           "Tipo": "Numérica",
           "Método": "Média/classe",
-          "n_imputados": 6019
+          "n_imputados": 51
         },
         {
           "Variável": "P00901",
@@ -230,6 +230,18 @@
           "Tipo": "Numérica",
           "Método": "Média/classe",
           "n_imputados": 115
+        },
+        {
+          "Variável": "P02801",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 149
+        },
+        {
+          "Variável": "P029",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 285
         },
         {
           "Variável": "J01002",
@@ -308,6 +320,8 @@
         "J01101",
         "J01002",
         "G059",
+        "G060",
+        "G062",
         "Q092",
         "Q11006",
         "Q00201",
@@ -324,6 +338,7 @@
         "P00620",
         "P02601",
         "P027",
+        "P03201",
         "P02401",
         "P02102",
         "P00612",
@@ -349,7 +364,7 @@
     },
     "etapa_9_dataset_final": {
       "n_registros": 8357,
-      "n_features": 58,
+      "n_features": 66,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025

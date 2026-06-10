@@ -18,35 +18,35 @@
       "variaveis_carregadas": 71
     },
     "etapa_2_5_skip_patterns": {
-      "total_preenchidos": 5777,
+      "total_preenchidos": 29274,
       "detalhes": [
         {
           "Variável": "P035",
           "Pai": "P034",
           "Condição": "P034=2 (Não pratica)",
           "Valor_Implicito": "0 dias/sem.",
-          "n_preenchidos": 0
+          "n_preenchidos": 3444
         },
         {
           "Variável": "P02801",
           "Pai": "P027",
           "Condição": "P027∈{1,2} (não bebe sem.)",
           "Valor_Implicito": "0 dias/sem.",
-          "n_preenchidos": 0
+          "n_preenchidos": 3863
         },
         {
           "Variável": "P029",
           "Pai": "P027",
           "Condição": "P027=1 (nunca bebe)",
           "Valor_Implicito": "0 doses",
-          "n_preenchidos": 0
+          "n_preenchidos": 3419
         },
         {
           "Variável": "P03201",
           "Pai": "P027",
           "Condição": "P027=1 (nunca bebe)",
           "Valor_Implicito": "'2' (Não)",
-          "n_preenchidos": 0
+          "n_preenchidos": 3419
         },
         {
           "Variável": "J012",
@@ -60,14 +60,14 @@
           "Pai": "G059",
           "Condição": "G059=2 (não usa aparelho)",
           "Valor_Implicito": "'2' (Não)",
-          "n_preenchidos": 0
+          "n_preenchidos": 4676
         },
         {
           "Variável": "G062",
           "Pai": "G059",
           "Condição": "G059=2 (não usa aparelho)",
           "Valor_Implicito": "'2' (Não)",
-          "n_preenchidos": 0
+          "n_preenchidos": 4676
         },
         {
           "Variável": "P03202",
@@ -81,26 +81,23 @@
     "etapa_3_missing": {
       "vars_excluidas_>75pct": [
         "Q05901",
-        "Q047081",
+        "G079",
         "G081",
         "G080",
-        "Q04711",
+        "Q04708",
         "P04501",
+        "Q047081",
+        "Q04711",
         "Q047111",
         "Q115",
-        "Q04708",
         "Q109",
-        "G079",
         "G070",
-        "G060",
-        "G062",
-        "P02602",
-        "P02801"
+        "P02602"
       ],
-      "n_excluidas": 16
+      "n_excluidas": 13
     },
     "etapa_4_outliers": {
-      "total_outliers_substituidos": 50,
+      "total_outliers_substituidos": 320,
       "parametro_usado": "3.0xIQR por classe",
       "detalhes": [
         {
@@ -125,13 +122,13 @@
         },
         {
           "Variável": "P029",
-          "n_outliers": 15,
-          "% outliers": 1.07
+          "n_outliers": 285,
+          "% outliers": 5.91
         }
       ]
     },
     "etapa_5_imputacao": {
-      "total_imputados": 36362,
+      "total_imputados": 26443,
       "nan_residual_em_X": 0,
       "detalhes": [
         {
@@ -162,7 +159,7 @@
           "Variável": "P035",
           "Tipo": "Numérica",
           "Método": "Média/classe",
-          "n_imputados": 3475
+          "n_imputados": 31
         },
         {
           "Variável": "P00901",
@@ -237,10 +234,16 @@
           "n_imputados": 24
         },
         {
+          "Variável": "P02801",
+          "Tipo": "Numérica",
+          "Método": "Média/classe",
+          "n_imputados": 93
+        },
+        {
           "Variável": "P029",
           "Tipo": "Numérica",
           "Método": "Média/classe",
-          "n_imputados": 3434
+          "n_imputados": 285
         },
         {
           "Variável": "J01002",
@@ -259,12 +262,6 @@
           "Tipo": "Qualitativa",
           "Método": "Moda/classe",
           "n_imputados": 17
-        },
-        {
-          "Variável": "P03201",
-          "Tipo": "Qualitativa",
-          "Método": "Moda/classe",
-          "n_imputados": 3419
         },
         {
           "Variável": "P02401",
@@ -326,6 +323,8 @@
         "J01101",
         "J01002",
         "G059",
+        "G060",
+        "G062",
         "Q11006",
         "Q00201",
         "Q03001",
@@ -359,7 +358,7 @@
     },
     "etapa_9_dataset_final": {
       "n_registros": 4826,
-      "n_features": 63,
+      "n_features": 69,
       "distribuicao_label": {
         "0": 4332,
         "1": 494
