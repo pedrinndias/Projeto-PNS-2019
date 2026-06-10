@@ -46,8 +46,8 @@
         "n_faixas": 4,
         "fonte": "Guia de Atividade Física para a População Brasileira (2021)",
         "distribuicao": {
-          "0.0": 5968,
-          "1.0": 733,
+          "0.0": 6019,
+          "1.0": 682,
           "2.0": 786,
           "3.0": 870
         }
@@ -61,8 +61,8 @@
         "distribuicao": {
           "0.0": 1489,
           "1.0": 2935,
-          "2.0": 2977,
-          "3.0": 956
+          "2.0": 2862,
+          "3.0": 1071
         }
       },
       {
@@ -73,8 +73,8 @@
         "fonte": "NIAAA — binge a partir de 5 doses por ocasião (só D1; baixa confiança)",
         "distribuicao": {
           "0.0": 6318,
-          "1.0": 1933,
-          "2.0": 106
+          "1.0": 1648,
+          "2.0": 391
         }
       },
       {
@@ -84,10 +84,10 @@
         "n_faixas": 4,
         "fonte": "Plano cartesiano de padrões alimentares (Ribeiro & Zárate, 2019, ESWA) — corte pela mediana",
         "distribuicao": {
-          "0": 2119,
-          "1": 2372,
-          "2": 1916,
-          "3": 1950
+          "0": 2200,
+          "1": 2367,
+          "2": 1590,
+          "3": 2200
         }
       }
     ],
@@ -105,6 +105,7 @@
       "P01101",
       "P02501",
       "P02002",
+      "P02001",
       "P018",
       "P00901",
       "P015",
@@ -275,15 +276,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "P02401_Integral",
-        "entropia": 0.693,
-        "corr_abs_Label": 0.125,
-        "sinal": "ok"
-      },
-      {
         "feature": "P00614_Sim",
         "entropia": 0.693,
         "corr_abs_Label": 0.042,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02401_Integral",
+        "entropia": 0.693,
+        "corr_abs_Label": 0.125,
         "sinal": "ok"
       },
       {
@@ -317,12 +318,6 @@
         "sinal": "ok"
       },
       {
-        "feature": "P029_cat",
-        "entropia": 0.874,
-        "corr_abs_Label": 0.089,
-        "sinal": "ok"
-      },
-      {
         "feature": "Q084_Sim",
         "entropia": 0.927,
         "corr_abs_Label": 0.355,
@@ -353,9 +348,15 @@
         "sinal": "ok"
       },
       {
+        "feature": "P029_cat",
+        "entropia": 0.974,
+        "corr_abs_Label": 0.135,
+        "sinal": "ok"
+      },
+      {
         "feature": "P035_cat",
-        "entropia": 1.315,
-        "corr_abs_Label": 0.02,
+        "entropia": 1.297,
+        "corr_abs_Label": 0.019,
         "sinal": "ok"
       },
       {
@@ -372,20 +373,20 @@
       },
       {
         "feature": "J012_cat",
-        "entropia": 1.862,
-        "corr_abs_Label": 0.424,
+        "entropia": 1.883,
+        "corr_abs_Label": 0.428,
         "sinal": "ok"
       },
       {
         "feature": "Padrao_Alimentar_cat",
-        "entropia": 1.995,
-        "corr_abs_Label": 0.076,
+        "entropia": 1.985,
+        "corr_abs_Label": 0.096,
         "sinal": "ok"
       }
     ],
     "dataset_final": {
       "n_registros": 8357,
-      "n_features": 54,
+      "n_features": 55,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025

@@ -23,8 +23,8 @@ Os notebooks 03 e 03b já entregam datasets **prontos para ML**:
 
 | Desenho | Arquivo (não versionado) | n × p | Distribuição (0/1) | Razão |
 |---------|--------------------------|-------|--------------------|-------|
-| 1 — Artrite Pura | `data/results/preprocessing/dataset_preprocessado.csv` | 4 826 × 69 (→ 56 NB04) | 4 332 / 494 | 8,77:1 |
-| 2 — Artrite c/ Comorbidades | `data/results/preprocessing_comorbidades/dataset_preprocessado.csv` | 8 357 × 66 (→ 54 NB04) | 4 332 / 4 025 | 1,08:1 |
+| 1 — Artrite Pura | `data/results/preprocessing/dataset_preprocessado.csv` | 4 826 × 70 (→ 57 NB04) | 4 332 / 494 | 8,77:1 |
+| 2 — Artrite c/ Comorbidades | `data/results/preprocessing_comorbidades/dataset_preprocessado.csv` | 8 357 × 68 (→ 55 NB04) | 4 332 / 4 025 | 1,08:1 |
 
 Cada CSV traz `X` (features encoded) + coluna `Label` (0 = saudável, 1 = artrite). Não há mais NaN, não há mais outliers extremos, encoding já feito. O NB06 consome o **dataset discretizado** (saída do NB04).
 
@@ -165,4 +165,4 @@ Esses artefatos alimentam:
 
 ---
 
-*Documento atualizado em 10/06/2026: skip patterns das perguntas-pai textuais corrigidos (NB03/03b), imputação trocada para global target-blind, skip P035←P034 aplicado na EDA (NB02 incl. Tab 3-A). Pipeline `02→03→03b→04→05` reexecutado e `data/results/` regenerado/versionado. Dims atuais: D1 4 826×69→56, D2 8 357×66→54. Resta apenas a modelagem (NB06).*
+*Documento atualizado em 10/06/2026: skip patterns das perguntas-pai textuais corrigidos (NB03/03b), imputação trocada para global target-blind, skip P035←P034 aplicado na EDA (NB02 incl. Tab 3-A). Pipeline `02→03→03b→04→05` reexecutado e `data/results/` regenerado/versionado. Dims atuais: D1 4 826×70→57, D2 8 357×68→55. Resta apenas a modelagem (NB06).*

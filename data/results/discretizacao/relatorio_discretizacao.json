@@ -46,8 +46,8 @@
         "n_faixas": 4,
         "fonte": "Guia de Atividade Física para a População Brasileira (2021)",
         "distribuicao": {
-          "0.0": 3444,
-          "1.0": 393,
+          "0.0": 3475,
+          "1.0": 362,
           "2.0": 456,
           "3.0": 533
         }
@@ -61,8 +61,8 @@
         "distribuicao": {
           "0.0": 1344,
           "1.0": 2006,
-          "2.0": 1241,
-          "3.0": 235
+          "2.0": 1217,
+          "3.0": 259
         }
       },
       {
@@ -73,8 +73,8 @@
         "fonte": "NIAAA — binge a partir de 5 doses por ocasião (só D1; baixa confiança)",
         "distribuicao": {
           "0.0": 3419,
-          "1.0": 1386,
-          "2.0": 21
+          "1.0": 1101,
+          "2.0": 306
         }
       },
       {
@@ -84,10 +84,10 @@
         "n_faixas": 4,
         "fonte": "Plano cartesiano de padrões alimentares (Ribeiro & Zárate, 2019, ESWA) — corte pela mediana",
         "distribuicao": {
-          "0": 1189,
-          "1": 1276,
-          "2": 1224,
-          "3": 1137
+          "0": 1247,
+          "1": 1230,
+          "2": 1058,
+          "3": 1291
         }
       }
     ],
@@ -294,6 +294,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "Q084_Sim",
+        "entropia": 0.721,
+        "corr_abs_Label": 0.144,
+        "sinal": "ok"
+      },
+      {
         "feature": "P027_Uma vez ou mais por mês",
         "entropia": 0.721,
         "corr_abs_Label": 0.022,
@@ -303,12 +309,6 @@
         "feature": "P00614_Sim",
         "entropia": 0.721,
         "corr_abs_Label": 0.015,
-        "sinal": "ok"
-      },
-      {
-        "feature": "Q084_Sim",
-        "entropia": 0.721,
-        "corr_abs_Label": 0.144,
         "sinal": "ok"
       },
       {
@@ -342,12 +342,6 @@
         "sinal": "ok"
       },
       {
-        "feature": "P029_cat",
-        "entropia": 0.903,
-        "corr_abs_Label": 0.003,
-        "sinal": "ok"
-      },
-      {
         "feature": "J01002_Unidade básica de saúde (posto ou centro de saúde ou unidade de saúde da família)",
         "entropia": 0.93,
         "corr_abs_Label": 0.055,
@@ -366,6 +360,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "P029_cat",
+        "entropia": 1.091,
+        "corr_abs_Label": 0.036,
+        "sinal": "ok"
+      },
+      {
         "feature": "C008_cat",
         "entropia": 1.279,
         "corr_abs_Label": 0.044,
@@ -373,8 +373,8 @@
       },
       {
         "feature": "P035_cat",
-        "entropia": 1.315,
-        "corr_abs_Label": 0.018,
+        "entropia": 1.294,
+        "corr_abs_Label": 0.016,
         "sinal": "ok"
       },
       {
@@ -385,20 +385,20 @@
       },
       {
         "feature": "J012_cat",
-        "entropia": 1.756,
-        "corr_abs_Label": 0.141,
+        "entropia": 1.768,
+        "corr_abs_Label": 0.144,
         "sinal": "ok"
       },
       {
         "feature": "Padrao_Alimentar_cat",
-        "entropia": 1.999,
-        "corr_abs_Label": 0.016,
+        "entropia": 1.996,
+        "corr_abs_Label": 0.029,
         "sinal": "ok"
       }
     ],
     "dataset_final": {
       "n_registros": 4826,
-      "n_features": 56,
+      "n_features": 57,
       "distribuicao_label": {
         "0": 4332,
         "1": 494

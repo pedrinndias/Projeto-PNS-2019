@@ -81,23 +81,22 @@
     "etapa_3_missing": {
       "vars_excluidas_>75pct": [
         "Q05901",
-        "G079",
+        "Q047081",
         "G081",
         "G080",
-        "Q04708",
+        "G079",
         "P04501",
-        "Q047081",
-        "Q04711",
-        "Q047111",
-        "Q115",
         "Q109",
-        "G070",
-        "P02602"
+        "Q115",
+        "Q04708",
+        "Q047111",
+        "Q04711",
+        "G070"
       ],
-      "n_excluidas": 13
+      "n_excluidas": 12
     },
     "etapa_4_outliers": {
-      "total_outliers_substituidos": 320,
+      "total_outliers_substituidos": 4,
       "parametro_usado": "3.0xIQR por classe",
       "detalhes": [
         {
@@ -109,26 +108,11 @@
           "Variável": "C008",
           "n_outliers": 2,
           "% outliers": 0.04
-        },
-        {
-          "Variável": "P02002",
-          "n_outliers": 7,
-          "% outliers": 0.47
-        },
-        {
-          "Variável": "J012",
-          "n_outliers": 24,
-          "% outliers": 0.5
-        },
-        {
-          "Variável": "P029",
-          "n_outliers": 285,
-          "% outliers": 5.91
         }
       ]
     },
     "etapa_5_imputacao": {
-      "total_imputados": 26443,
+      "total_imputados": 9633,
       "nan_residual_em_X": 0,
       "detalhes": [
         {
@@ -154,96 +138,6 @@
           "Tipo": "Numérica",
           "Método": "Média/global",
           "n_imputados": 2
-        },
-        {
-          "Variável": "P035",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 31
-        },
-        {
-          "Variável": "P00901",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 420
-        },
-        {
-          "Variável": "P015",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 2011
-        },
-        {
-          "Variável": "P018",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 404
-        },
-        {
-          "Variável": "P01101",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 460
-        },
-        {
-          "Variável": "P02501",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 2733
-        },
-        {
-          "Variável": "P02002",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 3339
-        },
-        {
-          "Variável": "P02001",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 3564
-        },
-        {
-          "Variável": "P023",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 1266
-        },
-        {
-          "Variável": "P01601",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 1436
-        },
-        {
-          "Variável": "P006",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 234
-        },
-        {
-          "Variável": "P013",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 510
-        },
-        {
-          "Variável": "J012",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 24
-        },
-        {
-          "Variável": "P02801",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 93
-        },
-        {
-          "Variável": "P029",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 285
         },
         {
           "Variável": "J01002",
@@ -358,7 +252,7 @@
     },
     "etapa_9_dataset_final": {
       "n_registros": 4826,
-      "n_features": 69,
+      "n_features": 70,
       "distribuicao_label": {
         "0": 4332,
         "1": 494
