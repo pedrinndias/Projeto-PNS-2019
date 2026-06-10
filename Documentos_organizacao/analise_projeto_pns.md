@@ -98,12 +98,12 @@ Fluxograma: [`figuras_artigo/fluxograma_pipeline_kdd.png`](figuras_artigo/fluxog
 | n casos | 494 | 4 025 |
 | n controles | 4 332 | 4 332 |
 | Razão | 8,77:1 (desbalanceado) | 1,08:1 (quase balanceado) |
-| Features (pré-proc → após NB04) | 69 → 56 | 66 → 54 |
+| Features (pré-proc → após NB04) | 70 → 57 | 68 → 55 |
 | Vars Q* (comorbidades) | Constantes → removidas | **Removidas das features** (filtro de coorte; anti-leakage) — só Q084 permanece; **+ exames condicionais** (`Q04708/Q047081/Q04711/Q047111/Q05901`) também removidos |
 | Skip patterns | 29 274 NaN preenchidos | 50 565 NaN preenchidos |
-| Vars excluídas (>75% NaN) | 13 | 15 |
-| Outliers tratados (IQR×3 → NaN → média global) | 320 | 493 |
-| Valores imputados | 26 443 (global target-blind) | 33 616 (global target-blind) |
+| Vars excluídas (>75% NaN) | 12 | 13 |
+| Outliers tratados (IQR×3 só em contínuas → NaN → média) | 4 | 7 |
+| Valores imputados | 9 633 (global target-blind) | 10 415 (global target-blind) |
 | Risco metodológico | Amostra pequena para ML | Leakage circular das Q* + exames **resolvido por anti-leakage** (NB03b) |
 
 Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alto 39,8% · diabetes 21,9% · depressão 19,5%.
@@ -131,9 +131,9 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 
 ## 6. Pontos de atenção atuais
 
-### 🔴 Correções de código aplicadas (10/06/2026 — **exigem reexecução**)
+### 🟢 Correções de código aplicadas + reexecutadas (10/06/2026)
 
-Bugs **substantivos** corrigidos no código; o `data/results/` versionado ainda reflete a versão ANTIGA — **reexecutar `02 → 03 → 03b → 04 → 05`** para regenerar CSVs/figuras/JSON e atualizar as dimensões e contagens abaixo.
+Bugs **substantivos** corrigidos e o pipeline `02 → 03 → 03b → 04 → 05` **reexecutado**; `data/results/`, bases finais e figuras regenerados. Os números novos já estão refletidos nas tabelas da §4 (outliers 320→**4**/493→**7**; imputados 26 443→**9 633**/33 616→**10 415**; features 69→**70**/66→**68**).
 
 - **3.1/3.2 — Escore alimentar corrompido por bug texto→NaN (RESOLVIDO na raiz):** as variáveis de frequência alimentar guardam o valor 0 dia/sem. como o **texto** `"Nunca ou menos de uma vez por semana"`; o `pd.to_numeric` o jogava para `NaN`, que virava **média imputada** (não-consumidor tratado como consumidor médio). Efeito medido: `Escore_Inflamatorio` **inflado ~2×** (média 12,5 → 6,3 real; P02001 74% imputado → 0%). Corrigido com `coerce_frequencia` (`"Nunca…"→0`) em **NB02, NB02b, NB03, NB03b**. Como `P02001`/`P02602` saem do corte >75% missing, **o escore volta a ter a mesma composição nos dois desenhos** (3.2). ⚠️ Reflexo na EDA: as medianas alimentares e o alerta de **causalidade reversa** (NB02) precisam ser **reinterpretados** — parte do achado "contraintuitivo" vinha de descartar os não-consumidores.
 - **3.3 — Outliers IQR só em contínuas verdadeiras:** o IQR×3 por classe era aplicado também a **contagens limitadas** (dias/sem. 0–7, doses, consultas), achatando respostas legítimas (ex.: 285 doses de álcool → média). Agora o tratamento de outlier é restrito a `P00104`/`P00404`/`C008` (peso/altura/idade), onde extremo = erro de medição. As contagens são absorvidas pela discretização do NB04.
@@ -148,7 +148,7 @@ Bugs **substantivos** corrigidos no código; o `data/results/` versionado ainda 
 
 ### 🟢 Reexecução concluída (10/06/2026)
 
-O pipeline `02 → 03 → 03b → 04 → 05` foi **reexecutado** após as correções de 10/06 (skip patterns das perguntas-pai textuais, imputação **global target-blind**, skip P035←P034 na EDA). `data/results/` (CSVs, figuras, relatórios) e as bases finais foram **regenerados e commitados**. Dims atuais: D1 4 826×69→56, D2 8 357×66→54. Não há mais reexecução pendente — resta a modelagem (NB06).
+O pipeline `02 → 03 → 03b → 04 → 05` foi **reexecutado** após as correções de 10/06 (skip patterns das perguntas-pai textuais, imputação **global target-blind**, skip P035←P034 na EDA). `data/results/` (CSVs, figuras, relatórios) e as bases finais foram **regenerados e commitados**. Dims atuais: D1 4 826×70→57, D2 8 357×68→55. Não há mais reexecução pendente — resta a modelagem (NB06).
 
 ### 🟢 Resolvidos (30/05/2026)
 
@@ -205,4 +205,4 @@ Detalhamento em [`../proxima_fase.md`](../proxima_fase.md). Em resumo:
 
 ---
 
-*Documento atualizado em 10/06/2026: correção dos skip patterns (perguntas-pai textuais → `MAPA_PAIS` texto→código nos NB03/03b), imputação trocada para **global target-blind** (sem vazamento do alvo), skip P035←P034 aplicado na EDA (NB02 incl. Tab 3-A). Pipeline `02→03→03b→04→05` reexecutado e `data/results/` regenerado/versionado. Dims atuais: D1 4 826×69→56, D2 8 357×66→54. **Pendente:** modelagem no NB06.*
+*Documento atualizado em 10/06/2026: correção dos skip patterns (perguntas-pai textuais → `MAPA_PAIS` texto→código nos NB03/03b), imputação trocada para **global target-blind** (sem vazamento do alvo), skip P035←P034 aplicado na EDA (NB02 incl. Tab 3-A). Pipeline `02→03→03b→04→05` reexecutado e `data/results/` regenerado/versionado. Dims atuais: D1 4 826×70→57, D2 8 357×68→55. **Pendente:** modelagem no NB06.*
