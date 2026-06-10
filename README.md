@@ -15,8 +15,8 @@ Projeto_PNS/
 ├── data/
 │   ├── raw/               ← Dados brutos (pns2019.csv não versionado – ver .gitignore)
 │   └── results/
-│       ├── preprocessing/             ← Desenho 1: artrite pura (4 826 × 49)
-│       ├── preprocessing_comorbidades/← Desenho 2: artrite + comorbidades (8 357 × 57)
+│       ├── preprocessing/             ← Desenho 1: artrite pura (4 826 × 69 → 56 após NB04)
+│       ├── preprocessing_comorbidades/← Desenho 2: artrite + comorbidades (8 357 × 66 → 54 após NB04)
 │       └── eda/                       ← Figuras da análise exploratória
 ├── Documentos_organizacao/
 │   ├── figuras_artigo/
@@ -63,13 +63,13 @@ Projeto_PNS/
 
 ### Desenho 1 – Artrite Pura (`03_preprocessamento_v3.ipynb`)
 - **Critério:** `Q079 = Sim` **e** as demais 13 doenças crônicas = Não (artrite isolada)
-- **Amostra:** 4 826 registros · 49 features
+- **Amostra:** 4 826 registros · 69 features (→ 56 após discretização no NB04)
 - **Distribuição:** 4 332 saudáveis vs 494 artrite (razão 8,77:1 – desbalanceado)
 - **Dataset:** `data/results/preprocessing/dataset_preprocessado.csv`
 
 ### Desenho 2 – Artrite com Comorbidades (`03b_preprocessamento_comorbidades.ipynb`)
 - **Critério:** `Q079 = Sim` com qualquer combinação de outras doenças crônicas
-- **Amostra:** 8 357 registros · 57 features
+- **Amostra:** 8 357 registros · 66 features (→ 54 após discretização no NB04)
 - **Distribuição:** 4 332 saudáveis vs 4 025 artrite (razão 1,08:1 – quase balanceado)
 - **Comorbidades prevalentes:** hipertensão 65,3% · colesterol alto 39,8% · diabetes 21,9% · depressão 19,5%
 - **Dataset:** `data/results/preprocessing_comorbidades/dataset_preprocessado.csv`
@@ -80,12 +80,12 @@ Projeto_PNS/
 
 | Etapa | Decisão | Resultado |
 |-------|---------|-----------|
-| Skip patterns | Preenchimento condicional (J012, P035, P02801…) | 1 344 NaN estruturais resolvidos |
+| Skip patterns | Preenchimento condicional (P035, P029, J012, G060/G062…) | 29 274 NaN estruturais resolvidos |
 | Missing >75% | Exclusão da variável | 13 variáveis removidas |
 | Outliers | Substituição por limite IQR×3 por classe | 50 valores tratados |
-| Imputação | Média/classe (numérica) · Moda/classe (categórica) | 27 455 valores imputados |
+| Imputação | Média/moda **global** (target-blind, não usa o alvo) | 26 443 valores imputados |
 | Feature eng. | IMC · Escore Inflamatório · Escore Saudável · Razão Inf/Saud | 4 features criadas |
-| Encoding | OHE em 22 variáveis categóricas | Dataset final 4 826 × 49 |
+| Encoding | OHE em 31 + Label Encoding em 4 variáveis | Dataset final 4 826 × 69 |
 
 ---
 

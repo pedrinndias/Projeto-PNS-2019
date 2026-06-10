@@ -34,8 +34,8 @@
         "n_faixas": 3,
         "fonte": "Subdivisão etária do idoso (risco crescente)",
         "distribuicao": {
-          "0.0": 4832,
-          "1.0": 2448,
+          "0.0": 4830,
+          "1.0": 2450,
           "2.0": 1077
         }
       },
@@ -60,8 +60,8 @@
         "fonte": "Intensidade de uso de serviços de saúde (faixas pragmáticas)",
         "distribuicao": {
           "0.0": 1489,
-          "1.0": 2951,
-          "2.0": 2961,
+          "1.0": 2935,
+          "2.0": 2977,
           "3.0": 956
         }
       },
@@ -84,10 +84,10 @@
         "n_faixas": 4,
         "fonte": "Plano cartesiano de padrões alimentares (Ribeiro & Zárate, 2019, ESWA) — corte pela mediana",
         "distribuicao": {
-          "0": 2088,
-          "1": 2181,
-          "2": 1964,
-          "3": 2124
+          "0": 2119,
+          "1": 2372,
+          "2": 1916,
+          "3": 1950
         }
       }
     ],
@@ -209,15 +209,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "P02601_Muito baixo",
-        "entropia": 0.332,
-        "corr_abs_Label": 0.068,
-        "sinal": "ok"
-      },
-      {
         "feature": "P03201_Sim",
         "entropia": 0.332,
         "corr_abs_Label": 0.1,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02601_Muito baixo",
+        "entropia": 0.332,
+        "corr_abs_Label": 0.068,
         "sinal": "ok"
       },
       {
@@ -275,15 +275,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "P02401_Integral",
-        "entropia": 0.693,
-        "corr_abs_Label": 0.125,
-        "sinal": "ok"
-      },
-      {
         "feature": "P00614_Sim",
         "entropia": 0.693,
         "corr_abs_Label": 0.042,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02401_Integral",
+        "entropia": 0.693,
+        "corr_abs_Label": 0.125,
         "sinal": "ok"
       },
       {
@@ -361,7 +361,7 @@
       {
         "feature": "C008_cat",
         "entropia": 1.357,
-        "corr_abs_Label": 0.114,
+        "corr_abs_Label": 0.113,
         "sinal": "ok"
       },
       {
@@ -373,13 +373,13 @@
       {
         "feature": "J012_cat",
         "entropia": 1.862,
-        "corr_abs_Label": 0.426,
+        "corr_abs_Label": 0.424,
         "sinal": "ok"
       },
       {
         "feature": "Padrao_Alimentar_cat",
-        "entropia": 1.999,
-        "corr_abs_Label": 0.269,
+        "entropia": 1.995,
+        "corr_abs_Label": 0.076,
         "sinal": "ok"
       }
     ],

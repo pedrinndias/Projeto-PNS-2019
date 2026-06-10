@@ -1,7 +1,7 @@
 # Análise do Projeto PNS 2019
 ## Mineração de Dados — Pedro Dias Soares
 
-> **Última atualização:** 08/06/2026
+> **Última atualização:** 10/06/2026
 > **Documento companheiro:** [`../proxima_fase.md`](../proxima_fase.md) (roadmap das Fases 3.x e 4). O antigo `plano_reestruturacao.md` está **descontinuado** (ver banner no topo dele).
 
 ---
@@ -70,7 +70,7 @@ Projeto_PNS/
 | `.gitignore` | ✅ | Ignora `.csv`, `.db`, `.venv`, settings locais. Limpo (duplicatas removidas em 30/05) |
 | `requirements.txt` | ✅ | Inclui `nbformat` e `xlrd` |
 | README | ✅ | Sincronizado em 08/06 (NB04/05 existem; 05 = exportação; +02b; NB06 a criar) |
-| Notebooks 01–05 + 02b | ⚠️ | Código atualizado em 08/06 (alinhamento D1×D2, Tab 2-C, anti-leakage de exames). **NB03b/02/02b precisam ser REEXECUTADOS** — outputs limpos; `data/results/` ainda refletem o código antigo |
+| Notebooks 01–05 + 02b | ✅ | Reexecutados em 10/06 (skip patterns corrigidos, imputação global target-blind, skip na EDA). `data/results/` e bases finais regenerados e versionados |
 | Rastreabilidade (JSON) | ✅ | `relatorio_preprocessamento.json` em cada pasta de resultado |
 | Scripts de build | ⚠️ | Removidos do repo (commit ad89d7a). Os notebooks são mantidos diretamente, não mais por geradores |
 
@@ -98,12 +98,12 @@ Fluxograma: [`figuras_artigo/fluxograma_pipeline_kdd.png`](figuras_artigo/fluxog
 | n casos | 494 | 4 025 |
 | n controles | 4 332 | 4 332 |
 | Razão | 8,77:1 (desbalanceado) | 1,08:1 (quase balanceado) |
-| Features (pré-proc → após NB04) | ~33 (majoritariamente categórico; `P04501` e `VDF004` seguem numéricas) | **a recalcular na reexecução** (D2 ganhou ~15 vars + anti-leakage maior) |
+| Features (pré-proc → após NB04) | 69 → 56 | 66 → 54 |
 | Vars Q* (comorbidades) | Constantes → removidas | **Removidas das features** (filtro de coorte; anti-leakage) — só Q084 permanece; **+ exames condicionais** (`Q04708/Q047081/Q04711/Q047111/Q05901`) também removidos |
-| Skip patterns | 1 344 NaN preenchidos | a recalcular (ganhou skip-8 P03202) |
-| Vars excluídas (>75% NaN) | 13 | a recalcular |
-| Outliers tratados (IQR×3) | 50 | a recalcular |
-| Valores imputados | 27 455 | a recalcular |
+| Skip patterns | 29 274 NaN preenchidos | 50 565 NaN preenchidos |
+| Vars excluídas (>75% NaN) | 13 | 15 |
+| Outliers tratados (IQR×3) | 50 | 50 |
+| Valores imputados | 26 443 (global target-blind) | 33 616 (global target-blind) |
 | Risco metodológico | Amostra pequena para ML | Leakage circular das Q* + exames **resolvido por anti-leakage** (NB03b) |
 
 Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alto 39,8% · diabetes 21,9% · depressão 19,5%.
@@ -117,7 +117,7 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 | Faixa etária | ≥ 60 anos (idosos) | Alinhado com Cancella (2025) e Plano do Artigo |
 | Limite de missing | Excluir variável se > 75% NaN | Padrão Cancella (60%) flexibilizado para preservar variáveis-chave |
 | Outliers | IQR × 3,0 por classe → substituir por limite | ~3,3 σ na normal; conservador (Hipertensão/DPOC usam 1,5×) |
-| Imputação | Média (numérica) / Moda (categórica) **por classe**; IMC/escores por **mediana** | Preserva n; mediana evita `IMC=0` no `fillna` final |
+| Imputação | Média (numérica) / Moda (categórica) **global (target-blind)**; IMC/escores por **mediana global** | Sem vazamento do alvo no dataset de ML (a EDA descritiva vem dos `.db`, à parte); mediana evita `IMC=0` no `fillna` final |
 | Renda (`VDF004`) | Tratada como **faixa** (1–7) via `coerce_codificado` (aceita texto ou código) | É faixa de salário mínimo, não "quintil"; evita exclusão silenciosa |
 | Plano de saúde | `I00102` (médico) — **não** `I00101` (odontológico) | Correção de código contra o dicionário PNS 2019 |
 | Discretização (NB04) | Faixa etária, IMC-OMS, atividade física, consultas (J012), álcool (NIAAA, só D1) e **padrão alimentar via plano cartesiano** (Ribeiro & Zárate, 2019) — substitui os escores em quartis | Faixas de organismos oficiais (OMS, Guia AF BR 2021, NIAAA); padrão CAPTO/STROBE |
@@ -138,9 +138,9 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 - **Bug `NaN`-como-categoria na Tab 2-C** (NB02/02b): `dropna()` antes do `crosstab`, alinhando com a Tab 2-B (não contamina mais χ²/Fisher).
 - **`IMC=0` latente:** imputação por mediana de IMC/escores antes do `fillna(0)` final (NB03 e NB03b).
 
-### 🔴 Pendência ativa — REEXECUÇÃO do pipeline
+### 🟢 Reexecução concluída (10/06/2026)
 
-Como o código do NB03b/NB02/02b mudou e os `.db` **não são versionados**, os artefatos em `data/results/` (CSVs, figuras, relatórios) e as bases finais estão **defasados (stale)**. É preciso **reexecutar localmente `03 → 03b → 04 → 05` (+ `02`/`02b`)** e commitar os resultados regenerados. Os números do Desenho 2 (nº de features, excluídas, imputados) vão mudar.
+O pipeline `02 → 03 → 03b → 04 → 05` foi **reexecutado** após as correções de 10/06 (skip patterns das perguntas-pai textuais, imputação **global target-blind**, skip P035←P034 na EDA). `data/results/` (CSVs, figuras, relatórios) e as bases finais foram **regenerados e commitados**. Dims atuais: D1 4 826×69→56, D2 8 357×66→54. Não há mais reexecução pendente — resta a modelagem (NB06).
 
 ### 🟢 Resolvidos (30/05/2026)
 
@@ -171,9 +171,9 @@ Como o código do NB03b/NB02/02b mudou e os `.db` **não são versionados**, os 
 |------|:------:|
 | Compreensão do problema (CAPTO/PICOS) | ✅ 100% |
 | ETL e bases SQLite | ✅ 100% |
-| EDA bivariada (NB02 D1 + NB02b D2) | ✅ código pronto — ⚠️ reexecutar p/ regenerar figuras/tabelas |
+| EDA bivariada (NB02 D1 + NB02b D2) | ✅ 100% — reexecutada 10/06 (figuras/tabelas regeneradas) |
 | Pré-processamento — Desenho 1 (NB03) | ✅ 100% |
-| Pré-processamento — Desenho 2 (NB03b) | ✅ código alinhado ao D1 — ⚠️ reexecutar |
+| Pré-processamento — Desenho 2 (NB03b) | ✅ 100% — alinhado ao D1 e reexecutado 10/06 |
 | Documentação (template, guias, resultados consolidados) | ✅ 100% |
 | **Discretização (NB04)** | ✅ 100% — faixas de domínio + plano cartesiano |
 | **Exportação das bases (NB05)** | ✅ 100% — 2 .db + 2 .csv + Excel |
@@ -181,7 +181,7 @@ Como o código do NB03b/NB02/02b mudou e os `.db` **não são versionados**, os 
 | Avaliação e feature importance | 🔴 0% |
 | Redação do artigo (Resultados/Discussão) | 🔴 0% |
 
-**Progresso geral estimado:** ~80% — pipeline corrigido e consistente entre os dois desenhos; falta **reexecutar** para regenerar as bases finais (números do D2 mudarão), a modelagem (NB06) e a escrita do artigo.
+**Progresso geral estimado:** ~85% — pipeline corrigido, consistente entre os dois desenhos e **reexecutado** (bases finais regeneradas); faltam a modelagem (NB06) e a escrita do artigo.
 
 ---
 
@@ -190,11 +190,11 @@ Como o código do NB03b/NB02/02b mudou e os `.db` **não são versionados**, os 
 Detalhamento em [`../proxima_fase.md`](../proxima_fase.md). Em resumo:
 
 1. ✅ **Concluído** — `notebooks/04_discretizacao.ipynb` (faixas de domínio + plano cartesiano) e `05_exportacao_bases.ipynb` (bases finais .db/.csv/Excel).
-2. **Reexecutar** `03 → 03b → 04 → 05` (+ `02`/`02b`) para regenerar `data/results/` e as bases finais com o código corrigido, e commitar os resultados.
+2. ✅ **Concluído (10/06)** — pipeline `02 → 03 → 03b → 04 → 05` reexecutado e `data/results/`/bases finais regenerados e commitados.
 3. **Criar** `notebooks/06_modelagem_ml.ipynb` — pipeline ML nos dois desenhos (Reg. Logística, Árvore, Random Forest; RUS dentro da CV; F1-macro com IC 95%).
 4. **Atualizar** o `Resultados_Consolidados_PNS2019_Artrite.docx` com as métricas do ML.
 5. **Redigir** as seções de Resultados e Discussão do artigo.
 
 ---
 
-*Documento atualizado em 08/06/2026: auditoria completa + correção de rótulos (I00102, alimentares, VDF004 faixa); **alinhamento D1×D2** (NB03b recebeu as correções do NB03 e o anti-leakage foi estendido aos exames condicionais); `dropna()` na Tab 2-C; imputação por mediana de IMC/escores. **Pendente:** reexecutar o pipeline para regenerar `data/results/` (artefatos atuais defasados); modelagem no NB06.*
+*Documento atualizado em 10/06/2026: correção dos skip patterns (perguntas-pai textuais → `MAPA_PAIS` texto→código nos NB03/03b), imputação trocada para **global target-blind** (sem vazamento do alvo), skip P035←P034 aplicado na EDA (NB02 incl. Tab 3-A). Pipeline `02→03→03b→04→05` reexecutado e `data/results/` regenerado/versionado. Dims atuais: D1 4 826×69→56, D2 8 357×66→54. **Pendente:** modelagem no NB06.*
