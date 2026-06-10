@@ -300,15 +300,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "Q084_Sim",
-        "entropia": 0.721,
-        "corr_abs_Label": 0.144,
-        "sinal": "ok"
-      },
-      {
         "feature": "P00614_Sim",
         "entropia": 0.721,
         "corr_abs_Label": 0.015,
+        "sinal": "ok"
+      },
+      {
+        "feature": "Q084_Sim",
+        "entropia": 0.721,
+        "corr_abs_Label": 0.144,
         "sinal": "ok"
       },
       {
