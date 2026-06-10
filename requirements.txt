@@ -24,3 +24,7 @@ openpyxl>=3.1
 
 nbformat
 xlrd
+
+# Configuração central (config.toml) — tomllib é stdlib no Python 3.11+;
+# só é necessário instalar tomli no Python 3.10.
+tomli>=2.0; python_version < "3.11"
