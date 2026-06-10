@@ -28,7 +28,7 @@ Os notebooks 03 e 03b já entregam datasets **prontos para ML**:
 
 Cada CSV traz `X` (features encoded) + coluna `Label` (0 = saudável, 1 = artrite). Não há mais NaN, não há mais outliers extremos, encoding já feito. O NB06 consome o **dataset discretizado** (saída do NB04).
 
-> ✅ Números **pós-reexecução (10/06)**. Anti-leakage do D2 = 13 Q* + 5 exames removidos. Os skips agora preenchem P035/P029/G060/G062/P02801/P03201 (antes descartados por >75% missing), por isso `p` subiu vs. versões antigas.
+> ✅ Números **pós-reexecução (10/06)**. Anti-leakage do D2 = **11 colunas Q\* removidas das features** (Q088/Q128 nunca entraram; os 5 exames condicionais já saíam pelo corte >75% missing). Os skips agora preenchem P035/P029/G060/G062/P02801/P03201 (antes descartados por >75% missing), por isso `p` subiu vs. versões antigas.
 
 ---
 
