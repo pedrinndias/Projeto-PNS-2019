@@ -72,7 +72,7 @@
         {
           "Variável": "P03202",
           "Pai": "P03201",
-          "Condição": "P03201≠1 (não fez binge)",
+          "Condição": "P03201=2 (não fez binge)",
           "Valor_Implicito": "0 doses",
           "n_preenchidos": 4433
         }

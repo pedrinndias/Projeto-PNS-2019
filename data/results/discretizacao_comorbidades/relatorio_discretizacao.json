@@ -275,15 +275,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "P00614_Sim",
-        "entropia": 0.693,
-        "corr_abs_Label": 0.042,
-        "sinal": "ok"
-      },
-      {
         "feature": "P02401_Integral",
         "entropia": 0.693,
         "corr_abs_Label": 0.125,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P00614_Sim",
+        "entropia": 0.693,
+        "corr_abs_Label": 0.042,
         "sinal": "ok"
       },
       {
