@@ -82,7 +82,7 @@ Projeto_PNS/
 |-------|---------|-----------|
 | Skip patterns | Preenchimento condicional (P035, P029, J012, G060/G062…) | 29 274 NaN estruturais resolvidos |
 | Missing >75% | Exclusão da variável | 13 variáveis removidas |
-| Outliers | Substituição por limite IQR×3 por classe | 50 valores tratados |
+| Outliers | IQR×3 por classe → substituído por NaN → imputação por média global | 320 valores tratados |
 | Imputação | Média/moda **global** (target-blind, não usa o alvo) | 26 443 valores imputados |
 | Feature eng. | IMC · Escore Inflamatório · Escore Saudável · Razão Inf/Saud | 4 features criadas |
 | Encoding | OHE em 31 + Label Encoding em 4 variáveis | Dataset final 4 826 × 69 |

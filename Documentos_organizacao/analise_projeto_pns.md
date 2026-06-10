@@ -102,7 +102,7 @@ Fluxograma: [`figuras_artigo/fluxograma_pipeline_kdd.png`](figuras_artigo/fluxog
 | Vars Q* (comorbidades) | Constantes → removidas | **Removidas das features** (filtro de coorte; anti-leakage) — só Q084 permanece; **+ exames condicionais** (`Q04708/Q047081/Q04711/Q047111/Q05901`) também removidos |
 | Skip patterns | 29 274 NaN preenchidos | 50 565 NaN preenchidos |
 | Vars excluídas (>75% NaN) | 13 | 15 |
-| Outliers tratados (IQR×3) | 50 | 50 |
+| Outliers tratados (IQR×3 → NaN → média global) | 320 | 493 |
 | Valores imputados | 26 443 (global target-blind) | 33 616 (global target-blind) |
 | Risco metodológico | Amostra pequena para ML | Leakage circular das Q* + exames **resolvido por anti-leakage** (NB03b) |
 
@@ -116,7 +116,7 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 |-------|---------|---------------|
 | Faixa etária | ≥ 60 anos (idosos) | Alinhado com Cancella (2025) e Plano do Artigo |
 | Limite de missing | Excluir variável se > 75% NaN | Padrão Cancella (60%) flexibilizado para preservar variáveis-chave |
-| Outliers | IQR × 3,0 por classe → substituir por limite | ~3,3 σ na normal; conservador (Hipertensão/DPOC usam 1,5×) |
+| Outliers | IQR × 3,0 por classe → marcar como NaN → imputar por média global | ~3,3 σ na normal; conservador (Hipertensão/DPOC usam 1,5×) |
 | Imputação | Média (numérica) / Moda (categórica) **global (target-blind)**; IMC/escores por **mediana global** | Sem vazamento do alvo no dataset de ML (a EDA descritiva vem dos `.db`, à parte); mediana evita `IMC=0` no `fillna` final |
 | Renda (`VDF004`) | Tratada como **faixa** (1–7) via `coerce_codificado` (aceita texto ou código) | É faixa de salário mínimo, não "quintil"; evita exclusão silenciosa |
 | Plano de saúde | `I00102` (médico) — **não** `I00101` (odontológico) | Correção de código contra o dicionário PNS 2019 |
@@ -130,6 +130,14 @@ Comorbidades mais prevalentes no Desenho 2: hipertensão 65,3% · colesterol alt
 ---
 
 ## 6. Pontos de atenção atuais
+
+### 🔴 Correções de código aplicadas (10/06/2026 — **exigem reexecução**)
+
+Bugs **substantivos** corrigidos no código; o `data/results/` versionado ainda reflete a versão ANTIGA — **reexecutar `02 → 03 → 03b → 04 → 05`** para regenerar CSVs/figuras/JSON e atualizar as dimensões e contagens abaixo.
+
+- **3.1/3.2 — Escore alimentar corrompido por bug texto→NaN (RESOLVIDO na raiz):** as variáveis de frequência alimentar guardam o valor 0 dia/sem. como o **texto** `"Nunca ou menos de uma vez por semana"`; o `pd.to_numeric` o jogava para `NaN`, que virava **média imputada** (não-consumidor tratado como consumidor médio). Efeito medido: `Escore_Inflamatorio` **inflado ~2×** (média 12,5 → 6,3 real; P02001 74% imputado → 0%). Corrigido com `coerce_frequencia` (`"Nunca…"→0`) em **NB02, NB02b, NB03, NB03b**. Como `P02001`/`P02602` saem do corte >75% missing, **o escore volta a ter a mesma composição nos dois desenhos** (3.2). ⚠️ Reflexo na EDA: as medianas alimentares e o alerta de **causalidade reversa** (NB02) precisam ser **reinterpretados** — parte do achado "contraintuitivo" vinha de descartar os não-consumidores.
+- **3.3 — Outliers IQR só em contínuas verdadeiras:** o IQR×3 por classe era aplicado também a **contagens limitadas** (dias/sem. 0–7, doses, consultas), achatando respostas legítimas (ex.: 285 doses de álcool → média). Agora o tratamento de outlier é restrito a `P00104`/`P00404`/`C008` (peso/altura/idade), onde extremo = erro de medição. As contagens são absorvidas pela discretização do NB04.
+- **3.4 — Vazamento não-supervisionado documentado:** a **mediana** do plano cartesiano alimentar (NB04) é o **único** corte data-driven (os demais são faixas de domínio fixas) e é alvo-cega; fica registrado que o **NB06 deve reajustá-la _in-fold_** (só no treino) dentro da CV.
 
 ### 🟢 Resolvidos (08/06/2026 — auditoria + alinhamento)
 
