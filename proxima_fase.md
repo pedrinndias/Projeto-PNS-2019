@@ -108,8 +108,9 @@ Essas decisões já foram tomadas e ficam registradas para evitar retrabalho:
 | Desenhos | **C** — treinar e comparar os dois | Triangulação metodológica; Desenho 1 = limpo; Desenho 2 = poder estatístico |
 | Q* como features | **Não** em nenhum desenho — removidas no NB03b (anti-leakage; + exames condicionais) | Q* definem a coorte, não o modelo — evita vazamento circular |
 | Tratamento de missing | **Imputação global (target-blind)** (média/moda) após corte de >75% NaN | Sem vazamento do alvo no dataset de ML; já no NB03/NB03b |
-| Outliers | **IQR × 3,0 por classe → substituir** | ~3,3 σ; já feito no NB03/NB03b |
+| Outliers | **IQR × 3,0 por classe → NaN → média global** | ~3,3 σ; já feito no NB03/NB03b |
 | Discretização | **Sim** — IMC-OMS, faixa etária, atividade física, escore inflamatório | Melhor interpretabilidade das regras (CAPTO) |
+| Mediana do plano alimentar | **Reajustar _in-fold_ no NB06** (só no treino) | Único corte data-driven do NB04 (3.4); evita vazamento não-supervisionado |
 | Split | **80/20 estratificado**, `random_state=42` | Padrão da literatura PUC Minas |
 | Balanceamento | **RUS dentro de cada fold da CV** (não fora) | Evita vazamento; padrão Cancella |
 | Métrica-alvo | **F1-macro** | Robusta a desbalanceamento (Desenho 1) |
