@@ -40,11 +40,18 @@ Projeto_PNS/
 ├── scripts/                          ← (vazio no momento)
 ├── docs/
 │   └── Chaves_PNS_2019.pdf
+├── config.toml                       ← Parâmetros centrais (hiperparâmetros, cores, cortes de discretização)
 ├── proxima_fase.md                   ← Roadmap das Fases 3.x e 4
 ├── README.md
 ├── requirements.txt
 └── .gitignore
 ```
+
+> **Configuração central (`config.toml`).** Os hiperparâmetros (`random_state`, `alpha`,
+> `limite_missing`, `limite_iqr_mult`, limiares de entropia/correlação), as cores dos gráficos e
+> os **cortes de discretização com a sua fonte oficial** ficam num único `config.toml`, lido pelos
+> notebooks 02–05. Para mudar uma semente ou um corte de domínio, edite o `config.toml` — não os
+> notebooks. Leitura via `tomllib` (Python 3.11+, stdlib) ou `tomli` (Python 3.10).
 
 ---
 
@@ -121,7 +128,7 @@ jupyter notebook notebooks/05_exportacao_bases.ipynb              # bases finais
 
 ## Requisitos Principais
 
-- Python 3.10+
+- Python 3.10+ (no 3.10, instale `tomli` para ler o `config.toml`; no 3.11+ já vem no `tomllib`)
 - pandas · numpy · matplotlib · seaborn · scikit-learn · nbformat · python-docx · imbalanced-learn
 
 Ver lista completa em `requirements.txt`.

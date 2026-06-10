@@ -1,0 +1,85 @@
+# config.toml — Parâmetros do pipeline PNS 2019 (fonte única de configuração)
+#
+# Lido pelos notebooks (02–05) via `tomllib` (Python 3.11+) ou `tomli` (Python 3.10).
+# Centraliza os valores que antes estavam duplicados em cada notebook: hiperparâmetros,
+# cores, e os cortes de discretização (cada um com a sua fonte oficial — auditável).
+
+[pipeline]
+random_state    = 42      # semente fixa em todo o projeto (reprodutibilidade)
+alpha           = 0.05    # nível de significância dos testes (5%)
+limite_missing  = 0.75    # exclui variável com > 75% NaN real
+limite_iqr_mult = 3.0     # multiplicador do IQR para outliers (~3,3 σ)
+limiar_entropia = 0.10    # NB04: abaixo disso = atributo quase constante (sinaliza)
+limiar_corr     = 0.60    # NB04: acima disso = alerta de variável-consequência
+
+[cores]
+artrite  = "#C0392B"      # vermelho — Com Artrite
+saudavel = "#27AE60"      # verde    — Saudável
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Discretização (NB04): cada faixa de domínio com a sua FONTE oficial.
+# Array de tabelas [[...]] = lista de registros homogêneos. A ordem é preservada.
+# bins/labels/right são os argumentos de pandas.cut.
+# ─────────────────────────────────────────────────────────────────────────────
+[[discretizacao.faixa]]
+var    = "IMC"
+bins   = [0, 18.5, 25, 30, 100]
+labels = [0, 1, 2, 3]
+right  = false
+fonte  = "OMS — classificação de IMC para adultos"
+
+[[discretizacao.faixa]]
+var    = "C008"
+bins   = [59, 69, 79, 120]
+labels = [0, 1, 2]
+right  = true
+fonte  = "Subdivisão etária do idoso (risco crescente)"
+
+[[discretizacao.faixa]]
+var    = "P035"
+bins   = [-0.1, 0, 2, 4, 7]
+labels = [0, 1, 2, 3]
+right  = true
+fonte  = "Guia de Atividade Física para a População Brasileira (2021)"
+
+[[discretizacao.faixa]]
+var    = "J012"
+bins   = [-0.1, 0, 2, 6, 1e9]
+labels = [0, 1, 2, 3]
+right  = true
+fonte  = "Intensidade de uso de serviços de saúde (faixas pragmáticas)"
+
+[[discretizacao.faixa]]
+var    = "P029"
+bins   = [-0.1, 0, 4, 1e9]
+labels = [0, 1, 2]
+right  = true
+fonte  = "NIAAA — binge a partir de 5 doses por ocasião (só D1; baixa confiança)"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Desenhos para a DISCRETIZAÇÃO (NB04): entrada = saída do NB03/03b; saída = pasta disc.
+# ─────────────────────────────────────────────────────────────────────────────
+[desenhos.puro]
+rotulo  = "Desenho 1 — Artrite pura"
+entrada = "../data/results/preprocessing/dataset_preprocessado.csv"
+saida   = "../data/results/discretizacao/"
+
+[desenhos.comorbidades]
+rotulo  = "Desenho 2 — Artrite + comorbidades"
+entrada = "../data/results/preprocessing_comorbidades/dataset_preprocessado.csv"
+saida   = "../data/results/discretizacao_comorbidades/"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Desenhos para a EXPORTAÇÃO (NB05): entrada = saída do NB04 (discretizado).
+# ─────────────────────────────────────────────────────────────────────────────
+[exportacao.desenhos.puro]
+rotulo  = "Desenho 1 — Artrite pura"
+entrada = "../data/results/discretizacao/dataset_discretizado.csv"
+base    = "desenho1_artrite_pura"
+tabela  = "dados"
+
+[exportacao.desenhos.comorbidades]
+rotulo  = "Desenho 2 — Artrite + comorbidades"
+entrada = "../data/results/discretizacao_comorbidades/dataset_discretizado.csv"
+base    = "desenho2_comorbidades"
+tabela  = "dados"
