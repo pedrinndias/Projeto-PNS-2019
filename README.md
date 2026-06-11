@@ -41,9 +41,9 @@ Projeto_PNS/
 ├── docs/
 │   └── Chaves_PNS_2019.pdf
 ├── config.toml                       ← Parâmetros centrais (hiperparâmetros, cores, cortes de discretização)
+├── pyproject.toml                    ← Dependências e metadados (pip install -e .)
 ├── proxima_fase.md                   ← Roadmap das Fases 3.x e 4
 ├── README.md
-├── requirements.txt
 └── .gitignore
 ```
 
@@ -102,8 +102,8 @@ Projeto_PNS/
 # Clonar o repositório
 git clone https://github.com/pedrinndias/Projeto-PNS-2019.git
 
-# Instalar dependências
-pip install -r requirements.txt
+# Instalar dependências (lê o pyproject.toml)
+pip install -e .
 
 # Executar os notebooks em ordem
 jupyter notebook notebooks/01_extracao_pre_processamento.ipynb
@@ -131,4 +131,4 @@ jupyter notebook notebooks/05_exportacao_bases.ipynb              # bases finais
 - Python 3.10+ (no 3.10, instale `tomli` para ler o `config.toml`; no 3.11+ já vem no `tomllib`)
 - pandas · numpy · matplotlib · seaborn · scikit-learn · nbformat · python-docx · imbalanced-learn
 
-Ver lista completa em `requirements.txt`.
+Ver lista completa em `pyproject.toml` (`[project.dependencies]`).

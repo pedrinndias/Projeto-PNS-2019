@@ -1,0 +1,54 @@
+# pyproject.toml — empacotamento/dependências (padrão PEP 621).
+#
+# NÃO confundir com o config.toml: aqui ficam as DEPENDÊNCIAS e metadados do projeto
+# (o que você instala); no config.toml ficam os PARÂMETROS do pipeline (o que você roda).
+#
+# Instalação:  pip install -e .      (lê as dependências abaixo)
+# Antes era:   pip install -r requirements.txt
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "projeto-pns-2019-artrite"
+version = "0.5.0"
+description = "Mineração de dados em saúde — perfil de idosos com artrite/reumatismo na PNS 2019 (PUC Minas)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Pedro Dias Soares" }]
+keywords = ["PNS", "artrite", "mineração de dados", "saúde", "CRISP-DM", "CAPTO"]
+
+dependencies = [
+    # Núcleo de manipulação e visualização
+    "pandas>=2.2",
+    "numpy>=1.26",
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    # Notebooks
+    "jupyter>=1.0",
+    "ipykernel>=6.29",
+    "nbformat",
+    # Estatística inferencial
+    "scipy>=1.11",
+    "statsmodels>=0.14",
+    "scikit-posthocs>=0.9",
+    # Machine learning (NB06)
+    "scikit-learn>=1.4",
+    "imbalanced-learn>=0.12",
+    # Exportação de relatórios / leitura de planilhas
+    "fpdf>=1.7",
+    "python-docx>=1.1",
+    "openpyxl>=3.1",
+    "xlrd",
+    # Configuração central (config.toml): tomllib é stdlib no 3.11+; no 3.10 usa tomli
+    "tomli>=2.0; python_version < '3.11'",
+]
+
+[project.urls]
+Repository = "https://github.com/pedrinndias/Projeto-PNS-2019"
+
+# Projeto de notebooks: não há pacote Python importável para empacotar.
+[tool.setuptools]
+py-modules = []

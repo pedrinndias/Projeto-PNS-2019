@@ -83,3 +83,168 @@ rotulo  = "Desenho 2 — Artrite + comorbidades"
 entrada = "../data/results/discretizacao_comorbidades/dataset_discretizado.csv"
 base    = "desenho2_comorbidades"
 tabela  = "dados"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Mapas texto→código — o banco "formatado" guarda rótulos de texto; estes mapas
+# (chave = rótulo NORMALIZADO: minúsculo, sem acento) os convertem de volta a código.
+# Usados por coerce_codificado/skip nos NB02–03b. (Lógica de normalização fica no código.)
+# ─────────────────────────────────────────────────────────────────────────────
+[mapas.vdf004]   # renda VDF004 → faixa 1–7 (salários mínimos per capita)
+"ate 1/4 salario minimo"              = 1
+"mais de 1/4 ate 1/2 salario minimo"  = 2
+"mais de 1/2 ate 1 salario minimo"    = 3
+"mais de 1 ate 2 salarios minimos"    = 4
+"mais de 2 ate 3 salarios minimos"    = 5
+"mais de 3 ate 5 salarios minimos"    = 6
+"mais de 5 salarios minimos"          = 7
+
+[mapas.ordinal.N001]    # autoavaliação de saúde
+"muito boa" = 1
+"boa"       = 2
+"regular"   = 3
+"ruim"      = 4
+"muito ruim" = 5
+
+[mapas.ordinal.VDD004A] # escolaridade
+"sem instrucao"                          = 1
+"fundamental incompleto ou equivalente"  = 2
+"fundamental completo ou equivalente"    = 3
+"medio incompleto ou equivalente"        = 4
+"medio completo ou equivalente"          = 5
+"superior incompleto ou equivalente"     = 6
+"superior completo"                      = 7
+
+[mapas.ordinal.N010]    # problemas de sono
+"nenhum dia"               = 1
+"menos da metade dos dias" = 2
+"mais da metade dos dias"  = 3
+"quase todos dias"         = 4
+
+[mapas.ordinal.N011]    # cansaço/falta de energia
+"nenhum dia"               = 1
+"menos da metade dos dias" = 2
+"mais da metade dos dias"  = 3
+"quase todos dias"         = 4
+
+[mapas.ordinal.G070]    # dificuldade de caminhar/subir degraus
+"nao, nenhuma dificuldade"        = 1
+"sim, alguma dificuldade"         = 2
+"sim, muita dificuldade"          = 3
+"sim, nao consegue de modo algum" = 4
+
+[mapas.ordinal.Q115]    # limitação por doença mental
+"nao limita"          = 1
+"um pouco"            = 2
+"moderadamente"       = 3
+"intensamente"        = 4
+"muito intensamente"  = 5
+
+[mapas.ordinal.Q109]    # limitação pela depressão
+"nao limita"          = 1
+"um pouco"            = 2
+"moderadamente"       = 3
+"intensamente"        = 4
+"muito intensamente"  = 5
+
+# Perguntas-pai dos skip patterns (texto→código oficial do questionário PNS 2019)
+[mapas.pais.P034]
+sim = 1
+nao = 2
+[mapas.pais.G059]
+sim = 1
+nao = 2
+[mapas.pais.P03201]
+sim = 1
+nao = 2
+[mapas.pais.P027]
+"nao bebo nunca"            = 1
+"menos de uma vez por mes"  = 2
+"uma vez ou mais por mes"   = 3
+[mapas.pais.J01101]
+"ate 1 ano"             = 1
+"mais de 1 ano a 2 anos" = 2
+"mais de 2 anos a 3 anos" = 3
+"mais de 3 anos"         = 4
+"nunca foi ao medico"    = 5
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Frequência alimentar: o rótulo textual abaixo = 0 dia/sem. (correção do bug texto-zero).
+# `vars` é a lista usada pelo NB03/03b (a EDA do NB02 usa um subconjunto próprio, sem P02801).
+# ─────────────────────────────────────────────────────────────────────────────
+[frequencia]
+zero_label_prefix = "nunca ou menos de uma vez"
+vars = ["P035", "P00901", "P015", "P018", "P01101", "P02501", "P02002",
+        "P02001", "P023", "P01601", "P02602", "P006", "P013", "P02801"]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Skip patterns (roteamento condicional do questionário). Aqui ficam os DADOS de cada
+# regra; a lógica (converter o pai, preencher onde o filho está NaN) fica no NB03/03b.
+#   filho        = variável preenchida quando há skip
+#   pai          = pergunta que roteia
+#   valores_skip = códigos do pai que disparam o skip
+#   valor        = valor implícito gravado no filho (0.0 numérico ou "2" textual=Não)
+# A ordem importa: P03201 (regra do binge) vem ANTES de P03202 (que a usa como pai).
+# ─────────────────────────────────────────────────────────────────────────────
+[[skip]]
+filho = "P035"
+pai = "P034"
+valores_skip = [2]
+valor = 0.0
+condicao = "P034=2 (Não pratica)"
+valor_desc = "0 dias/sem."
+
+[[skip]]
+filho = "P02801"
+pai = "P027"
+valores_skip = [1, 2]
+valor = 0.0
+condicao = "P027∈{1,2} (não bebe sem.)"
+valor_desc = "0 dias/sem."
+
+[[skip]]
+filho = "P029"
+pai = "P027"
+valores_skip = [1]
+valor = 0.0
+condicao = "P027=1 (nunca bebe)"
+valor_desc = "0 doses"
+
+[[skip]]
+filho = "P03201"
+pai = "P027"
+valores_skip = [1]
+valor = "2"
+condicao = "P027=1 (nunca bebe)"
+valor_desc = "'2' (Não)"
+
+[[skip]]
+filho = "J012"
+pai = "J01101"
+valores_skip = [2, 3, 4, 5]
+valor = 0.0
+condicao = "J01101≠1 (não consultou)"
+valor_desc = "0 consultas"
+
+[[skip]]
+filho = "G060"
+pai = "G059"
+valores_skip = [2]
+valor = "2"
+condicao = "G059=2 (não usa aparelho)"
+valor_desc = "'2' (Não)"
+
+[[skip]]
+filho = "G062"
+pai = "G059"
+valores_skip = [2]
+valor = "2"
+condicao = "G059=2 (não usa aparelho)"
+valor_desc = "'2' (Não)"
+
+[[skip]]
+filho = "P03202"
+pai = "P03201"
+valores_skip = [2]
+valor = 0.0
+condicao = "P03201=2 (não fez binge)"
+valor_desc = "0 doses"
