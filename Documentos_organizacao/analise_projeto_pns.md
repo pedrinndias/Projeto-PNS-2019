@@ -57,7 +57,8 @@ Projeto_PNS/
 ├── docs/
 │   └── Chaves_PNS_2019.pdf
 ├── README.md
-├── requirements.txt
+├── config.toml
+├── pyproject.toml
 ├── proxima_fase.md
 └── .gitignore
 ```
@@ -68,7 +69,8 @@ Projeto_PNS/
 |---------|--------|------------|
 | Organização de diretórios | ✅ | Pipeline `data/ → notebooks/ → scripts/ → Documentos_organizacao/` claro |
 | `.gitignore` | ✅ | Ignora `.csv`, `.db`, `.venv`, settings locais. Limpo (duplicatas removidas em 30/05) |
-| `requirements.txt` | ✅ | Inclui `nbformat` e `xlrd` |
+| `pyproject.toml` | ✅ | Dependências em `[project.dependencies]` (PEP 621); instala com `pip install -e .` |
+| `config.toml` | ✅ | Parâmetros do pipeline (hiperparâmetros, cores, cortes de discretização com fonte) — lido pelos NB02–05 |
 | README | ✅ | Sincronizado em 08/06 (NB04/05 existem; 05 = exportação; +02b; NB06 a criar) |
 | Notebooks 01–05 + 02b | ✅ | Reexecutados em 10/06 (skip patterns corrigidos, imputação global target-blind, skip na EDA). `data/results/` e bases finais regenerados e versionados |
 | Rastreabilidade (JSON) | ✅ | `relatorio_preprocessamento.json` em cada pasta de resultado |
