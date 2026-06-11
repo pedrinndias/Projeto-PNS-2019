@@ -17,6 +17,17 @@ artrite  = "#C0392B"      # vermelho — Com Artrite
 saudavel = "#27AE60"      # verde    — Saudável
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Modelagem ML (NB06). A análise de entropia (Camada 1 = art_d) usa estes valores.
+# Seleção supervisionada CONSERVADORA (= art_c): remove só atributos com SU≈0,
+# medida sobre o TREINO balanceado por RUS (H(Classe)≈1). Permutação é descritiva.
+# ─────────────────────────────────────────────────────────────────────────────
+[modelagem]
+test_size = 0.20      # hold-out estratificado (80/20)
+limiar_su = 0.001     # corte da seleção: SU < limiar = informação de classe ~nula → remover (só dummies one-hot vazios; preserva substantivas do CAPTO)
+n_perm    = 200       # permutações p/ o p-valor descritivo de significância da SU
+top_n_fig = 15        # nº de atributos no gráfico de ranking por SU
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Discretização (NB04): cada faixa de domínio com a sua FONTE oficial.
 # Array de tabelas [[...]] = lista de registros homogêneos. A ordem é preservada.
 # bins/labels/right são os argumentos de pandas.cut.

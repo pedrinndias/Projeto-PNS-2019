@@ -151,8 +151,10 @@ Esses artefatos alimentam:
 - [x] **Reexecutado** `02 → 03 → 03b → 04 → 05` e commitado `data/results/` regenerado (10/06)
 
 **Modelagem (NB06):**
-- [ ] Criar `notebooks/06_modelagem_ml.ipynb` seguindo o esqueleto da §2
-- [ ] Consumir o dataset discretizado nos dois desenhos
+- [x] `notebooks/06_modelagem_ml.ipynb` criado (§1 config · §2 split 80/20 · §3 **Análise de Entropia**)
+- [x] **Análise de Entropia (Camada 1 = art_d):** ranking supervisionado IG · Gain Ratio · **Incerteza Simétrica (SU)** sobre o treino **balanceado por RUS** (H(C)≈1); permutação (`n_perm=200`) como p-valor descritivo. Seleção conservadora (= art_c) **`limiar_su=0.001`**: remove só dummies one-hot de informação nula → **D1 mantém 39/57, D2 mantém 42/55**. Artefatos em `data/results/modelagem/`. Topo do ranking (sexo·diabetes·autopercepção·uso de serviços·sono/cansaço) reproduz os fatores do art_d. Parâmetros na seção `[modelagem]` do `config.toml`.
+- [ ] Implementar a modelagem (§4): RUS in-fold (`pip install imbalanced-learn`), modelos, CV 10-fold, teste-t+Bonferroni, interpretabilidade (cruzar `feature_importances` com o ranking de SU), comparação dos dois desenhos
+- [ ] Consumir `features_selecionadas['d1'|'d2']` (saída da §3) nos modelos
 
 ---
 
