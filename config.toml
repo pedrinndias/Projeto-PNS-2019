@@ -288,3 +288,58 @@ valores_skip = [2]
 valor = 0.0
 condicao = "P03201=2 (não fez binge)"
 valor_desc = "0 doses"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Eixo nutricional (PLANEJAMENTO — ainda NÃO consumido pelo código).
+# Ver docs/spec_nutricao_desenho3.md. IRNI = proxy adaptado do DII (Shivappa 2014):
+#   IRNI = soma(peso_item * frequencia_padronizada_zscore). + pró-inflamatório / − anti.
+# Testar os DOIS esquemas de peso (graded e direcao) como análise de sensibilidade.
+# z-score e qualquer corte derivado: ajustar IN-FOLD (só no treino) no NB06.
+# ─────────────────────────────────────────────────────────────────────────────
+[nutricao.irni]
+padronizar       = "zscore"
+itens_frequencia = ["P02501","P02602","P02002","P02001","P01101","P006","P013","P018","P00901","P015","P01601","P023"]
+# Embutidos P00620 (carne processada, pró forte) fica FORA do IRNI contínuo (é "dia anterior"/binário,
+# escala diferente) — citar como limitação; alternativa seria termo binário +2 à parte.
+
+[nutricao.irni.graded]   # magnitudes graduadas (heurística defensável, não os coeficientes do DII)
+P02501 = 2     # doces/ultraprocessados
+P02602 = 1     # substituir almoço por lanche
+P02002 = 1     # refrigerante
+P02001 = 1     # suco em pó/caixinha
+P01101 = 1     # carne vermelha
+P006   = -1    # feijão
+P013   = 0     # frango (neutro)
+P018   = -2    # frutas
+P00901 = -2    # verduras/legumes
+P015   = -2    # peixe
+P01601 = -1    # suco de fruta natural
+P023   = 0     # leite (ambíguo)
+
+[nutricao.irni.direcao]  # só direção (±1); sensibilidade — mostra robustez aos pesos
+P02501 = 1
+P02602 = 1
+P02002 = 1
+P02001 = 1
+P01101 = 1
+P006   = -1
+P013   = 0
+P018   = -1
+P00901 = -1
+P015   = -1
+P01601 = -1
+P023   = 0
+
+[nutricao.cluster]       # padrões a posteriori (k-means) → 1 feature categórica Cluster_Alimentar
+metodo       = "kmeans"
+padronizar   = "zscore"
+k_min        = 2
+k_max        = 6
+criterio     = "silhueta+interpretabilidade"
+random_state = 42
+# mesmos itens do IRNI (itens_frequencia acima); rótulo atribuído pelos centróides a cada ajuste.
+
+# Desenho 3 (NB03c): coorte intra-artrite, alvo = "tem >=1 comorbidade" (4025 vs 494).
+# Comorbidades de manejo dietético (excluir p/ a contagem não-dietética): Q00201, Q03001, Q060, Q06306.
+[nutricao.desenho3]
+comorbidades_dieteticas = ["Q00201","Q03001","Q060","Q06306"]   # hipertensão, diabetes, colesterol, cardíaca
