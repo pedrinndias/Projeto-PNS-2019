@@ -157,6 +157,35 @@ tabela  = "dados"
 "intensamente"        = 4
 "muito intensamente"  = 5
 
+# Dificuldade funcional (módulo G) — mesma escala 1–4 do G070.
+# Sem estes mapas os rótulos textuais viravam NaN → >75% missing → exclusão silenciosa
+# (G079/G080/G081 são itens de força/preensão, clinicamente centrais p/ artrite).
+[mapas.ordinal.G079]    # dificuldade p/ levantar garrafa 2L (com auxílio)
+"nao, nenhuma dificuldade"        = 1
+"sim, alguma dificuldade"         = 2
+"sim, muita dificuldade"          = 3
+"sim, nao consegue de modo algum" = 4
+
+[mapas.ordinal.G080]    # dificuldade p/ pegar objetos pequenos (com auxílio)
+"nao, nenhuma dificuldade"        = 1
+"sim, alguma dificuldade"         = 2
+"sim, muita dificuldade"          = 3
+"sim, nao consegue de modo algum" = 4
+
+[mapas.ordinal.G081]    # dificuldade p/ levantar garrafa 2L (sem auxílio)
+"nao, nenhuma dificuldade"        = 1
+"sim, alguma dificuldade"         = 2
+"sim, muita dificuldade"          = 3
+"sim, nao consegue de modo algum" = 4
+
+[mapas.ordinal.Q05901]  # tempo desde o último exame de colesterol/triglicerídeos
+"menos de 6 meses"             = 1
+"de 6 meses a menos de 1 ano"  = 2
+"de 1 ano a menos de 2 anos"   = 3
+"de 2 anos a menos de 3 anos"  = 4
+"3 anos ou mais"               = 5
+"nunca fez"                    = 6
+
 # Perguntas-pai dos skip patterns (texto→código oficial do questionário PNS 2019)
 [mapas.pais.P034]
 sim = 1
