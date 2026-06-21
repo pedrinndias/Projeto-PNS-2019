@@ -81,14 +81,24 @@ def _db_valido(dbp):
 
 
 def _carregar_csv_robusto(csv_path):
-    """Lê um CSV tentando vírgula, ponto-e-vírgula e espaço (a PNS varia). Levanta erro se falhar."""
-    erros = {}
-    for sep in (",", ";", r"\s+"):
+    """Lê um CSV escolhendo o delimitador automaticamente.
+
+    Os CSVs-semente da PNS usam ';' como separador e vírgula como decimal. Tentar ','
+    primeiro pode 'ter sucesso' devolvendo UMA coluna (sem erro) num arquivo ';' — por isso
+    NÃO basta pegar o primeiro que não falha. Aqui testamos ',', ';' e espaço e ficamos com
+    o que produz MAIS colunas, garantindo que um arquivo ';' nunca vire um banco de 1 coluna."""
+    melhor = None
+    for sep in (";", ",", r"\s+"):
         try:
-            return pd.read_csv(csv_path, sep=sep, low_memory=False, engine="python" if sep == r"\s+" else "c")
-        except Exception as e:
-            erros[sep] = e
-    raise RuntimeError(f"Não consegui ler {csv_path.name} com vírgula/;/espaço: {erros}")
+            df = pd.read_csv(csv_path, sep=sep, low_memory=False,
+                             engine="python" if sep == r"\s+" else "c")
+        except Exception:
+            continue
+        if melhor is None or df.shape[1] > melhor.shape[1]:
+            melhor = df
+    if melhor is None:
+        raise RuntimeError(f"Não consegui ler {csv_path.name} com ',', ';' nem espaço.")
+    return melhor
 
 
 def _reconstruir_via_csv(dbs, verbose=True):
