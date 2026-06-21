@@ -34,6 +34,7 @@ VARIAVEIS_DOENCAS = ['Q00201','Q03001','Q060','Q06306','Q068','Q074','Q079',
 # CSV de origem -> .db de destino (cenário B)
 MAP_CSV = {"idosos_geral.csv":"idosos_geral.db", "idosos_artrite.csv":"idosos_artrite.db",
            "idosos_artrite_puro.csv":"idosos_artrite_puro.db", "idosos_saudaveis.csv":"idosos_saudaveis.db"}
+INV_CSV = {db: csv for csv, db in MAP_CSV.items()}   # .db de destino -> CSV de origem
 
 
 def _tabelas(db_path):
@@ -62,6 +63,99 @@ def _gravar(df, db):
     print(f"  ✅ {db:24s} {len(df):>7,} linhas × {df.shape[1]:>4} colunas")
 
 
+def _db_valido(dbp):
+    """True se o .db existe, não está vazio (0 byte = fantasma) e tem `pns_idosos` com linhas."""
+    try:
+        if not dbp.exists() or dbp.stat().st_size == 0:
+            return False
+        con = sqlite3.connect(dbp)
+        try:
+            if TABELA not in [r[0] for r in con.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table'")]:
+                return False
+            return con.execute(f"SELECT COUNT(*) FROM {TABELA}").fetchone()[0] > 0
+        finally:
+            con.close()
+    except Exception:
+        return False
+
+
+def _carregar_csv_robusto(csv_path):
+    """Lê um CSV tentando vírgula, ponto-e-vírgula e espaço (a PNS varia). Levanta erro se falhar."""
+    erros = {}
+    for sep in (",", ";", r"\s+"):
+        try:
+            return pd.read_csv(csv_path, sep=sep, low_memory=False, engine="python" if sep == r"\s+" else "c")
+        except Exception as e:
+            erros[sep] = e
+    raise RuntimeError(f"Não consegui ler {csv_path.name} com vírgula/;/espaço: {erros}")
+
+
+def _reconstruir_via_csv(dbs, verbose=True):
+    """Reconstrói APENAS os .db pedidos a partir dos CSVs-semente. Levanta exceção (não sys.exit)
+    para ser seguro de chamar dentro de um notebook."""
+    if not CSV_DIR.exists():
+        raise FileNotFoundError(
+            f"Sem mestre válido e a pasta {CSV_DIR} não existe. É preciso o "
+            f"pns_master_formatado.db REAL OU os idosos_*.csv em data/processed/csv/.")
+    suspeitos = []
+    for db in dbs:
+        csv = INV_CSV.get(db)
+        if csv is None:
+            raise ValueError(f"Banco desconhecido para reconstrução: {db}")
+        csv_path = CSV_DIR / csv
+        if not csv_path.exists():
+            raise FileNotFoundError(f"Falta o CSV-semente {csv_path} para reconstruir {db}.")
+        df = _carregar_csv_robusto(csv_path)
+        if df.shape[1] < 50:
+            suspeitos.append(db)
+        _gravar(df, db)
+    if suspeitos and verbose:
+        print(f"\n⚠️  {suspeitos} têm POUCAS colunas — se forem subconjuntos, os notebooks "
+              "vão reclamar de coluna ausente (ex.: V0015/Q079). Aí você precisa do mestre REAL.")
+
+
+def garantir_bancos(necessarios=None, verbose=True):
+    """Bootstrap IDEMPOTENTE para os notebooks NB01–NB03c.
+
+    Garante que os .db pedidos existam e sejam válidos, regenerando APENAS os que
+    faltam — a partir do mestre (se válido) ou dos CSVs-semente. Não faz nada (rápido)
+    quando os bancos já estão ok. Uso no topo do notebook:
+
+        from preparar_bancos import garantir_bancos
+        garantir_bancos(['idosos_artrite_puro.db', 'idosos_saudaveis.db'])
+
+    `necessarios=None` garante os 4 bancos. Levanta FileNotFoundError se não houver
+    como preparar (sem mestre e sem CSVs-semente)."""
+    DB_DIR.mkdir(parents=True, exist_ok=True)
+    necessarios = list(necessarios) if necessarios else list(MAP_CSV.values())
+
+    # remove o 'arquivo-fantasma' do mestre (0 byte / sem a tabela pns_completa)
+    if MASTER.exists() and 'pns_completa' not in _tabelas(MASTER):
+        MASTER.unlink()
+        if verbose:
+            print(f"[bootstrap] removido {MASTER.name} INVÁLIDO (arquivo-fantasma).")
+
+    faltam = [db for db in necessarios if not _db_valido(DB_DIR / db)]
+    if not faltam:
+        return                       # tudo certo — silencioso e rápido
+
+    if verbose:
+        print(f"[bootstrap] regenerando banco(s) ausente(s)/inválido(s): {faltam}")
+    if MASTER.exists() and 'pns_completa' in _tabelas(MASTER):
+        via_mestre()                 # mestre válido → deriva todos os grupos (cobre o subconjunto)
+    else:
+        _reconstruir_via_csv(faltam, verbose=verbose)
+
+    ainda = [db for db in necessarios if not _db_valido(DB_DIR / db)]
+    if ainda:
+        raise FileNotFoundError(
+            f"[bootstrap] não consegui preparar {ainda}. É preciso o mestre "
+            f"pns_master_formatado.db em data/database/ OU os CSVs-semente em {CSV_DIR}.")
+    if verbose:
+        print("[bootstrap] ✅ bancos prontos.")
+
+
 def via_mestre():
     """Cenário A — deriva os 4 grupos do banco mestre (lógica do NB01)."""
     print("Cenário A: banco mestre válido encontrado → derivando os 4 grupos (lógica do NB01).")
@@ -86,23 +180,12 @@ def via_mestre():
 
 
 def via_csv():
-    """Cenário B — reconstrói os 4 .db a partir dos CSVs derivados."""
+    """Cenário B (CLI) — reconstrói os 4 .db a partir dos CSVs derivados."""
     print("Cenário B: sem mestre válido → reconstruindo a partir dos CSVs em data/processed/csv/.")
-    if not CSV_DIR.exists():
-        sys.exit(f"ERRO: não há mestre válido e a pasta {CSV_DIR} não existe.\n"
-                 "Você precisa do pns_master_formatado.db REAL em data/database/ "
-                 "OU dos idosos_*.csv em data/processed/csv/.")
-    faltando = [c for c in MAP_CSV if not (CSV_DIR / c).exists()]
-    if faltando:
-        sys.exit(f"ERRO: faltam CSVs em {CSV_DIR}: {faltando}")
-    suspeitos = []
-    for csv, db in MAP_CSV.items():
-        df = pd.read_csv(CSV_DIR / csv, low_memory=False)
-        if df.shape[1] < 50: suspeitos.append(db)
-        _gravar(df, db)
-    if suspeitos:
-        print(f"\n⚠️  {suspeitos} têm POUCAS colunas — se forem subconjuntos, os notebooks vão "
-              "reclamar de coluna ausente (ex.: V0015/Q079). Nesse caso você precisa do mestre REAL.")
+    try:
+        _reconstruir_via_csv(list(MAP_CSV.values()))
+    except (FileNotFoundError, RuntimeError, ValueError) as e:
+        sys.exit(f"ERRO: {e}")
 
 
 def main():
