@@ -12,6 +12,13 @@ archive/
 *.jar
 *.zip
 
+# ─── Temporários do MS Office (Word/Excel) ──────────────────
+# Arquivos de lock/auto-save que o Word cria ao abrir um .docx (~$arquivo.docx)
+# e os temporários de salvamento (~WRL####.tmp). Nunca devem ir pro repositório.
+~$*
+~WRL*.tmp
+*.tmp
+
 # ─── Ambientes e cache Python ───────────────────────────────
 .venv/
 .venv-1/
