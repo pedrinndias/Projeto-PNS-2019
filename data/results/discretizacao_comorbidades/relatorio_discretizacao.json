@@ -276,15 +276,15 @@
         "sinal": "ok"
       },
       {
-        "feature": "P02401_Integral",
-        "entropia": 0.693,
-        "corr_abs_Label": 0.125,
-        "sinal": "ok"
-      },
-      {
         "feature": "P00614_Sim",
         "entropia": 0.693,
         "corr_abs_Label": 0.042,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02401_Integral",
+        "entropia": 0.693,
+        "corr_abs_Label": 0.125,
         "sinal": "ok"
       },
       {
@@ -386,7 +386,7 @@
     ],
     "dataset_final": {
       "n_registros": 8357,
-      "n_features": 55,
+      "n_features": 56,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025

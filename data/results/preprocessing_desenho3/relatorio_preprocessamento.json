@@ -1,0 +1,73 @@
+{
+  "projeto": "Artrite e Reumatismo em Idosos Brasileiros — PNS 2019",
+  "pesquisador": "Pedro Dias Soares",
+  "orientador": "Prof. Dr. Luis Enrique Zárate — PUC Minas",
+  "notebook": "03c_preprocessamento_desenho3",
+  "desenho": "Desenho 3 — intra-artrite; alvo = tem >=1 comorbidade",
+  "aviso": "Confundidor: dieta pode refletir manejo da comorbidade. Entrega central = gradiente IRNI x carga.",
+  "parametros": {
+    "LIMITE_MISSING_pct": 75.0,
+    "LIMITE_IQR_MULT": 3.0,
+    "RANDOM_STATE": 42,
+    "irni_esquemas": [
+      "padronizar",
+      "itens_frequencia",
+      "graded",
+      "direcao"
+    ],
+    "comorbidades_dieteticas": [
+      "Q00201",
+      "Q03001",
+      "Q060",
+      "Q06306"
+    ]
+  },
+  "rastreabilidade": {
+    "skip_total": 24256,
+    "vars_excluidas_>75pct": [
+      "P04501",
+      "G080",
+      "G079",
+      "Q115",
+      "G070",
+      "Q047081",
+      "Q047111",
+      "Q04711",
+      "Q04708",
+      "Q109",
+      "P02101",
+      "P02102"
+    ],
+    "outliers": 3,
+    "imputados": 2001,
+    "anti_leakage_removidas": [
+      "Q088",
+      "Q128",
+      "Q05901",
+      "Q092_Sim",
+      "Q11006_Sim",
+      "Q00201_Sim",
+      "Q03001_Sim",
+      "Q060_Sim",
+      "Q06306_Sim",
+      "Q068_Sim",
+      "Q074_Sim",
+      "Q120_Sim",
+      "Q124_Sim",
+      "Q11604_Sim"
+    ],
+    "features_irni": [
+      "IRNI_graded",
+      "IRNI_direcao"
+    ],
+    "dataset_final": {
+      "n_registros": 4025,
+      "n_features": 67,
+      "distribuicao_label": {
+        "1": 3531,
+        "0": 494
+      },
+      "razao": 7.15
+    }
+  }
+}
