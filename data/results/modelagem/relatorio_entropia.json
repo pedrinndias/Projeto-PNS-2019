@@ -16,7 +16,7 @@
       "H_classe_natural": 0.4763,
       "H_classe_balanceada": 1.0,
       "n_treino_balanceado": 790,
-      "n_mantidos": 39,
+      "n_mantidos": 41,
       "n_removidos": 18,
       "features_selecionadas": [
         "Q084_Sim",
@@ -25,7 +25,9 @@
         "N011",
         "P03202",
         "N001",
+        "G081",
         "J012_cat",
+        "Q05901",
         "J01101_Mais de 1 ano a 2 anos",
         "J01002_Unidade básica de saúde (posto ou centro de saúde ou unidade de saúde da família)",
         "J01101_Mais de 3 anos",
@@ -45,8 +47,8 @@
         "P03201_Sim",
         "J01002_Pronto atendimento ou emergência de hospital privado.",
         "P02102_Normal",
-        "P00603_Sim",
         "J01002_Policlínica pública, PAM (Posto de Assistência Médica) ou Centro de Especialidades público",
+        "P00603_Sim",
         "P02601_Muito baixo",
         "P013",
         "VDD004A",
@@ -56,8 +58,8 @@
         "P035_cat",
         "I00102_Sim",
         "P02401_Os dois tipos",
-        "VDF004",
-        "P027_Não bebo nunca"
+        "P027_Não bebo nunca",
+        "VDF004"
       ],
       "features_removidas": [
         "J01101_Mais de 2 anos a 3 anos",
@@ -69,14 +71,14 @@
         "P02601_Alto",
         "P027_Uma vez ou mais por mês",
         "P02601_Baixo",
-        "P03201_Não",
-        "P00614_Sim",
-        "P00620_Sim",
         "J01002_Outro serviço",
         "J01002_Farmácia",
         "J01002_Atendimento domiciliar",
-        "P02101_Diet/Light/Zero",
+        "P00620_Sim",
         "P02601_Muito alto",
+        "P03201_Não",
+        "P00614_Sim",
+        "P02101_Diet/Light/Zero",
         "P00612_Sim"
       ],
       "ranking": [
@@ -147,12 +149,34 @@
           "decisao": "manter"
         },
         {
+          "feature": "G081",
+          "k": 4,
+          "H_A": 0.783,
+          "IG": 0.0199,
+          "GainRatio": 0.0254,
+          "SU": 0.0223,
+          "p_perm": 0.005,
+          "significativo": true,
+          "decisao": "manter"
+        },
+        {
           "feature": "J012_cat",
           "k": 4,
           "H_A": 1.831,
           "IG": 0.0287,
           "GainRatio": 0.0157,
           "SU": 0.0203,
+          "p_perm": 0.005,
+          "significativo": true,
+          "decisao": "manter"
+        },
+        {
+          "feature": "Q05901",
+          "k": 6,
+          "H_A": 2.099,
+          "IG": 0.0288,
+          "GainRatio": 0.0137,
+          "SU": 0.0186,
           "p_perm": 0.005,
           "significativo": true,
           "decisao": "manter"
@@ -367,17 +391,6 @@
           "decisao": "manter"
         },
         {
-          "feature": "P00603_Sim",
-          "k": 2,
-          "H_A": 0.724,
-          "IG": 0.0021,
-          "GainRatio": 0.0029,
-          "SU": 0.0024,
-          "p_perm": 0.204,
-          "significativo": false,
-          "decisao": "manter"
-        },
-        {
           "feature": "J01002_Policlínica pública, PAM (Posto de Assistência Médica) ou Centro de Especialidades público",
           "k": 2,
           "H_A": 0.15,
@@ -385,6 +398,17 @@
           "GainRatio": 0.0093,
           "SU": 0.0024,
           "p_perm": 0.3582,
+          "significativo": false,
+          "decisao": "manter"
+        },
+        {
+          "feature": "P00603_Sim",
+          "k": 2,
+          "H_A": 0.724,
+          "IG": 0.0021,
+          "GainRatio": 0.0029,
+          "SU": 0.0024,
+          "p_perm": 0.204,
           "significativo": false,
           "decisao": "manter"
         },
@@ -488,17 +512,6 @@
           "decisao": "manter"
         },
         {
-          "feature": "VDF004",
-          "k": 7,
-          "H_A": 2.427,
-          "IG": 0.0019,
-          "GainRatio": 0.0008,
-          "SU": 0.0011,
-          "p_perm": 0.9353,
-          "significativo": false,
-          "decisao": "manter"
-        },
-        {
           "feature": "P027_Não bebo nunca",
           "k": 2,
           "H_A": 0.83,
@@ -506,6 +519,17 @@
           "GainRatio": 0.0012,
           "SU": 0.0011,
           "p_perm": 0.3532,
+          "significativo": false,
+          "decisao": "manter"
+        },
+        {
+          "feature": "VDF004",
+          "k": 7,
+          "H_A": 2.427,
+          "IG": 0.0019,
+          "GainRatio": 0.0008,
+          "SU": 0.0011,
+          "p_perm": 0.9353,
           "significativo": false,
           "decisao": "manter"
         },
@@ -609,39 +633,6 @@
           "decisao": "remover"
         },
         {
-          "feature": "P03201_Não",
-          "k": 2,
-          "H_A": 0.712,
-          "IG": 0.0,
-          "GainRatio": 0.0,
-          "SU": 0.0,
-          "p_perm": 1.0,
-          "significativo": false,
-          "decisao": "remover"
-        },
-        {
-          "feature": "P00614_Sim",
-          "k": 2,
-          "H_A": 0.69,
-          "IG": 0.0,
-          "GainRatio": 0.0,
-          "SU": 0.0,
-          "p_perm": 1.0,
-          "significativo": false,
-          "decisao": "remover"
-        },
-        {
-          "feature": "P00620_Sim",
-          "k": 2,
-          "H_A": 0.611,
-          "IG": 0.0,
-          "GainRatio": 0.0,
-          "SU": 0.0,
-          "p_perm": 1.0,
-          "significativo": false,
-          "decisao": "remover"
-        },
-        {
           "feature": "J01002_Outro serviço",
           "k": 1,
           "H_A": -0.0,
@@ -675,7 +666,18 @@
           "decisao": "remover"
         },
         {
-          "feature": "P02101_Diet/Light/Zero",
+          "feature": "P00620_Sim",
+          "k": 2,
+          "H_A": 0.611,
+          "IG": 0.0,
+          "GainRatio": 0.0,
+          "SU": 0.0,
+          "p_perm": 1.0,
+          "significativo": false,
+          "decisao": "remover"
+        },
+        {
+          "feature": "P02601_Muito alto",
           "k": 2,
           "H_A": 0.046,
           "IG": 0.0,
@@ -686,7 +688,29 @@
           "decisao": "remover"
         },
         {
-          "feature": "P02601_Muito alto",
+          "feature": "P03201_Não",
+          "k": 2,
+          "H_A": 0.712,
+          "IG": 0.0,
+          "GainRatio": 0.0,
+          "SU": 0.0,
+          "p_perm": 1.0,
+          "significativo": false,
+          "decisao": "remover"
+        },
+        {
+          "feature": "P00614_Sim",
+          "k": 2,
+          "H_A": 0.69,
+          "IG": 0.0,
+          "GainRatio": 0.0,
+          "SU": 0.0,
+          "p_perm": 1.0,
+          "significativo": false,
+          "decisao": "remover"
+        },
+        {
+          "feature": "P02101_Diet/Light/Zero",
           "k": 2,
           "H_A": 0.046,
           "IG": 0.0,
@@ -714,7 +738,7 @@
       "H_classe_natural": 0.999,
       "H_classe_balanceada": 1.0,
       "n_treino_balanceado": 6440,
-      "n_mantidos": 42,
+      "n_mantidos": 43,
       "n_removidos": 13,
       "features_selecionadas": [
         "C006_Mulher",
@@ -723,6 +747,7 @@
         "N001",
         "N011",
         "N010",
+        "G081",
         "J01101_Mais de 3 anos",
         "J01101_Mais de 1 ano a 2 anos",
         "G062_Sim",
@@ -744,11 +769,11 @@
         "J01101_Nunca foi ao médico",
         "P03201_Não",
         "I00102_Sim",
-        "J01002_Consultório particular, clínica privada ou ambulatório de hospital privado",
         "P00603_Sim",
+        "J01002_Consultório particular, clínica privada ou ambulatório de hospital privado",
         "P02102_Diet/Light/Zero",
-        "P02601_Muito baixo",
         "Padrao_Alimentar_cat",
+        "P02601_Muito baixo",
         "J01002_Pronto atendimento ou emergência de hospital privado.",
         "P02102_Normal",
         "P013",
@@ -765,15 +790,15 @@
         "J01002_Policlínica pública, PAM (Posto de Assistência Médica) ou Centro de Especialidades público",
         "VDF004",
         "P02602",
-        "P00615_Sim",
         "J01002_UPA (Unidade de Pronto Atendimento), outro tipo de pronto atendimento público (24 horas), pronto-socorro ou emergência de hospital público.",
+        "P00615_Sim",
         "J01002_Farmácia",
+        "J01002_Atendimento domiciliar",
         "P034_Sim",
         "P02601_Muito alto",
-        "J01002_Atendimento domiciliar",
+        "J01002_Outro serviço",
         "P02601_Alto",
-        "P02401_Os dois tipos",
-        "J01002_Outro serviço"
+        "P02401_Os dois tipos"
       ],
       "ranking": [
         {
@@ -838,6 +863,17 @@
           "IG": 0.0964,
           "GainRatio": 0.0601,
           "SU": 0.074,
+          "p_perm": 0.005,
+          "significativo": true,
+          "decisao": "manter"
+        },
+        {
+          "feature": "G081",
+          "k": 4,
+          "H_A": 0.975,
+          "IG": 0.0665,
+          "GainRatio": 0.0682,
+          "SU": 0.0673,
           "p_perm": 0.005,
           "significativo": true,
           "decisao": "manter"
@@ -1074,22 +1110,22 @@
           "decisao": "manter"
         },
         {
-          "feature": "J01002_Consultório particular, clínica privada ou ambulatório de hospital privado",
+          "feature": "P00603_Sim",
           "k": 2,
-          "H_A": 0.733,
-          "IG": 0.0047,
-          "GainRatio": 0.0064,
+          "H_A": 0.762,
+          "IG": 0.0048,
+          "GainRatio": 0.0063,
           "SU": 0.0054,
           "p_perm": 0.005,
           "significativo": true,
           "decisao": "manter"
         },
         {
-          "feature": "P00603_Sim",
+          "feature": "J01002_Consultório particular, clínica privada ou ambulatório de hospital privado",
           "k": 2,
-          "H_A": 0.762,
-          "IG": 0.0048,
-          "GainRatio": 0.0063,
+          "H_A": 0.733,
+          "IG": 0.0047,
+          "GainRatio": 0.0064,
           "SU": 0.0054,
           "p_perm": 0.005,
           "significativo": true,
@@ -1107,22 +1143,22 @@
           "decisao": "manter"
         },
         {
-          "feature": "P02601_Muito baixo",
-          "k": 2,
-          "H_A": 0.33,
-          "IG": 0.0028,
-          "GainRatio": 0.0084,
+          "feature": "Padrao_Alimentar_cat",
+          "k": 4,
+          "H_A": 1.984,
+          "IG": 0.0063,
+          "GainRatio": 0.0032,
           "SU": 0.0042,
           "p_perm": 0.005,
           "significativo": true,
           "decisao": "manter"
         },
         {
-          "feature": "Padrao_Alimentar_cat",
-          "k": 4,
-          "H_A": 1.984,
-          "IG": 0.0063,
-          "GainRatio": 0.0032,
+          "feature": "P02601_Muito baixo",
+          "k": 2,
+          "H_A": 0.33,
+          "IG": 0.0028,
+          "GainRatio": 0.0084,
           "SU": 0.0042,
           "p_perm": 0.005,
           "significativo": true,
@@ -1283,17 +1319,6 @@
           "decisao": "remover"
         },
         {
-          "feature": "P00615_Sim",
-          "k": 2,
-          "H_A": 0.629,
-          "IG": 0.0001,
-          "GainRatio": 0.0002,
-          "SU": 0.0002,
-          "p_perm": 0.2886,
-          "significativo": false,
-          "decisao": "remover"
-        },
-        {
           "feature": "J01002_UPA (Unidade de Pronto Atendimento), outro tipo de pronto atendimento público (24 horas), pronto-socorro ou emergência de hospital público.",
           "k": 2,
           "H_A": 0.335,
@@ -1305,6 +1330,17 @@
           "decisao": "remover"
         },
         {
+          "feature": "P00615_Sim",
+          "k": 2,
+          "H_A": 0.629,
+          "IG": 0.0001,
+          "GainRatio": 0.0002,
+          "SU": 0.0002,
+          "p_perm": 0.2886,
+          "significativo": false,
+          "decisao": "remover"
+        },
+        {
           "feature": "J01002_Farmácia",
           "k": 2,
           "H_A": 0.101,
@@ -1312,6 +1348,17 @@
           "GainRatio": 0.0003,
           "SU": 0.0001,
           "p_perm": 0.6567,
+          "significativo": false,
+          "decisao": "remover"
+        },
+        {
+          "feature": "J01002_Atendimento domiciliar",
+          "k": 2,
+          "H_A": 0.029,
+          "IG": 0.0001,
+          "GainRatio": 0.0018,
+          "SU": 0.0001,
+          "p_perm": 0.602,
           "significativo": false,
           "decisao": "remover"
         },
@@ -1338,13 +1385,13 @@
           "decisao": "remover"
         },
         {
-          "feature": "J01002_Atendimento domiciliar",
+          "feature": "J01002_Outro serviço",
           "k": 2,
-          "H_A": 0.029,
-          "IG": 0.0001,
-          "GainRatio": 0.0018,
-          "SU": 0.0001,
-          "p_perm": 0.602,
+          "H_A": 0.02,
+          "IG": 0.0,
+          "GainRatio": 0.0,
+          "SU": 0.0,
+          "p_perm": 1.0,
           "significativo": false,
           "decisao": "remover"
         },
@@ -1363,17 +1410,6 @@
           "feature": "P02401_Os dois tipos",
           "k": 2,
           "H_A": 0.24,
-          "IG": 0.0,
-          "GainRatio": 0.0,
-          "SU": 0.0,
-          "p_perm": 1.0,
-          "significativo": false,
-          "decisao": "remover"
-        },
-        {
-          "feature": "J01002_Outro serviço",
-          "k": 2,
-          "H_A": 0.02,
           "IG": 0.0,
           "GainRatio": 0.0,
           "SU": 0.0,

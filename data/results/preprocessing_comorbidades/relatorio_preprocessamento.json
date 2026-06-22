@@ -82,11 +82,9 @@
     },
     "etapa_3_missing": {
       "vars_excluidas_>75pct": [
-        "Q05901",
-        "G081",
+        "P04501",
         "G080",
         "G079",
-        "P04501",
         "Q115",
         "Q047081",
         "G070",
@@ -96,7 +94,7 @@
         "Q109",
         "P02101"
       ],
-      "n_excluidas": 13
+      "n_excluidas": 11
     },
     "etapa_4_outliers": {
       "total_outliers_substituidos": 7,
@@ -115,7 +113,7 @@
       ]
     },
     "etapa_5_imputacao": {
-      "total_imputados": 10415,
+      "total_imputados": 10484,
       "nan_residual_em_X": 0,
       "detalhes": [
         {
@@ -177,6 +175,12 @@
           "Tipo": "Qualitativa",
           "Método": "Moda/global",
           "n_imputados": 6001
+        },
+        {
+          "Variável": "G081",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/global",
+          "n_imputados": 69
         }
       ]
     },
@@ -211,7 +215,9 @@
         "VDD004A",
         "N001",
         "N010",
-        "N011"
+        "N011",
+        "G081",
+        "Q05901"
       ],
       "ohe_encoding": [
         "C006",
@@ -248,6 +254,7 @@
       ],
       "excluidas_ohe": [],
       "removidas_df": [
+        "Q05901",
         "Q092_Sim",
         "Q11006_Sim",
         "Q00201_Sim",
@@ -264,7 +271,7 @@
     },
     "etapa_9_dataset_final": {
       "n_registros": 8357,
-      "n_features": 68,
+      "n_features": 69,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025
