@@ -78,6 +78,65 @@
         }
       },
       {
+        "variavel": "P006",
+        "nova": "P006_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Feijão — frequência semanal, faixas pragmáticas (0 / 1–4 / 5–7 dias/sem.)",
+        "distribuicao": {
+          "0.0": 422,
+          "1.0": 2445,
+          "2.0": 5490
+        }
+      },
+      {
+        "variavel": "P013",
+        "nova": "P013_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Frango/galinha — frequência semanal, faixas pragmáticas (0 / 1–4 / 5–7 dias/sem.)",
+        "distribuicao": {
+          "0.0": 825,
+          "1.0": 6076,
+          "2.0": 1456
+        }
+      },
+      {
+        "variavel": "P02602",
+        "nova": "P02602_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Substituição de refeição por lanche — frequência semanal, faixas pragmáticas (0 / 1–2 / 3–7 dias/sem.)",
+        "distribuicao": {
+          "0.0": 7540,
+          "1.0": 601,
+          "2.0": 216
+        }
+      },
+      {
+        "variavel": "P02801",
+        "nova": "P02801_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Dias/semana com consumo de álcool — faixas pragmáticas (0 / 1–2 / 3–7 dias/sem.)",
+        "distribuicao": {
+          "0.0": 7177,
+          "1.0": 778,
+          "2.0": 402
+        }
+      },
+      {
+        "variavel": "P03202",
+        "nova": "P03202_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Máx. de doses em episódio de binge — NIAAA (≥5 = binge): 0 / 1–4 / 5+ doses",
+        "distribuicao": {
+          "0.0": 7846,
+          "2.0": 511
+        }
+      },
+      {
         "variavel": "Escore_Inflamatorio x Escore_Saudavel",
         "nova": "Padrao_Alimentar_cat",
         "metodo": "plano_cartesiano",
@@ -97,9 +156,13 @@
       "P035",
       "J012",
       "P029",
+      "P006",
+      "P013",
+      "P02602",
+      "P02801",
+      "P03202",
       "Escore_Inflamatorio",
       "Escore_Saudavel",
-      "Razao_Inf_Saud",
       "P00104",
       "P00404",
       "P01101",
@@ -210,6 +273,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "P03202_cat",
+        "entropia": 0.332,
+        "corr_abs_Label": 0.1,
+        "sinal": "ok"
+      },
+      {
         "feature": "P03201_Sim",
         "entropia": 0.332,
         "corr_abs_Label": 0.1,
@@ -252,6 +321,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "P02602_cat",
+        "entropia": 0.543,
+        "corr_abs_Label": 0.018,
+        "sinal": "ok"
+      },
+      {
         "feature": "P027_Uma vez ou mais por mês",
         "entropia": 0.632,
         "corr_abs_Label": 0.123,
@@ -276,15 +351,21 @@
         "sinal": "ok"
       },
       {
+        "feature": "P02401_Integral",
+        "entropia": 0.693,
+        "corr_abs_Label": 0.125,
+        "sinal": "ok"
+      },
+      {
         "feature": "P00614_Sim",
         "entropia": 0.693,
         "corr_abs_Label": 0.042,
         "sinal": "ok"
       },
       {
-        "feature": "P02401_Integral",
-        "entropia": 0.693,
-        "corr_abs_Label": 0.125,
+        "feature": "P02801_cat",
+        "entropia": 0.718,
+        "corr_abs_Label": 0.118,
         "sinal": "ok"
       },
       {
@@ -351,6 +432,18 @@
         "feature": "P029_cat",
         "entropia": 0.974,
         "corr_abs_Label": 0.135,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P013_cat",
+        "entropia": 1.103,
+        "corr_abs_Label": 0.07,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P006_cat",
+        "entropia": 1.135,
+        "corr_abs_Label": 0.055,
         "sinal": "ok"
       },
       {

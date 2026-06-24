@@ -89,8 +89,8 @@
         "Q047081",
         "G070",
         "Q047111",
-        "Q04711",
         "Q04708",
+        "Q04711",
         "Q109",
         "P02101"
       ],
@@ -127,12 +127,6 @@
           "Tipo": "Numérica",
           "Método": "Média/global",
           "n_imputados": 2
-        },
-        {
-          "Variável": "VDF004",
-          "Tipo": "Numérica",
-          "Método": "Média/global",
-          "n_imputados": 1
         },
         {
           "Variável": "C008",
@@ -177,6 +171,12 @@
           "n_imputados": 6001
         },
         {
+          "Variável": "VDF004",
+          "Tipo": "Qualitativa",
+          "Método": "Moda/global",
+          "n_imputados": 1
+        },
+        {
           "Variável": "G081",
           "Tipo": "Qualitativa",
           "Método": "Moda/global",
@@ -188,8 +188,7 @@
       "features_criadas": [
         "IMC",
         "Escore_Inflamatorio",
-        "Escore_Saudavel",
-        "Razao_Inf_Saud"
+        "Escore_Saudavel"
       ],
       "formula_imc": "Peso(kg) / (Altura(m))²",
       "componentes_infla": [
@@ -212,6 +211,7 @@
     },
     "etapa_8_encoding": {
       "label_encoding": [
+        "VDF004",
         "VDD004A",
         "N001",
         "N010",
@@ -271,7 +271,7 @@
     },
     "etapa_9_dataset_final": {
       "n_registros": 8357,
-      "n_features": 69,
+      "n_features": 68,
       "distribuicao_label": {
         "0": 4332,
         "1": 4025
