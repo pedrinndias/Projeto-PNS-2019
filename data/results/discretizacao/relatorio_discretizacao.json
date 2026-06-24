@@ -78,6 +78,65 @@
         }
       },
       {
+        "variavel": "P006",
+        "nova": "P006_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Feijão — frequência semanal, faixas pragmáticas (0 / 1–4 / 5–7 dias/sem.)",
+        "distribuicao": {
+          "0.0": 234,
+          "1.0": 1322,
+          "2.0": 3270
+        }
+      },
+      {
+        "variavel": "P013",
+        "nova": "P013_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Frango/galinha — frequência semanal, faixas pragmáticas (0 / 1–4 / 5–7 dias/sem.)",
+        "distribuicao": {
+          "0.0": 510,
+          "1.0": 3611,
+          "2.0": 705
+        }
+      },
+      {
+        "variavel": "P02602",
+        "nova": "P02602_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Substituição de refeição por lanche — frequência semanal, faixas pragmáticas (0 / 1–2 / 3–7 dias/sem.)",
+        "distribuicao": {
+          "0.0": 4372,
+          "1.0": 336,
+          "2.0": 118
+        }
+      },
+      {
+        "variavel": "P02801",
+        "nova": "P02801_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Dias/semana com consumo de álcool — faixas pragmáticas (0 / 1–2 / 3–7 dias/sem.)",
+        "distribuicao": {
+          "0.0": 3956,
+          "1.0": 576,
+          "2.0": 294
+        }
+      },
+      {
+        "variavel": "P03202",
+        "nova": "P03202_cat",
+        "metodo": "dominio",
+        "n_faixas": 3,
+        "fonte": "Máx. de doses em episódio de binge — NIAAA (≥5 = binge): 0 / 1–4 / 5+ doses",
+        "distribuicao": {
+          "0.0": 4433,
+          "2.0": 393
+        }
+      },
+      {
         "variavel": "Escore_Inflamatorio x Escore_Saudavel",
         "nova": "Padrao_Alimentar_cat",
         "metodo": "plano_cartesiano",
@@ -97,9 +156,13 @@
       "P035",
       "J012",
       "P029",
+      "P006",
+      "P013",
+      "P02602",
+      "P02801",
+      "P03202",
       "Escore_Inflamatorio",
       "Escore_Saudavel",
-      "Razao_Inf_Saud",
       "P00104",
       "P00404",
       "P01101",
@@ -246,6 +309,12 @@
         "sinal": "ok"
       },
       {
+        "feature": "P03202_cat",
+        "entropia": 0.407,
+        "corr_abs_Label": 0.031,
+        "sinal": "ok"
+      },
+      {
         "feature": "P00616_Sim",
         "entropia": 0.426,
         "corr_abs_Label": 0.046,
@@ -261,6 +330,12 @@
         "feature": "J01101_Mais de 1 ano a 2 anos",
         "entropia": 0.522,
         "corr_abs_Label": 0.062,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02602_cat",
+        "entropia": 0.528,
+        "corr_abs_Label": 0.013,
         "sinal": "ok"
       },
       {
@@ -294,9 +369,9 @@
         "sinal": "ok"
       },
       {
-        "feature": "P00614_Sim",
+        "feature": "P027_Uma vez ou mais por mês",
         "entropia": 0.721,
-        "corr_abs_Label": 0.015,
+        "corr_abs_Label": 0.022,
         "sinal": "ok"
       },
       {
@@ -306,9 +381,9 @@
         "sinal": "ok"
       },
       {
-        "feature": "P027_Uma vez ou mais por mês",
+        "feature": "P00614_Sim",
         "entropia": 0.721,
-        "corr_abs_Label": 0.022,
+        "corr_abs_Label": 0.015,
         "sinal": "ok"
       },
       {
@@ -321,6 +396,12 @@
         "feature": "I00102_Sim",
         "entropia": 0.768,
         "corr_abs_Label": 0.033,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P02801_cat",
+        "entropia": 0.847,
+        "corr_abs_Label": 0.027,
         "sinal": "ok"
       },
       {
@@ -360,9 +441,21 @@
         "sinal": "ok"
       },
       {
+        "feature": "P013_cat",
+        "entropia": 1.061,
+        "corr_abs_Label": 0.001,
+        "sinal": "ok"
+      },
+      {
         "feature": "P029_cat",
         "entropia": 1.091,
         "corr_abs_Label": 0.036,
+        "sinal": "ok"
+      },
+      {
+        "feature": "P006_cat",
+        "entropia": 1.104,
+        "corr_abs_Label": 0.044,
         "sinal": "ok"
       },
       {

@@ -67,6 +67,46 @@ labels = [0, 1, 2]
 right  = true
 fonte  = "NIAAA — binge a partir de 5 doses por ocasião (só D1; baixa confiança)"
 
+# ── Frequências que ANTES passavam CRUAS pelo dataset discretizado (correção do achado 2) ──
+# P006/P013/P02602 (alimentares) e P02801/P03202 (álcool) eram contagens 0–7/0–21 que sobreviviam
+# ao NB04 sem binning e fora de qualquer escore — inconsistente com a tese "toda contagem vira
+# ordinal por faixa". Bandas pragmáticas de frequência (mesmo precedente de J012). Como entram em
+# FAIXAS, o NB04 cria o _cat e remove a coluna crua automaticamente (sem alterar código do NB04).
+[[discretizacao.faixa]]
+var    = "P006"
+bins   = [-0.1, 0, 4, 7]
+labels = [0, 1, 2]
+right  = true
+fonte  = "Feijão — frequência semanal, faixas pragmáticas (0 / 1–4 / 5–7 dias/sem.)"
+
+[[discretizacao.faixa]]
+var    = "P013"
+bins   = [-0.1, 0, 4, 7]
+labels = [0, 1, 2]
+right  = true
+fonte  = "Frango/galinha — frequência semanal, faixas pragmáticas (0 / 1–4 / 5–7 dias/sem.)"
+
+[[discretizacao.faixa]]
+var    = "P02602"
+bins   = [-0.1, 0, 2, 7]
+labels = [0, 1, 2]
+right  = true
+fonte  = "Substituição de refeição por lanche — frequência semanal, faixas pragmáticas (0 / 1–2 / 3–7 dias/sem.)"
+
+[[discretizacao.faixa]]
+var    = "P02801"
+bins   = [-0.1, 0, 2, 7]
+labels = [0, 1, 2]
+right  = true
+fonte  = "Dias/semana com consumo de álcool — faixas pragmáticas (0 / 1–2 / 3–7 dias/sem.)"
+
+[[discretizacao.faixa]]
+var    = "P03202"
+bins   = [-0.1, 0, 4, 1e9]
+labels = [0, 1, 2]
+right  = true
+fonte  = "Máx. de doses em episódio de binge — NIAAA (≥5 = binge): 0 / 1–4 / 5+ doses"
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Desenhos para a DISCRETIZAÇÃO (NB04): entrada = saída do NB03/03b; saída = pasta disc.
 # ─────────────────────────────────────────────────────────────────────────────
@@ -88,12 +128,14 @@ rotulo  = "Desenho 1 — Artrite pura"
 entrada = "../data/results/discretizacao/dataset_discretizado.csv"
 base    = "desenho1_artrite_pura"
 tabela  = "dados"
+alvo    = "Label (0=Saudável, 1=Artrite pura, sem comorbidades)"
 
 [exportacao.desenhos.comorbidades]
 rotulo  = "Desenho 2 — Artrite + comorbidades"
 entrada = "../data/results/discretizacao_comorbidades/dataset_discretizado.csv"
 base    = "desenho2_comorbidades"
 tabela  = "dados"
+alvo    = "Label (0=Saudável, 1=Artrite com comorbidades)"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Mapas texto→código — o banco "formatado" guarda rótulos de texto; estes mapas
