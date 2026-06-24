@@ -26,6 +26,10 @@ test_size = 0.20      # hold-out estratificado (80/20)
 limiar_su = 0.001     # corte da seleção: SU < limiar = informação de classe ~nula → remover (só dummies one-hot vazios; preserva substantivas do CAPTO)
 n_perm    = 200       # permutações p/ o p-valor descritivo de significância da SU
 top_n_fig = 15        # nº de atributos no gráfico de ranking por SU
+n_iter_busca = 15     # iterações do RandomizedSearchCV (§4 ablação). ↑ = mais robusto, mais lento (~min)
+cv_busca  = 5         # folds da busca de hiperparâmetros
+cv_aval   = 10        # folds da avaliação (F1±IC95) — = papers do Zárate
+min_cobertura_regra = 0.10  # cobertura mínima das regras da árvore (= papers TOC/AVC: 10%)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Discretização (NB04): cada faixa de domínio com a sua FONTE oficial.

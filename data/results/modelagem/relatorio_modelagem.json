@@ -1,0 +1,49 @@
+{
+  "notebook": "06 §4 — Ablação por blocos",
+  "pergunta": "Quais padrões nutricionais e características sociodemográficas diferenciam idosos com artrite dos saudáveis (PNS 2019), via algoritmos supervisionados?",
+  "parametros": {
+    "N_ITER": 15,
+    "CV_BUSCA": 5,
+    "CV_AVAL": 10,
+    "min_cobertura": 0.1,
+    "random_state": 42
+  },
+  "desenhos": {
+    "d1": {
+      "rotulo": "Desenho 1 — Artrite pura",
+      "k_cluster": 6,
+      "AUC_M0_socio": 0.603,
+      "AUC_M1_nutri": 0.574,
+      "AUC_Mc_socio_ctrl": 0.72,
+      "AUC_M3_completo": 0.722,
+      "dF1_nutricao_sobre_socio": -0.01,
+      "dAUC_nutricao_sobre_socio": 0.022,
+      "dF1_nutricao_sobre_socio_ctrl": -0.002,
+      "OR_IRNI": "OR=0.93 [0.81-1.06] p=0.254",
+      "OR_Cluster": "OR=1.03 [0.94-1.12] p=0.549",
+      "OR_sexo_mulher": "OR=2.50 [2.05-3.04] p=1.27e-19",
+      "OR_idade": "OR=1.20 [1.05-1.38] p=0.00623",
+      "melhor_modelo_M2": "Regressão Logística",
+      "F1_melhor_M2": 0.231,
+      "n_regras_cob10_usando_nutricao": 2
+    },
+    "d2": {
+      "rotulo": "Desenho 2 — Artrite + comorbidades",
+      "k_cluster": 2,
+      "AUC_M0_socio": 0.711,
+      "AUC_M1_nutri": 0.618,
+      "AUC_Mc_socio_ctrl": 0.871,
+      "AUC_M3_completo": 0.872,
+      "dF1_nutricao_sobre_socio": 0.008,
+      "dAUC_nutricao_sobre_socio": 0.012,
+      "dF1_nutricao_sobre_socio_ctrl": 0.005,
+      "OR_IRNI": "OR=1.02 [0.96-1.08] p=0.574",
+      "OR_Cluster": "OR=0.74 [0.65-0.84] p=2.92e-06",
+      "OR_sexo_mulher": "OR=4.74 [4.30-5.23] p=7.88e-213",
+      "OR_idade": "OR=1.31 [1.23-1.40] p=9.71e-16",
+      "melhor_modelo_M2": "Floresta Aleatória",
+      "F1_melhor_M2": 0.7,
+      "n_regras_cob10_usando_nutricao": 3
+    }
+  }
+}
