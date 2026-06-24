@@ -189,6 +189,23 @@ function takeaway(s,txt,y=6.35,cor=SAU,rot="O que isso significa:  "){
   foot(s);
 })();
 
+// ═══════════════════════════════════════════════════════════════ 8b ANÁLISE DE ERRO
+(()=>{ const s=slide(); kicker(s,"Resultado 2 · análise de erro (Desenho 1)");
+  title(s,"Por que a F1 do Desenho 1 é baixa");
+  s.addText([{text:"Matriz: ",options:{bold:true,color:GREY}},
+    {text:"recall 0,65 (acha 64 dos 99 doentes) · precisão 0,15 · ",options:{color:INK}},
+    {text:"375 falsos-positivos",options:{bold:true,color:ART}},
+    {text:" — o erro é quase todo FP.",options:{color:INK}}],
+    {x:0.7,y:1.62,w:12,h:0.35,fontFace:BF,fontSize:13,margin:0});
+  const [w,h]=figFit(11.4,3.85,2.71);
+  s.addImage({path:FIG+"modelagem_analise_erro.png",x:(W-w)/2,y:2.05,w,h,shadow:sh()});
+  s.addShape(p.shapes.RECTANGLE,{x:0.7,y:6.1,w:11.9,h:1.05,fill:{color:"FBEEEC"},line:{color:ART,width:1}});
+  s.addText([{text:"Não é bug — é a base rate.  ",options:{bold:true,color:ART}},
+    {text:"Nenhum limiar supera F1≈0,24 (teto = AUC 0,63). Sem RUS a acurácia chega a 90%, mas o recall é ZERO — não identifica nenhum doente. O RUS aceita 375 falsos-positivos para enxergar 2/3 dos 99 artríticos: consequência de 10% de prevalência + sinal nutricional fraco, não do algoritmo.",options:{color:INK}}],
+    {x:0.95,y:6.18,w:11.4,h:0.9,fontFace:BF,fontSize:12,valign:"middle",margin:0,lineSpacingMultiple:1.05});
+  foot(s);
+})();
+
 // ═══════════════════════════════════════════════════════════════════ 9 IMPORTÂNCIA
 (()=>{ const s=slide(); kicker(s,"Resultado 3 · importância por bloco (Floresta · M3)");
   title(s,"O topo do ranking é sexo e saúde, não comida");
